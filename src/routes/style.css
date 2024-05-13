@@ -6,6 +6,7 @@
 
     --color-dark: rgb(24, 24, 26);
     --color-light: rgb(204, 204, 204);
+    --color-accent: var(--color-light);
 
     --color-black: rgb(0, 0, 0);
     --color-white: rgb(255, 255, 255);
@@ -14,14 +15,21 @@
     --color-text: var(--color-white);
     --color-background: var(--color-dark);
 
+    --height-header: 3.5rem;
+
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-body);
 }
 
+body {
+    margin: 0;
+}
+
 .theme-light {
     --color-background: var(--color-light);
     --color-text: var(--color-black);
+    --color-accdent: var(--color-dark);
 }
 
 .button {
@@ -46,4 +54,14 @@
 
 .text-center {
     text-align: center;
+}
+
+.center-h {
+    display: flex;
+    justify-content: center;
+}
+
+.center-v {
+    display: flex;
+    align-items: center;
 }

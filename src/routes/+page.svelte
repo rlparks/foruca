@@ -1,7 +1,10 @@
 <script lang="ts">
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<p class="text-center">
+	Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
+</p>
 
-<button class="button">e</button>
+<div class="center-h">
+	<button class="button">e</button>
+</div>
