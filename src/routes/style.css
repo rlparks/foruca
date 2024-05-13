@@ -1,4 +1,49 @@
 :root {
     --color-primary: rgb(204, 0, 255);
-    --color-secondary: rgb(40, 29, 78);
+    --color-primary-dark: rgb(153, 0, 204);
+    --color-secondary: rgb(117, 0, 146);
+    --color-secondary-dark: rgb(88, 0, 110);
+
+    --color-dark: rgb(24, 24, 26);
+    --color-light: rgb(204, 204, 204);
+
+    --color-black: rgb(0, 0, 0);
+    --color-white: rgb(255, 255, 255);
+
+    --font-body: sans-serif;
+    --color-text: var(--color-white);
+    --color-background: var(--color-dark);
+
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+}
+
+.theme-light {
+    --color-background: var(--color-light);
+    --color-text: var(--color-black);
+}
+
+.button {
+    --button-background: var(--color-primary);
+    --button-hover-background: var(--color-secondary);
+    display: inline-block;
+    background-color: var(--button-background);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+
+
+}
+
+.button:hover {
+    background-color: var(--button-hover-background);
+}
+
+.text-center {
+    text-align: center;
 }
