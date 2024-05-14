@@ -17,10 +17,14 @@
 	<div id="container-account">
 		{#if user}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
+			<form action="/logout" method="POST">
+				<button class="button">Logout</button>
+			</form>
+		{:else}
+			<div id="container-log" class="button">
+				<a class="nav-link" href="/login">Login</a>
+			</div>
 		{/if}
-		<div id="container-log" class="button">
-			<a class="nav-link" href="/login">Login</a>
-		</div>
 	</div>
 {/snippet}
 
@@ -47,5 +51,11 @@
 
 	#container-log a:hover {
 		color: var(--color-text);
+	}
+
+	p,
+	form,
+	button {
+		margin: 0;
 	}
 </style>

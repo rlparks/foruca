@@ -7,7 +7,7 @@
 
 <div class="center-h">
 	<form action="?/login" method="post" use:enhance>
-		<label>Username<input type="text" name="username" /></label>
+		<label>Username<input autofocus type="text" name="username" /></label>
 		<label>Password<input type="password" name="password" /></label>
 		<button type="submit" class="button">Login</button>
 	</form>

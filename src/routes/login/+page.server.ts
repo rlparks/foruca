@@ -1,4 +1,4 @@
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async () => {
@@ -18,5 +18,7 @@ export const actions = {
 			console.log(err);
 			return fail(400, { error: "Error logging in" });
 		}
+
+		return redirect(303, "/");
 	}
 } satisfies Actions;
