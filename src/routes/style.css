@@ -63,6 +63,15 @@ a:hover {
     color: var(--color-a-hover);
 }
 
+.nav-link {
+    --nav-link-hover: var(--color-secondary);
+    color: var(--color-text);
+}
+
+.nav-link:hover {
+    color: var(--nav-link-hover);
+}
+
 .text-center {
     text-align: center;
 }
