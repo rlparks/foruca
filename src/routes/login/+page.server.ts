@@ -1,7 +1,12 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
-export const load = (async () => {
+export const load = (async (event) => {
+	// console.log(event);
+	if (event.locals.user) {
+		return redirect(303, "/");
+	}
+
 	return {};
 }) satisfies PageServerLoad;
 
