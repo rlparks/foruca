@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { enhance } from "$app/forms";
 	import type { PageData } from "./$types";
 </script>
 
 <h2 class="text-center">Login</h2>
 
 <div class="center-h">
-	<form action="/login" method="post">
+	<form action="?/login" method="post" use:enhance>
 		<label>Username<input type="text" name="username" /></label>
 		<label>Password<input type="password" name="password" /></label>
 		<button type="submit" class="button">Login</button>

@@ -1,5 +1,8 @@
 <script lang="ts">
+	import type { PageData } from "../../routes/$types";
 	import Title from "./Title.svelte";
+
+	const { data }: { data: PageData } = $props();
 </script>
 
 <header>
@@ -11,7 +14,9 @@
 
 {#snippet account()}
 	<div id="container-account">
-		<a class="nav-link" href="/"><p>name</p></a>
+		{#if data?.user}
+			<a class="nav-link" href="/"><p>{data.user.username}</p></a>
+		{/if}
 		<div id="container-log" class="button">
 			<a class="nav-link" href="/login">Login</a>
 		</div>
