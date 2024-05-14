@@ -85,3 +85,23 @@ a:hover {
     display: flex;
     align-items: center;
 }
+
+form input,
+button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--color-accent);
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+}
+
+form input {
+    background-color: var(--color-background);
+}
