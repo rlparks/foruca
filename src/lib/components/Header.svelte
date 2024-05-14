@@ -21,9 +21,7 @@
 				<button class="button">Logout</button>
 			</form>
 		{:else}
-			<div id="container-log" class="button">
-				<a class="nav-link" href="/login">Login</a>
-			</div>
+			<a class="nav-link" href="/login"> <div id="container-log" class="button">Login</div></a>
 		{/if}
 	</div>
 {/snippet}
@@ -49,9 +47,9 @@
 		margin-left: 1rem;
 	}
 
-	#container-log a:hover {
+	/* #container-log a:hover {
 		color: var(--color-text);
-	}
+	} */
 
 	p,
 	form,
