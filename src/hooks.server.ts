@@ -8,7 +8,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
 
-	console.log("user:", event.locals.pb.authStore.model);
+	// console.log("user:", event.locals.pb.authStore.model);
 	if (event.locals.pb.authStore.isValid) {
 		event.locals.user = event.locals.pb.authStore.model;
 	} else {
