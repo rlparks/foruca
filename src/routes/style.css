@@ -34,7 +34,7 @@ body {
 
 .button {
     --button-background: var(--color-primary);
-    --button-hover-background: var(--color-secondary);
+    --button-hover-background: var(--color-primary-dark);
     display: inline-block;
     background-color: var(--button-background);
     color: white;
@@ -50,6 +50,17 @@ body {
 
 .button:hover {
     background-color: var(--button-hover-background);
+}
+
+a {
+    --color-a-hover: var(--color-primary-dark);
+    color: var(--color-primary);
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: var(--color-a-hover);
 }
 
 .text-center {

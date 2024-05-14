@@ -1,9 +1,7 @@
-<div id="title-outside">
-	<div class="center-v">
-		<a href="/">
-			<h1 class="text-center">foruca</h1>
-		</a>
-	</div>
+<div class="center-v">
+	<a href="/">
+		<h1 class="text-center">foruca</h1>
+	</a>
 </div>
 
 <style>
