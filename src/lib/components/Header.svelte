@@ -2,6 +2,7 @@
 	import type { AuthModel } from "pocketbase";
 	import type { PageData } from "../../routes/$types";
 	import Title from "./Title.svelte";
+	import { enhance } from "$app/forms";
 
 	const { user }: { user: AuthModel | undefined } = $props();
 </script>
