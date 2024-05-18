@@ -8,7 +8,10 @@ export const load = (async (event) => {
 		return redirect(303, "/");
 	}
 
-	return {};
+	const ssoProviders = await event.locals.pb.collection("users").listAuthMethods();
+	// console.log(ssoProviders);
+
+	return { ssoProviders: ssoProviders.authProviders };
 }) satisfies PageServerLoad;
 
 export const actions = {

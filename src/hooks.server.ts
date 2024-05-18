@@ -1,9 +1,9 @@
-import { env } from "$env/dynamic/public";
+import { PB_URL } from "$env/static/private";
 import type { Handle } from "@sveltejs/kit";
 import PocketBase from "pocketbase";
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.pb = new PocketBase(env.PUBLIC_PB_URL);
+	event.locals.pb = new PocketBase(PB_URL);
 	// console.log(event.locals.pb);
 
 	// console.log(event.request.headers);

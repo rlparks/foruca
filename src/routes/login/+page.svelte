@@ -1,50 +1,7 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import { env } from "$env/dynamic/public";
-	import type { PageData } from "./$types";
-	import PocketBase from "pocketbase";
 
-	async function loginWithOidc(provider: string) {
-		const pb = new PocketBase(env.PUBLIC_PB_URL);
-		const authData = await pb.collection("users").authWithOAuth2({ provider: provider });
-
-		console.log("authData", authData);
-
-		await fetch("/login", {
-			method: "POST",
-			body: pb.authStore.exportToCookie()
-		});
-
-		// https://github.com/pocketbase/pocketbase/discussions/3212
-		if (authData.meta) {
-			const formData = new FormData();
-
-			try {
-				const response = await fetch(authData.meta.avatarUrl);
-
-				if (response.ok) {
-					const file = await response.blob();
-					formData.append("avatar", file);
-				}
-
-				formData.append("name", authData.meta.name);
-
-				await pb.collection("users").update(authData.record.id, formData);
-			} catch (err) {
-				console.error(err);
-			}
-		}
-
-		location.href = "/";
-	}
-
-	async function loginWithGithub() {
-		await loginWithOidc("github");
-	}
-
-	async function loginWithDiscord() {
-		await loginWithOidc("discord");
-	}
+	const { data } = $props();
 </script>
 
 <h2 class="text-center">Login</h2>
@@ -58,8 +15,9 @@
 		</form>
 		<div class="center-h">
 			<div id="container-oidc">
-				<button onclick={loginWithGithub} class="button oidc">Login with GitHub</button>
-				<button onclick={loginWithDiscord} class="button oidc">Login with Discord</button>
+				{#each data.ssoProviders as provider}
+					<button onclick={() => {}} class="button oidc">Login with {provider.displayName}</button>
+				{/each}
 			</div>
 		</div>
 	</div>
