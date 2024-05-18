@@ -18,7 +18,8 @@
 			window.location.href = "/";
 		} else {
 			// login
-			fetch("http://localhost:5173/login/callback", {
+			const currentPage: string = window.location.origin + window.location.pathname;
+			fetch(currentPage, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -26,7 +27,7 @@
 				body: JSON.stringify({
 					provider,
 					code: params.get("code"),
-					redirectUrl: "http://localhost:5173/login/callback"
+					redirectUrl: currentPage
 				})
 			}).then((res) => {
 				if (res.redirected) {

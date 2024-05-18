@@ -4,7 +4,7 @@
 
 	const { data } = $props();
 
-	const redirectUrl = `http://localhost:5173/login/callback`;
+	const redirectUrl = `${window.location.origin}/login/callback`;
 
 	function performRedirect(provider: AuthProviderInfo) {
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
