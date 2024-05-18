@@ -7,6 +7,7 @@
 	const redirectUrl = `http://localhost:5173/login/callback`;
 
 	function performRedirect(provider: AuthProviderInfo) {
+		window.sessionStorage.setItem("provider", JSON.stringify(provider));
 		window.location.href = provider.authUrl + redirectUrl;
 	}
 </script>
