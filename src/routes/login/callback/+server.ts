@@ -26,5 +26,5 @@ export const POST: RequestHandler = async (event) => {
 		return new Response("Error parsing body.", { status: 400 });
 	}
 
-	return redirect(303, "/");
+	throw redirect(303, "/");
 };

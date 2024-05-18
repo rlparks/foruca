@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { AuthProviderInfo } from "pocketbase";
 
+	let loading = $state(true);
+
 	$effect(() => {
 		const provider: AuthProviderInfo = JSON.parse(
 			window.sessionStorage.getItem("provider") || "{}"
@@ -26,11 +28,20 @@
 					code: params.get("code"),
 					redirectUrl: "http://localhost:5173/login/callback"
 				})
+			}).then((res) => {
+				if (res.redirected) {
+					window.location.href = res.url;
+				} else {
+					loading = false;
+				}
 			});
 		}
 	});
 </script>
 
 <h2 class="text-center">OIDC Login</h2>
-
-<p class="text-center">Failed to login. Please try again.</p>
+{#if loading}
+	<p class="text-center">Logging in...</p>
+{:else}
+	<p class="text-center">Failed to login. Please try again.</p>
+{/if}
