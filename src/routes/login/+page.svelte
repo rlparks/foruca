@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+	import type { AuthProviderInfo } from "pocketbase";
 
 	const { data } = $props();
+
+	const redirectUrl = `http://localhost:5173/login/callback`;
+
+	function performRedirect(provider: AuthProviderInfo) {
+		window.location.href = provider.authUrl + redirectUrl;
+	}
 </script>
 
 <h2 class="text-center">Login</h2>
@@ -16,7 +23,12 @@
 		<div class="center-h">
 			<div id="container-oidc">
 				{#each data.ssoProviders as provider}
-					<button onclick={() => {}} class="button oidc">Login with {provider.displayName}</button>
+					<button
+						onclick={() => {
+							performRedirect(provider);
+						}}
+						class="button">Login with {provider.displayName}</button
+					>
 				{/each}
 			</div>
 		</div>
@@ -27,17 +39,6 @@
 	form {
 		display: flex;
 		flex-direction: column;
-	}
-
-	input {
-		margin: 0.5rem 0;
-		padding: 0.5rem;
-		border-radius: 5px;
-	}
-
-	button {
-		margin: 0.5rem 0;
-		padding: 0.5rem;
 	}
 
 	#container-oidc {

@@ -22,7 +22,7 @@
 				<button class="button">Logout</button>
 			</form>
 		{:else}
-			<a class="nav-link" href="/login"> <div id="container-log" class="button">Login</div></a>
+			<a class="nav-link" href="/login"> <div class="button">Login</div></a>
 		{/if}
 	</div>
 {/snippet}
@@ -47,10 +47,6 @@
 	#container-account > * {
 		margin-left: 1rem;
 	}
-
-	/* #container-log a:hover {
-		color: var(--color-text);
-	} */
 
 	p,
 	form,

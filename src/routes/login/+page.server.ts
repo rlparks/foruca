@@ -1,6 +1,5 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import type { OAuth2UrlCallback } from "pocketbase";
 
 export const load = (async (event) => {
 	if (event.locals.user) {
