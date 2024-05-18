@@ -20,11 +20,23 @@ export const POST: RequestHandler = async (event) => {
 			.collection("users")
 			.authWithOAuth2Code(provider.name, code, provider.codeVerifier, redirectUrl);
 
-		console.log(authData);
+		// console.log(authData);
+
+		const name: string = authData?.meta?.name ?? "";
+		const avatarUrl: string = authData?.meta?.avatarUrl ?? "";
+
+		let avatar: Blob | undefined = undefined;
+
+		if (avatarUrl) {
+			const avatarRes = await fetch(avatarUrl);
+			avatar = await avatarRes.blob();
+		}
+
+		await pb.collection("users").update(authData.record.id, { name, avatar });
 	} catch (err) {
 		console.error(err);
 		return new Response("Error parsing body.", { status: 400 });
 	}
 
-	throw redirect(303, "/");
+	return redirect(303, "/");
 };
