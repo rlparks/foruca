@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
 	import type { AuthProviderInfo } from "pocketbase";
 
 	const { data } = $props();
 
-	const redirectUrl = `${window.location.origin}/login/callback`;
+	const redirectUrl = $derived(browser ? `${window.location.origin}/login/callback` : undefined);
 
 	function performRedirect(provider: AuthProviderInfo) {
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
