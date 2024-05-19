@@ -18,6 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			// console.log("avatar:", event.locals.pb.authStore.model?.avatar);
 			// console.log("user:", event.locals.user);
 
+			// exposes PB url to client
 			event.locals.user.avatarUrl = getImageUrl(
 				event.locals.user.collectionId,
 				event.locals.user.id,
