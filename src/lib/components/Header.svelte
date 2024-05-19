@@ -17,6 +17,9 @@
 {#snippet account()}
 	<div id="container-account">
 		{#if user}
+			{#if user.avatarUrl}
+				<img src={user.avatarUrl} alt={user.username + "'s avatar"} />
+			{/if}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
 			<form action="/logout" method="POST">
 				<button class="button">Logout</button>
@@ -52,5 +55,11 @@
 	form,
 	button {
 		margin: 0;
+	}
+
+	img {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
 	}
 </style>
