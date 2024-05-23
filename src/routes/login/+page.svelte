@@ -22,18 +22,20 @@
 			<label>Password<input type="password" name="password" /></label>
 			<button type="submit" class="button">Login</button>
 		</form>
-		<div class="center-h">
-			<div id="container-oidc">
-				{#each data.ssoProviders as provider}
-					<button
-						onclick={() => {
-							performRedirect(provider);
-						}}
-						class="button">Login with {provider.displayName}</button
-					>
-				{/each}
+		{#if data.ssoProviders}
+			<div class="center-h">
+				<div id="container-oidc">
+					{#each data.ssoProviders as provider (provider.name)}
+						<button
+							onclick={() => {
+								performRedirect(provider);
+							}}
+							class="button">Login with {provider.displayName}</button
+						>
+					{/each}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
 

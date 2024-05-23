@@ -15,7 +15,7 @@
 
 <div class="center-h">
 	<div>
-		{#each posts as post}
+		{#each posts as post (post.id)}
 			<h2>{post.title}</h2>
 			<p>{post.body}</p>
 		{/each}

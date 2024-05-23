@@ -8,6 +8,7 @@ declare global {
 		interface Locals {
 			pb: PocketBase;
 			user: AuthModel | undefined;
+			pbAlive: boolean;
 		}
 		// interface PageData {}
 		// interface PageState {}

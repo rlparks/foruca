@@ -5,13 +5,19 @@ import PocketBase from "pocketbase";
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(PB_URL);
-	// console.log(event.locals.pb);
+	event.locals.pbAlive = true;
+	try {
+		await event.locals.pb.health.check();
+	} catch (err) {
+		// console.error(err);
+		event.locals.pbAlive = false;
+	}
 
 	// console.log(event.request.headers);
 
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
 
-	console.log("user:", event.locals.pb.authStore.model);
+	// console.log("user:", event.locals.pb.authStore.model);
 	if (event.locals.pb.authStore.isValid) {
 		event.locals.user = event.locals.pb.authStore.model;
 		if (event.locals.user?.avatar) {

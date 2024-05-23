@@ -21,7 +21,7 @@
 				<img src={user.avatarUrl} alt={user.username + "'s avatar"} />
 			{/if}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
-			<form action="/logout" method="POST">
+			<form action="/api/logout" method="POST">
 				<button class="button">Logout</button>
 			</form>
 		{:else}
