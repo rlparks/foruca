@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
+	import { goto } from "$app/navigation";
 	import type { AuthProviderInfo } from "pocketbase";
 
 	const { data } = $props();
@@ -13,13 +14,38 @@
 	}
 
 	let loginButtonText = $state("Login");
+	let error: string | undefined = $state(undefined);
 </script>
 
 <h2 class="text-center">Login</h2>
 
 <div class="center-h">
 	<div>
-		<form action="/api/auth/login" method="post">
+		{#if error}
+			<p class="text-center error">{error}</p>
+		{/if}
+		<form
+			action="/api/auth/login"
+			method="post"
+			use:enhance={() => {
+				loginButtonText = "Logging in...";
+                error = undefined
+
+				return async function ({ update, result }) {
+					if (result.type) {
+						window.location.href = "/";
+					} else {
+						loginButtonText = "Login";
+
+						if (result) {
+                            // really?
+                            const resultWithError = result as { error: string };
+                            error = resultWithError.error;
+						}
+					}
+				};
+			}}
+		>
 			<label>Username<input type="text" name="username" /></label>
 			<label>Password<input type="password" name="password" /></label>
 			<button type="submit" class="button" disabled={loginButtonText !== "Login"}
@@ -53,5 +79,9 @@
 		margin-top: 3rem;
 		display: flex;
 		flex-direction: column;
+	}
+
+	.error {
+		color: red;
 	}
 </style>

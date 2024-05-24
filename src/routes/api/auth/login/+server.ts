@@ -10,12 +10,9 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 	try {
 		await locals.pb.collection("users").authWithPassword(body.username, body.password);
 	} catch (err) {
-		console.log(err);
+		// console.log(err);
 		return new Response(JSON.stringify({ error: "Error logging in" }), { status: 400 });
 	}
 
-	return new Response(JSON.stringify({ success: true }), {
-		status: 303,
-		headers: { location: "/" }
-	});
+	return redirect(303, "/");
 };
