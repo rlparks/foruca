@@ -11,16 +11,20 @@
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
 		window.location.href = provider.authUrl + redirectUrl;
 	}
+
+	let loginButtonText = $state("Login");
 </script>
 
 <h2 class="text-center">Login</h2>
 
 <div class="center-h">
 	<div>
-		<form action="?/login" method="post" use:enhance>
+		<form action="/api/auth/login" method="post">
 			<label>Username<input type="text" name="username" /></label>
 			<label>Password<input type="password" name="password" /></label>
-			<button type="submit" class="button">Login</button>
+			<button type="submit" class="button" disabled={loginButtonText !== "Login"}
+				>{loginButtonText}</button
+			>
 		</form>
 		{#if data.ssoProviders}
 			<div class="center-h">
