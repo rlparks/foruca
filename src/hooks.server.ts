@@ -6,12 +6,12 @@ import PocketBase from "pocketbase";
 if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 	try {
 		const tempPb = new PocketBase(PB_URL);
-		const admin = await tempPb.admins.create({
+		await tempPb.admins.create({
 			email: PB_ADMIN_EMAIL,
 			password: PB_ADMIN_PASSWORD,
 			passwordConfirm: PB_ADMIN_PASSWORD
 		});
-		initializeSchema(tempPb);
+		await initializeSchema(tempPb);
 	} catch (err) {
 		console.log("PB admin already exists");
 	}

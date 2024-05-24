@@ -19,7 +19,7 @@
 		} else {
 			// login
 			const currentPage: string = window.location.origin + window.location.pathname;
-			fetch(currentPage, {
+			fetch(window.location.origin + "/api/auth/login/oidc", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
