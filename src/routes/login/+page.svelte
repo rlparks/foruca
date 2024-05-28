@@ -25,7 +25,7 @@
 			<p class="text-center error">{error}</p>
 		{/if}
 		<form
-			action="?/login"
+			action="/api/auth/login"
 			method="post"
 			use:enhance={() => {
 				loginButtonText = "Logging in...";
