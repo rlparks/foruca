@@ -17,6 +17,44 @@ if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 	}
 }
 
+const denyAccess = new Response(
+	JSON.stringify({ error: "Error: Unable to access the database." }),
+	{
+		status: 500,
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}
+);
+
+export const handle: Handle = async ({ event, resolve }) => {
+	event.locals.pb = new PocketBase(PB_URL);
+	event.locals.pbAlive = true;
+	try {
+		await event.locals.pb.health.check();
+	} catch (err) {
+		// console.error(err);
+		event.locals.pbAlive = false;
+	}
+
+	// console.log(event.request.headers);
+
+	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
+
+	// console.log("user:", event.locals.pb.authStore.model);
+	if (event.locals.pb.authStore.isValid) {
+		event.locals.user = event.locals.pb.authStore.model;
+	} else {
+		event.locals.user = undefined;
+	}
+
+	const result = await resolve(event);
+
+	result.headers.set("set-cookie", event.locals.pb.authStore.exportToCookie({ secure: false }));
+
+	return result;
+};
+
 async function initializeSchema(pb: PocketBase) {
 	await pb.admins.authWithPassword(PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD);
 
@@ -29,6 +67,9 @@ async function initializeSchema(pb: PocketBase) {
 
 	try {
 		const users = await pb.collections.getOne("users");
+		await pb.collections.update(users.name, {
+			viewRule: "@request.auth.id != ''"
+		});
 		const posts = await pb.collections.create({
 			name: "posts",
 			type: "base",
@@ -79,42 +120,3 @@ async function initializeSchema(pb: PocketBase) {
 		console.log("Error creating posts collection:", err);
 	}
 }
-
-export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.pb = new PocketBase(PB_URL);
-	event.locals.pbAlive = true;
-	try {
-		await event.locals.pb.health.check();
-	} catch (err) {
-		// console.error(err);
-		event.locals.pbAlive = false;
-	}
-
-	// console.log(event.request.headers);
-
-	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
-
-	// console.log("user:", event.locals.pb.authStore.model);
-	if (event.locals.pb.authStore.isValid) {
-		event.locals.user = event.locals.pb.authStore.model;
-		if (event.locals.user?.avatar) {
-			// console.log("avatar:", event.locals.pb.authStore.model?.avatar);
-			// console.log("user:", event.locals.user);
-
-			// exposes PB url to client
-			event.locals.user.avatarUrl = getImageUrl(
-				event.locals.user.collectionId,
-				event.locals.user.id,
-				event.locals.user.avatar
-			);
-		}
-	} else {
-		event.locals.user = undefined;
-	}
-
-	const result = await resolve(event);
-
-	result.headers.set("set-cookie", event.locals.pb.authStore.exportToCookie({ secure: false }));
-
-	return result;
-};
