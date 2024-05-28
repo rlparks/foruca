@@ -25,24 +25,14 @@
 			<p class="text-center error">{error}</p>
 		{/if}
 		<form
-			action="/api/auth/login"
+			action="?/login"
 			method="post"
 			use:enhance={() => {
 				loginButtonText = "Logging in...";
-                error = undefined
+				error = undefined;
 
 				return async function ({ update, result }) {
-					if (result.type) {
-						window.location.href = "/";
-					} else {
-						loginButtonText = "Login";
-
-						if (result) {
-                            // really?
-                            const resultWithError = result as { error: string };
-                            error = resultWithError.error;
-						}
-					}
+					await update();
 				};
 			}}
 		>
