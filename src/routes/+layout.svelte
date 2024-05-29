@@ -11,8 +11,9 @@
 	}
 
 	let { data, children }: Props = $props();
+	let user = $derived(data.user);
 </script>
 
-<Header user={data.user} />
+<Header {user} />
 
 {@render children()}

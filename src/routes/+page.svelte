@@ -1,16 +1,9 @@
 <script lang="ts">
-	let posts = [
-		{
-			id: 1,
-			title: "post 1",
-			body: "body 1"
-		},
-		{
-			id: 2,
-			title: "post 2",
-			body: "<h1>body 2</h1>"
-		}
-	];
+	import type { Post } from "$lib/types";
+
+	const { data } = $props();
+	// hope this is right?
+	const posts: Post[] = $derived(data.posts);
 </script>
 
 <sveltekit:head>

@@ -94,6 +94,7 @@ async function initializeSchema(pb: PocketBase) {
 		const posts = await pb.collections.create({
 			name: "posts",
 			type: "base",
+			listRule: "",
 			viewRule: "",
 			createRule: "@request.auth.id != ''",
 			schema: [
