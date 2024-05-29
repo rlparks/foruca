@@ -17,6 +17,10 @@
 	let error: string | undefined = $state(undefined);
 </script>
 
+<sveltekit:head>
+	<title>foruca · login</title>
+</sveltekit:head>
+
 <h2 class="text-center">Login</h2>
 
 <div class="center-h">

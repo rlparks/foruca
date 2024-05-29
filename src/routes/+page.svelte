@@ -13,6 +13,10 @@
 	];
 </script>
 
+<sveltekit:head>
+	<title>foruca</title>
+</sveltekit:head>
+
 <div class="center-h">
 	<div>
 		{#each posts as post (post.id)}

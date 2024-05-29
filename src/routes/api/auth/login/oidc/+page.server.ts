@@ -28,7 +28,9 @@ export const actions = {
 			const name: string = authData?.meta?.name ?? "";
 			const avatarUrl: string = authData?.meta?.avatarUrl ?? "";
 
-			let avatar: Blob | undefined = undefined;
+			// if this is set to undefined, it will not remove avatar if the
+			// OIDC provider doesn't provide one
+			let avatar: Blob | null = null;
 			if (avatarUrl) {
 				const avatarRes = await fetch(avatarUrl);
 				avatar = await avatarRes.blob();
