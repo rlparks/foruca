@@ -1,3 +1,4 @@
+import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
@@ -9,6 +10,9 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 
 		const fileUrl = locals.pb.files.getUrl(userRecord, userRecord.avatar);
 		// console.log("fileUrl:", fileUrl);
+		if (!fileUrl) {
+			return json({ error: "Error: User has no avatar." }, { status: 404 });
+		}
 
 		const imgResponse = await fetch(fileUrl);
 		const imgBlob = await imgResponse.blob();
