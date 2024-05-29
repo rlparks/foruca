@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
 	import { page } from "$app/stores";
 	import type { AuthModel } from "pocketbase";
+	import LogoutButton from "./LogoutButton.svelte";
 	import Title from "./Title.svelte";
 
 	const { user }: { user: AuthModel | undefined } = $props();
+	$effect(() => {
+		console.log("user:", user);
+	});
 </script>
 
 <header>
@@ -24,17 +27,7 @@
 				/>
 			{/if}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
-			<form
-				action="/api/auth/logout"
-				method="POST"
-				use:enhance={() => {
-					return async function ({ update }) {
-						await update();
-					};
-				}}
-			>
-				<button type="submit" class="button">Logout</button>
-			</form>
+			<LogoutButton />
 		{:else}
 			<a class="nav-link" href="/login"> <div class="button">Login</div></a>
 		{/if}
@@ -62,9 +55,7 @@
 		margin-left: 1rem;
 	}
 
-	p,
-	form,
-	button {
+	p {
 		margin: 0;
 	}
 
