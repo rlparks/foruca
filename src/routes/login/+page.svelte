@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
-	import { goto } from "$app/navigation";
 	import type { AuthProviderInfo } from "pocketbase";
 	import { onMount } from "svelte";
 
@@ -28,8 +27,8 @@
 
 <h2 class="text-center">Login</h2>
 
-<div class="center-h">
-	<div>
+<div id="loginContainer">
+	<div class="center-h">
 		{#if error}
 			<p class="text-center error">{error}</p>
 		{/if}
@@ -55,21 +54,21 @@
 				>{loginButtonText}</button
 			>
 		</form>
-		{#if data.ssoProviders}
-			<div class="center-h">
-				<div id="container-oidc">
-					{#each data.ssoProviders as provider (provider.name)}
-						<button
-							onclick={() => {
-								performRedirect(provider);
-							}}
-							class="button">Login with {provider.displayName}</button
-						>
-					{/each}
-				</div>
-			</div>
-		{/if}
 	</div>
+	{#if data.ssoProviders}
+		<div class="center-h">
+			<div id="container-oidc">
+				{#each data.ssoProviders as provider (provider.name)}
+					<button
+						onclick={() => {
+							performRedirect(provider);
+						}}
+						class="button">Login with {provider.displayName}</button
+					>
+				{/each}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -86,5 +85,17 @@
 
 	.error {
 		color: red;
+	}
+
+	#loginContainer {
+		display: flex;
+		justify-content: space-evenly;
+		flex-direction: row-reverse;
+	}
+
+	@media (max-width: 600px) {
+		#loginContainer {
+			display: block;
+		}
 	}
 </style>
