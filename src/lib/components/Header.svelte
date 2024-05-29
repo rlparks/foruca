@@ -3,6 +3,7 @@
 	import type { PageData } from "../../routes/$types";
 	import Title from "./Title.svelte";
 	import { enhance } from "$app/forms";
+	import { page } from "$app/stores";
 
 	const { user }: { user: AuthModel | undefined } = $props();
 </script>
@@ -17,8 +18,11 @@
 {#snippet account()}
 	<div id="container-account">
 		{#if user}
-			{#if user.avatarUrl}
-				<img src={user.avatarUrl} alt={user.username + "'s avatar"} />
+			{#if user.avatar}
+				<img
+					src={$page.url.origin + `/api/images/user/${user.id}`}
+					alt={user.username + "'s avatar"}
+				/>
 			{/if}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
 			<form action="/api/auth/logout" method="POST" use:enhance>
