@@ -1,9 +1,8 @@
 <script lang="ts">
+	import { Header } from "$lib/components";
 	import type { Snippet } from "svelte";
 	import type { LayoutData } from "./$types";
 	import "./style.css";
-	import { Header } from "$lib/components";
-	import type { AuthModel } from "pocketbase";
 
 	interface Props {
 		data: LayoutData;

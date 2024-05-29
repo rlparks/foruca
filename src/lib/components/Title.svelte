@@ -18,6 +18,10 @@
 		color: var(--color-text);
 	}
 
+	a:hover {
+		color: var(--color-text);
+	}
+
 	h1 {
 		margin: 0;
 	}

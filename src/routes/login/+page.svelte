@@ -3,6 +3,7 @@
 	import { enhance } from "$app/forms";
 	import { goto } from "$app/navigation";
 	import type { AuthProviderInfo } from "pocketbase";
+	import { onMount } from "svelte";
 
 	const { data } = $props();
 
@@ -15,6 +16,10 @@
 
 	let loginButtonText = $state("Login");
 	let error: string | undefined = $state(undefined);
+
+	onMount(() => {
+		document.getElementById("usernameInput")?.focus();
+	});
 </script>
 
 <sveltekit:head>
@@ -37,11 +42,15 @@
 
 				return async function ({ update, result }) {
 					await update();
+					loginButtonText = "Login";
+					if (result.type === "failure" && result?.data?.error) {
+						error = String(result?.data?.error);
+					}
 				};
 			}}
 		>
-			<label>Username<input type="text" name="username" /></label>
-			<label>Password<input type="password" name="password" /></label>
+			<label>Username<input id="usernameInput" type="text" name="username" required /></label>
+			<label>Password<input type="password" name="password" required /></label>
 			<button type="submit" class="button" disabled={loginButtonText !== "Login"}
 				>{loginButtonText}</button
 			>

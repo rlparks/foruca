@@ -1,9 +1,8 @@
 <script lang="ts">
-	import type { AuthModel } from "pocketbase";
-	import type { PageData } from "../../routes/$types";
-	import Title from "./Title.svelte";
 	import { enhance } from "$app/forms";
 	import { page } from "$app/stores";
+	import type { AuthModel } from "pocketbase";
+	import Title from "./Title.svelte";
 
 	const { user }: { user: AuthModel | undefined } = $props();
 </script>
@@ -25,7 +24,15 @@
 				/>
 			{/if}
 			<a class="nav-link" href="/"><p>{user.username}</p></a>
-			<form action="/api/auth/logout" method="POST" use:enhance>
+			<form
+				action="/api/auth/logout"
+				method="POST"
+				use:enhance={() => {
+					return async function ({ update }) {
+						await update();
+					};
+				}}
+			>
 				<button type="submit" class="button">Logout</button>
 			</form>
 		{:else}
