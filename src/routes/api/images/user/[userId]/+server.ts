@@ -34,6 +34,4 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 			}
 		});
 	}
-
-	return new Response();
 };
