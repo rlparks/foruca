@@ -106,3 +106,9 @@ form label {
 form input {
     background-color: var(--color-background);
 }
+
+@media (max-width: 600px) {
+    .deflex {
+        display: block;
+    }
+}

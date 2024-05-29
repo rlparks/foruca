@@ -37,6 +37,8 @@ export const actions = {
 			}
 
 			await pb.collection("users").update(authData.record.id, { name, avatar });
+
+			console.log("OIDC LOGIN SUCCESS: " + authData?.meta?.username);
 		} catch (err) {
 			console.error(err);
 			return fail(400, { error: "Error: Cannot parse body." });

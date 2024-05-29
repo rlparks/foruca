@@ -27,8 +27,8 @@
 
 <h2 class="text-center">Login</h2>
 
-<div id="loginContainer">
-	<div class="center-h">
+<div class="center-h">
+	<div>
 		{#if error}
 			<p class="text-center error">{error}</p>
 		{/if}
@@ -54,21 +54,21 @@
 				>{loginButtonText}</button
 			>
 		</form>
-	</div>
-	{#if data.ssoProviders}
-		<div class="center-h">
-			<div id="container-oidc">
-				{#each data.ssoProviders as provider (provider.name)}
-					<button
-						onclick={() => {
-							performRedirect(provider);
-						}}
-						class="button">Login with {provider.displayName}</button
-					>
-				{/each}
+		{#if data.ssoProviders}
+			<div class="center-h">
+				<div id="container-oidc">
+					{#each data.ssoProviders as provider (provider.name)}
+						<button
+							onclick={() => {
+								performRedirect(provider);
+							}}
+							class="button">Login with {provider.displayName}</button
+						>
+					{/each}
+				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -85,17 +85,5 @@
 
 	.error {
 		color: red;
-	}
-
-	#loginContainer {
-		display: flex;
-		justify-content: space-evenly;
-		flex-direction: row-reverse;
-	}
-
-	@media (max-width: 600px) {
-		#loginContainer {
-			display: block;
-		}
 	}
 </style>

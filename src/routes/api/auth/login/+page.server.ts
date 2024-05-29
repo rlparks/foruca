@@ -12,9 +12,12 @@ export const actions = {
 
 		try {
 			await locals.pb.collection("users").authWithPassword(body.username, body.password);
+			console.log("LOGIN SUCCESS: " + body.username);
 		} catch (err) {
-			console.log(err);
-			return fail(400, { error: "Error logging in" });
+			// console.log(err);
+			console.log("LOGIN FAILURE: " + body.username);
+
+			return fail(400, { error: "Invalid credentials." });
 		}
 
 		return redirect(303, "/");
