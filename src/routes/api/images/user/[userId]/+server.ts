@@ -5,7 +5,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	const { userId } = params;
 
 	try {
-		const userRecord = await locals.pb.collection("users").getOne(userId);
+		const userRecord = await locals.pb.collection("public_users").getOne(userId);
 		// console.log("userRecord:", userRecord);
 
 		const fileUrl = locals.pb.files.getUrl(userRecord, userRecord.avatar);
