@@ -22,6 +22,4 @@
 	}
 </script>
 
-<svelte:head></svelte:head>
-
 <button class="button" onclick={handleClick}>{theme === "dark" ? "🌆" : "🏙️"}</button>

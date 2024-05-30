@@ -2,15 +2,15 @@ export type Post = {
 	id: string;
 	collectionId: string;
 	collectionName: string;
-	created: Date;
-	updated: Date;
+	created: string;
+	updated: string;
 	expand: PostExpand;
 
 	title: string;
 	body: string;
 	owner: string;
 	parent: string;
-	time: Date;
+	time: string;
 };
 
 export type PostExpand = {
@@ -21,12 +21,12 @@ export type User = {
 	avatar: string;
 	collectionId: string;
 	collectionName: string;
-	created: Date;
+	created: string;
 	email: string;
 	emailVisibility: boolean;
 	id: string;
 	name: string;
-	updated: Date;
+	updated: string;
 	username: string;
 	verified: boolean;
 };

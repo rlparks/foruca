@@ -3,17 +3,24 @@
 	import UserPortrait from "./UserPortrait.svelte";
 
 	const { post }: { post: Post } = $props();
-	$effect(() => {
-		console.log("post:", post);
-	});
+	// $effect(() => {
+	// 	console.log("post:", post);
+	// });
 
 	const owner = $derived(post?.expand?.owner);
+
+	const createdDate: Date = $derived(new Date(post.created));
+
+	const niceDate = createdDate.toLocaleDateString();
+	const niceTime = createdDate.toLocaleTimeString();
 </script>
 
 <div id="container">
-	<aside class="">
+	<div id="sidebar">
 		<UserPortrait user={owner} />
-	</aside>
+		<p class="text-center">{niceDate}</p>
+		<p class="text-center">{niceTime}</p>
+	</div>
 	<div class="vr"></div>
 	<article>
 		<h2>{post.title}</h2>
@@ -29,9 +36,5 @@
 		border: 1px solid var(--color-accent);
 		border-radius: 5px;
 		padding: 1em;
-	}
-
-	aside {
-		height: 100%;
 	}
 </style>
