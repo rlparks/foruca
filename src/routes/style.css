@@ -5,7 +5,7 @@
     --color-secondary-dark: rgb(88, 0, 110);
 
     --color-dark: rgb(24, 24, 26);
-    --color-light: rgb(204, 204, 204);
+    --color-light: rgb(233, 233, 233);
     --color-accent: var(--color-light);
 
     --color-black: rgb(0, 0, 0);
@@ -30,7 +30,7 @@ body {
 .theme-light {
     --color-background: var(--color-light);
     --color-text: var(--color-black);
-    --color-accdent: var(--color-dark);
+    --color-accent: var(--color-dark);
 }
 
 .button {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PostHolder from "$lib/components/PostHolder.svelte";
+	import { PostHolder } from "$lib/components";
 	import type { Post } from "$lib/types";
 
 	const { data } = $props();

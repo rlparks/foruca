@@ -3,6 +3,7 @@
 	import type { AuthModel } from "pocketbase";
 	import LogoutButton from "./LogoutButton.svelte";
 	import Title from "./Title.svelte";
+	import ThemeSwitcher from "./ThemeSwitcher.svelte";
 
 	const { user }: { user: AuthModel | undefined } = $props();
 	// $effect(() => {
@@ -19,6 +20,7 @@
 
 {#snippet account()}
 	<div id="container-account">
+		<ThemeSwitcher />
 		{#if user}
 			{#if user.avatar}
 				<img
