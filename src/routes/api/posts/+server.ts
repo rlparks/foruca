@@ -18,5 +18,5 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		expand: "owner"
 	});
 
-	return json(posts.items);
+	return json(posts);
 };

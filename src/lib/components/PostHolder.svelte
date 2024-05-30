@@ -3,16 +3,13 @@
 	import UserPortrait from "./UserPortrait.svelte";
 
 	const { post }: { post: Post } = $props();
-	// $effect(() => {
-	// 	console.log("post:", post);
-	// });
 
 	const owner = $derived(post?.expand?.owner);
 
 	const createdDate: Date = $derived(new Date(post.created));
 
-	const niceDate = createdDate.toLocaleDateString();
-	const niceTime = createdDate.toLocaleTimeString();
+	const niceDate = $derived(createdDate.toLocaleDateString());
+	const niceTime = $derived(createdDate.toLocaleTimeString());
 </script>
 
 <div id="container">
