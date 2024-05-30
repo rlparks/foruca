@@ -22,19 +22,25 @@
 		<p class="text-center">{niceTime}</p>
 	</div>
 	<div class="vr"></div>
-	<article>
+	<div>
 		<h2>{post.title}</h2>
 		<p>{post.body}</p>
-	</article>
+	</div>
 </div>
 
 <style>
 	#container {
 		display: flex;
-		justify-content: center;
+		/* justify-content: center; */
 		/* align-items: center; */
 		border: 1px solid var(--color-accent);
 		border-radius: 5px;
 		padding: 1em;
+		width: 600px;
+		margin-bottom: 1em;
+	}
+
+	h2 {
+		margin-top: 0;
 	}
 </style>
