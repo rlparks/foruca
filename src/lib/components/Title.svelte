@@ -24,5 +24,6 @@
 
 	h1 {
 		margin: 0;
+		font-size: 2em;
 	}
 </style>

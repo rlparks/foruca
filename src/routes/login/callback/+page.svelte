@@ -36,7 +36,7 @@
 	<title>foruca · SSO Callback</title>
 </sveltekit:head>
 
-<h2 class="text-center">OIDC Login</h2>
+<h1 class="text-center">OIDC Login</h1>
 {#if loading}
 	<p class="text-center">Logging in...</p>
 {:else}

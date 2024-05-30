@@ -25,7 +25,7 @@
 	<title>foruca · login</title>
 </sveltekit:head>
 
-<h2 class="text-center">Login</h2>
+<h1 class="text-center">Login</h1>
 
 <div class="center-h">
 	<div>
