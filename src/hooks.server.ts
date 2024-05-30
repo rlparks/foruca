@@ -115,11 +115,6 @@ async function initializeSchema(pb: PocketBase) {
 						collectionId: users.id,
 						maxSelect: 1
 					}
-				},
-				{
-					name: "time",
-					type: "date",
-					required: true
 				}
 			]
 		});
