@@ -5,9 +5,9 @@
 	import Title from "./Title.svelte";
 
 	const { user }: { user: AuthModel | undefined } = $props();
-	$effect(() => {
-		console.log("user:", user);
-	});
+	// $effect(() => {
+	// 	console.log("user:", user);
+	// });
 </script>
 
 <header>
@@ -43,6 +43,7 @@
 		height: var(--height-header);
 
 		padding: 0 1rem;
+		margin-bottom: 1em;
 	}
 
 	#container-account {

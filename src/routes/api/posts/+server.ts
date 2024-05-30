@@ -14,7 +14,8 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 	}
 
 	const posts = await locals.pb.collection("posts").getList<Post>(page, perPage, {
-		sort: "-created"
+		sort: "-created",
+		expand: "owner"
 	});
 
 	return json(posts.items);

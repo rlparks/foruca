@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PostHolder from "$lib/components/PostHolder.svelte";
 	import type { Post } from "$lib/types";
 
 	const { data } = $props();
@@ -13,8 +14,7 @@
 <div class="center-h">
 	<div>
 		{#each posts as post (post.id)}
-			<h2>{post.title}</h2>
-			<p>{post.body}</p>
+			<PostHolder {post} />
 		{/each}
 	</div>
 </div>
