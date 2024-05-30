@@ -21,9 +21,9 @@
 	});
 </script>
 
-<sveltekit:head>
+<svelte:head>
 	<title>foruca · login</title>
-</sveltekit:head>
+</svelte:head>
 
 <h1 class="text-center page-title">Login</h1>
 

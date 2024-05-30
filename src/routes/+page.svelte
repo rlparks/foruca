@@ -12,9 +12,9 @@
 	);
 </script>
 
-<sveltekit:head>
+<svelte:head>
 	<title>foruca</title>
-</sveltekit:head>
+</svelte:head>
 
 <div class="center-h">
 	<div>

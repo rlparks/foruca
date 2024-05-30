@@ -32,9 +32,9 @@
 	});
 </script>
 
-<sveltekit:head>
+<svelte:head>
 	<title>foruca · SSO Callback</title>
-</sveltekit:head>
+</svelte:head>
 
 <h1 class="text-center">OIDC Login</h1>
 {#if loading}
