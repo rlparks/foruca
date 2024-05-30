@@ -6,7 +6,12 @@
 
 {#if user}
 	<div>
-		<img src={$page.url.origin + `/api/images/user/${user.id}`} alt={user.username + "'s avatar"} />
+		{#if user.avatar}
+			<img
+				src={$page.url.origin + `/api/images/user/${user.id}`}
+				alt={user.username + "'s avatar"}
+			/>
+		{/if}
 		<p>{user.username}</p>
 	</div>
 {:else}

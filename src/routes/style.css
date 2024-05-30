@@ -101,7 +101,8 @@ a:hover {
 }
 
 form input,
-button {
+button,
+textarea {
     margin: 0.5rem 0;
     padding: 0.5rem;
     border-radius: var(--border-radius-button);
@@ -116,7 +117,8 @@ form label {
     flex-direction: column;
 }
 
-form input {
+form input,
+textarea {
     background-color: var(--color-background);
 }
 
