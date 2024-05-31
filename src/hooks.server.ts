@@ -1,8 +1,7 @@
 import { PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD, PB_URL } from "$env/static/private";
-import { redirect, type Handle } from "@sveltejs/kit";
+import { json, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
-// dangerous!
 const adminPb: PocketBase = new PocketBase(PB_URL);
 if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 	try {
@@ -14,26 +13,19 @@ if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 		await initializeSchema(adminPb);
 	} catch (err) {
 		console.log("PB admin already exists");
+	} finally {
+		if (adminPb) {
+			await adminPb.authStore.clear();
+		}
 	}
-	// finally {
-	// 	if (adminPb) {
-	// 		await adminPb.admins.authWithPassword(PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD);
-	// 	}
-	// }
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(PB_URL);
-	// event.locals.adminPb = adminPb;
 	try {
 		await event.locals.pb.health.check();
 	} catch (err) {
-		return new Response(JSON.stringify({ error: "Error: Unable to access the database." }), {
-			status: 500,
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
+		return json({ error: "Error: Unable to access the database." }, { status: 500 });
 	}
 
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
@@ -54,6 +46,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const result = await resolve(event);
 
+	// TODO
 	result.headers.set("set-cookie", event.locals.pb.authStore.exportToCookie({ secure: false }));
 
 	return result;
