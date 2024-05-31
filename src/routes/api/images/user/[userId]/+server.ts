@@ -1,11 +1,12 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import type { User } from "$lib/types";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
 	const { userId } = params;
 
 	try {
-		const userRecord = await locals.pb.collection("public_users").getOne(userId);
+		const userRecord = await locals.pb.collection<User>("users").getOne(userId);
 		// console.log("userRecord:", userRecord);
 
 		const fileUrl = locals.pb.files.getUrl(userRecord, userRecord.avatar);

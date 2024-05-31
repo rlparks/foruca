@@ -118,16 +118,6 @@ async function initializeSchema(pb: PocketBase) {
 				}
 			]
 		});
-
-		// public_users
-		// await pb.collections.create({
-		// 	name: "public_users",
-		// 	type: "view",
-		// 	viewRule: "@request.auth.id != ''",
-		// 	options: {
-		// 		query: "SELECT id, username, name, avatar FROM users"
-		// 	}
-		// });
 	} catch (err) {
 		console.log("Error creating posts collection:", err);
 	}
