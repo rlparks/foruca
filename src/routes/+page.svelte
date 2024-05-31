@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { PostHolder } from "$lib/components";
-	import PostPage from "$lib/components/PostPage.svelte";
-	import type { Post } from "$lib/types";
+	import { PostPage } from "$lib/components";
 
 	const { data } = $props();
 	const { posts, page, perPage, totalItems } = $derived(data);
