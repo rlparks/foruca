@@ -1,4 +1,4 @@
-import { json } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import type { Post } from "$lib/types";
 
@@ -11,6 +11,10 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		perPage = parseInt(params.get("perPage") ?? "10");
 	} catch (err) {
 		return json({ error: "Error: Invalid parameters." }, { status: 400 });
+	}
+
+	if (isNaN(page) || isNaN(perPage)) {
+		return error(400, { message: "Invalid parameters" });
 	}
 
 	const posts = await locals.pb.collection("posts").getList<Post>(page, perPage, {

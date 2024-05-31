@@ -1,4 +1,5 @@
 import type { Post } from "$lib/types";
+import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async ({ fetch, url }) => {
@@ -7,12 +8,18 @@ export const load = (async ({ fetch, url }) => {
 	const page = parseInt(params?.page ?? 1);
 	const perPage = parseInt(params?.perPage ?? 10);
 
-	const postsRes = await (await fetch(`/api/posts?page=${page}&perPage=${perPage}`)).json();
+	const postsRes = await fetch(`/api/posts?page=${page}&perPage=${perPage}`);
+
+	if (!postsRes.ok) {
+		return error(postsRes.status, await postsRes.json());
+	}
+
+	const posts = await postsRes.json();
 
 	return {
-		posts: postsRes.items as Post[],
-		page: postsRes.page as number,
-		perPage: postsRes.perPage as number,
-		totalItems: postsRes.totalItems as number
+		posts: posts.items as Post[],
+		page: posts.page as number,
+		perPage: posts.perPage as number,
+		totalItems: posts.totalItems as number
 	};
 }) satisfies PageServerLoad;
