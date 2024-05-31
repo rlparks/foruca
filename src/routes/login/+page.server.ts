@@ -8,6 +8,7 @@ export const load = (async (event) => {
 	}
 
 	const ssoProviders = await (await event.fetch("/api/auth/methods")).json();
+	const redirectUrl: string | null = event.url.searchParams.get("redirect");
 
-	return { ssoProviders: ssoProviders.authProviders };
+	return { ssoProviders: ssoProviders.authProviders, redirect: redirectUrl };
 }) satisfies PageServerLoad;

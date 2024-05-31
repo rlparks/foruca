@@ -1,6 +1,6 @@
 import { PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD, PB_URL } from "$env/static/private";
-import type { Handle } from "@sveltejs/kit";
-import PocketBase from "pocketbase";
+import { redirect, type Handle } from "@sveltejs/kit";
+import PocketBase, { type AuthModel } from "pocketbase";
 
 // dangerous!
 const adminPb: PocketBase = new PocketBase(PB_URL);
@@ -22,12 +22,12 @@ if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 	// }
 }
 
-// const denyAccessResponse = new Response(JSON.stringify({ error: "Error: Unauthorized." }), {
-// 	status: 401,
-// 	headers: {
-// 		"Content-Type": "application/json"
-// 	}
-// });
+const denyAccessResponse = new Response(JSON.stringify({ error: "Error: Unauthorized." }), {
+	status: 401,
+	headers: {
+		"Content-Type": "application/json"
+	}
+});
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(PB_URL);
@@ -43,8 +43,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		});
 	}
 
-	// console.log(event.request.headers);
-
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
 
 	// console.log("user:", event.locals.pb.authStore.model);
@@ -54,10 +52,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = undefined;
 	}
 
-	// const denyRes = requireAuth(event.locals.user, event.url.pathname);
-	// if (denyRes) {
-	// 	return denyRes;
-	// }
+	const denyRes = requireAuth(event.locals.user, event.url.pathname);
+	if (denyRes) {
+		return redirect(303, `/login?redirect=${event.url.pathname}`);
+	}
 
 	const result = await resolve(event);
 
@@ -66,15 +64,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return result;
 };
 
-// function requireAuth(user: AuthModel | undefined, path: string) {
-// 	if (!user) {
-// 		if (path.startsWith("/api/images")) {
-// 			return denyAccessResponse;
-// 		}
-// 	}
+function requireAuth(user: AuthModel | undefined, path: string) {
+	if (!user) {
+		if (path.startsWith("/new")) {
+			// return denyAccessResponse;
+			return true;
+		}
+	}
 
-// 	return null;
-// }
+	return null;
+}
 
 async function initializeSchema(pb: PocketBase) {
 	await pb.admins.authWithPassword(PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD);

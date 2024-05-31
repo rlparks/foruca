@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
+	import { goto } from "$app/navigation";
 	import type { AuthProviderInfo } from "pocketbase";
-	import { onMount } from "svelte";
 
 	const { data } = $props();
+	const { redirect } = $derived(data);
 
 	const redirectUrl = $derived(browser ? `${window.location.origin}/login/callback` : undefined);
 
@@ -16,8 +17,12 @@
 	let loginButtonText = $state("Login");
 	let error: string | undefined = $state(undefined);
 
-	onMount(() => {
+	$effect(() => {
 		document.getElementById("usernameInput")?.focus();
+
+		if (redirect) {
+			error = "Please log in to access this route.";
+		}
 	});
 </script>
 
@@ -44,6 +49,8 @@
 					loginButtonText = "Login";
 					if (result.type === "failure" && result?.data?.error) {
 						error = String(result?.data?.error);
+					} else if (result.type === "redirect" && redirect) {
+						goto(redirect);
 					}
 				};
 			}}
