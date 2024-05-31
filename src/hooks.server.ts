@@ -22,13 +22,6 @@ if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 	// }
 }
 
-const denyAccessResponse = new Response(JSON.stringify({ error: "Error: Unauthorized." }), {
-	status: 401,
-	headers: {
-		"Content-Type": "application/json"
-	}
-});
-
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(PB_URL);
 	// event.locals.adminPb = adminPb;
@@ -45,7 +38,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");
 
-	// console.log("user:", event.locals.pb.authStore.model);
 	if (event.locals.pb.authStore.isValid) {
 		event.locals.user = event.locals.pb.authStore.model;
 	} else {
@@ -54,7 +46,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const denyRes = requireAuth(event.locals.user, event.url.pathname);
 	if (denyRes) {
-		return redirect(303, `/login?redirect=${event.url.pathname}`);
+		return redirect(
+			303,
+			`/login?${new URLSearchParams({ redirect: event.url.pathname + event.url.search }).toString()}`
+		);
 	}
 
 	const result = await resolve(event);
@@ -67,12 +62,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 function requireAuth(user: AuthModel | undefined, path: string) {
 	if (!user) {
 		if (path.startsWith("/new")) {
-			// return denyAccessResponse;
 			return true;
 		}
 	}
 
-	return null;
+	return false;
 }
 
 async function initializeSchema(pb: PocketBase) {
@@ -81,7 +75,6 @@ async function initializeSchema(pb: PocketBase) {
 	await pb.settings.update({
 		meta: {
 			appName: "foruca"
-			// appUrl: APP_URL
 		}
 	});
 
@@ -134,14 +127,14 @@ async function initializeSchema(pb: PocketBase) {
 		});
 
 		// public_users
-		await pb.collections.create({
-			name: "public_users",
-			type: "view",
-			viewRule: "@request.auth.id != ''",
-			options: {
-				query: "SELECT id, username, name, avatar FROM users"
-			}
-		});
+		// await pb.collections.create({
+		// 	name: "public_users",
+		// 	type: "view",
+		// 	viewRule: "@request.auth.id != ''",
+		// 	options: {
+		// 		query: "SELECT id, username, name, avatar FROM users"
+		// 	}
+		// });
 	} catch (err) {
 		console.log("Error creating posts collection:", err);
 	}
