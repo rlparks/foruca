@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/private";
-import { error, json, redirect, type Handle } from "@sveltejs/kit";
+import { error, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
 const adminPb: PocketBase = new PocketBase(env.PB_URL);

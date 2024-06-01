@@ -20,6 +20,10 @@ WORKDIR /app
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package.json ./
 
+RUN yarn workspaces focus --production
+
+RUN yarn install
+
 # internal port
 EXPOSE 3000
 
