@@ -25,6 +25,8 @@ export const actions = {
 				.collection("users")
 				.authWithOAuth2Code(providerObj.name, code, providerObj.codeVerifier, redirectUrl);
 
+			console.log(authData);
+
 			const name: string = authData?.meta?.name ?? "";
 			const avatarUrl: string = authData?.meta?.avatarUrl ?? "";
 
