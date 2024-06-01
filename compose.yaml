@@ -6,12 +6,13 @@ services:
       - 3000:3000
     restart: unless-stopped
     environment:
-      PB_URL: http://192.168.0.2:8080
+      PB_URL: foruca-pb:8080
       PB_ADMIN_EMAIL: PBECCA@example.com
       PB_ADMIN_PASSWORD: superSecurePassword
   pb:
     container_name: foruca-pb
-    build: ./pb-Dockerfile
+    build:
+      dockerfile: ./pb-Dockerfile
     ports:
       - 8080
     restart: unless-stopped
