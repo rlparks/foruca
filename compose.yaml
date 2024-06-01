@@ -6,7 +6,7 @@ services:
       - 3000:3000
     restart: unless-stopped
     environment:
-      PB_URL: foruca-pb:8080
+      PB_URL: pb:8080
       PB_ADMIN_EMAIL: PBECCA@example.com
       PB_ADMIN_PASSWORD: superSecurePassword
   pb:
