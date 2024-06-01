@@ -16,7 +16,8 @@ services:
     build:
       dockerfile: ./pb-Dockerfile
     ports:
-      - 127.0.0.1:8080:8080
+      # be careful who can access this admin UI!
+      - 8039:8080
     restart: unless-stopped
     volumes:
       - ./pb:/pb/pb_data
