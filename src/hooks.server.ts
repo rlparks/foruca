@@ -1,14 +1,14 @@
-import { PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD, PB_URL } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { json, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
-const adminPb: PocketBase = new PocketBase(PB_URL);
-if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
+const adminPb: PocketBase = new PocketBase(env.PB_URL);
+if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
 	try {
 		await adminPb.admins.create({
-			email: PB_ADMIN_EMAIL,
-			password: PB_ADMIN_PASSWORD,
-			passwordConfirm: PB_ADMIN_PASSWORD
+			email: env.PB_ADMIN_EMAIL,
+			password: env.PB_ADMIN_PASSWORD,
+			passwordConfirm: env.PB_ADMIN_PASSWORD
 		});
 		await initializeSchema(adminPb);
 	} catch (err) {
@@ -21,7 +21,7 @@ if (PB_ADMIN_EMAIL && PB_ADMIN_PASSWORD) {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.pb = new PocketBase(PB_URL);
+	event.locals.pb = new PocketBase(env.PB_URL);
 	try {
 		await event.locals.pb.health.check();
 	} catch (err) {
@@ -63,7 +63,7 @@ function requireAuth(user: AuthModel | undefined, path: string) {
 }
 
 async function initializeSchema(pb: PocketBase) {
-	await pb.admins.authWithPassword(PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD);
+	await pb.admins.authWithPassword(env.PB_ADMIN_EMAIL, env.PB_ADMIN_PASSWORD);
 
 	await pb.settings.update({
 		meta: {
