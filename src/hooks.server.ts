@@ -31,6 +31,7 @@ if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.pb = new PocketBase(env.PB_URL);
+	event.locals.pb.autoCancellation(false);
 	try {
 		await event.locals.pb.health.check();
 	} catch (err) {
