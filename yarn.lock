@@ -1729,7 +1729,7 @@ __metadata:
     eslint: "npm:^8.56.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-svelte: "npm:^2.36.0-next.4"
-    pocketbase: "npm:^0.21.2"
+    pocketbase: "npm:^0.21.3"
     prettier: "npm:^3.1.1"
     prettier-plugin-svelte: "npm:^3.1.2"
     svelte: "npm:^5.0.0-next.1"
@@ -2642,10 +2642,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pocketbase@npm:^0.21.2":
-  version: 0.21.2
-  resolution: "pocketbase@npm:0.21.2"
-  checksum: 10c0/7420dea0b7333c10294b83f182ff3b61c4d4fb9a238f4c3072908b4bccca69d4bc556ab022dc7490954de6f1b7eec36c965ec5d0ee0dc119752289c3ea024538
+"pocketbase@npm:^0.21.3":
+  version: 0.21.3
+  resolution: "pocketbase@npm:0.21.3"
+  checksum: 10c0/8753b3a577f1b205d2639630b6a0808ef10ab66982a67ef7cfeaa5c069f3674e04690f92c09297da8876a66370dbb5735831098fd570c54dd3ad158386e70bc2
   languageName: node
   linkType: hard
 

@@ -19,26 +19,30 @@
 </script>
 
 <div>
-	{#each posts as post (post.id)}
-		<PostHolder {post} />
-	{/each}
-	<div id="pagination">
-		{#if page > 1 && posts.length > 0}
-			<a class="nav-link" href="/?page={page - 1}"> <div class="button">{"<"}</div></a>
-		{:else}
-			<div class="page-button"></div>
-		{/if}
-		<div class="center-v">
-			<p class="text-center">
-				{`${startingPostNumber} - ${endingPostNumber} of ${totalItems}`}
-			</p>
+	{#if posts.length > 0}
+		{#each posts as post (post.id)}
+			<PostHolder {post} />
+		{/each}
+		<div id="pagination">
+			{#if page > 1 && posts.length > 0}
+				<a class="nav-link" href="/?page={page - 1}"> <div class="button">{"<"}</div></a>
+			{:else}
+				<div class="page-button"></div>
+			{/if}
+			<div class="center-v">
+				<p class="text-center">
+					{`${startingPostNumber} - ${endingPostNumber} of ${totalItems}`}
+				</p>
+			</div>
+			{#if endingPostNumber < totalItems && posts.length > 0}
+				<a class="nav-link" href="/?page={page + 1}"> <div class="button">{">"}</div></a>
+			{:else}
+				<div class="page-button"></div>
+			{/if}
 		</div>
-		{#if endingPostNumber < totalItems && posts.length > 0}
-			<a class="nav-link" href="/?page={page + 1}"> <div class="button">{">"}</div></a>
-		{:else}
-			<div class="page-button"></div>
-		{/if}
-	</div>
+	{:else}
+		<p id="no-posts" class="text-center">No posts found. Try <a href="/new">creating one</a>!</p>
+	{/if}
 </div>
 
 <style>
@@ -54,5 +58,9 @@
 
 	.page-button {
 		width: 39px;
+	}
+
+	#no-posts {
+		margin-bottom: 3em;
 	}
 </style>

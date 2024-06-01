@@ -6,7 +6,7 @@
 	const { posts, page, perPage, totalItems } = $derived(data);
 
 	$effect(() => {
-		if (posts.length === 0) {
+		if (page !== 1 && posts.length === 0) {
 			goto(`/?page=${page - 1}`);
 		}
 	});

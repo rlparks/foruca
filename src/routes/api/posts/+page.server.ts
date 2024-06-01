@@ -26,6 +26,8 @@ export const actions = {
 			return fail(500, { error: "Error: Failed to create post." });
 		}
 
-		return redirect(303, `/posts/${createdPost.id}`);
+		return redirect(303, `/`);
+		// TODO: Redirect to post
+		// return redirect(303, `/posts/${createdPost.id}`);
 	}
 } satisfies Actions;
