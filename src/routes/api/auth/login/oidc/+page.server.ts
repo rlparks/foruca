@@ -25,7 +25,11 @@ export const actions = {
 				.collection("users")
 				.authWithOAuth2Code(providerObj.name, code, providerObj.codeVerifier, redirectUrl);
 
-			console.log(authData);
+			let username = undefined;
+			if (providerObj.name === "google" && authData.meta) {
+				username = authData.meta.email.split("@")[0];
+				authData.meta.username = username;
+			}
 
 			const name: string = authData?.meta?.name ?? "";
 			const avatarUrl: string = authData?.meta?.avatarUrl ?? "";
@@ -38,7 +42,7 @@ export const actions = {
 				avatar = await avatarRes.blob();
 			}
 
-			await pb.collection("users").update(authData.record.id, { name, avatar });
+			await pb.collection("users").update(authData.record.id, { username, name, avatar });
 
 			console.log("OIDC LOGIN SUCCESS: " + authData?.meta?.username);
 		} catch (err) {
