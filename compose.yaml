@@ -9,12 +9,14 @@ services:
       PB_URL: pb:8080
       PB_ADMIN_EMAIL: PBECCA@example.com
       PB_ADMIN_PASSWORD: superSecurePassword
+    depends_on:
+      - pb
   pb:
     container_name: foruca-pb
     build:
       dockerfile: ./pb-Dockerfile
     ports:
-      - 8080
+      - 127.0.0.1:8080:8080
     restart: unless-stopped
     volumes:
       - ./pb:/pb/pb_data
