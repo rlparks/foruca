@@ -1,6 +1,7 @@
 services:
   foruca:
-    build: .
+    container_name: foruca
+    image: rlparks/foruca
     ports:
       - 3000:3000
     restart: unless-stopped
@@ -8,3 +9,12 @@ services:
       PB_URL: http://192.168.0.2:8080
       PB_ADMIN_EMAIL: PBECCA@example.com
       PB_ADMIN_PASSWORD: superSecurePassword
+  pb:
+    container_name: foruca-pb
+    build: ./pb-Dockerfile
+    ports:
+      - 8080
+    restart: unless-stopped
+    volumes:
+      - ./pb:/pb/pb_data
+    
