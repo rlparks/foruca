@@ -15,7 +15,7 @@
 		<p>{user.username}</p>
 	</div>
 {:else}
-	<p style="color: red">‽</p>
+	<p class="text-center" style="color: red">‽</p>
 {/if}
 
 <style>
