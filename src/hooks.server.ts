@@ -7,6 +7,10 @@ if (!env.PB_URL || !env.PB_ADMIN_EMAIL || !env.PB_ADMIN_PASSWORD) {
 	process.exit(1);
 }
 
+console.log("PB_URL:", env.PB_URL);
+console.log("PB_ADMIN_EMAIL:", env.PB_ADMIN_EMAIL);
+console.log("PB_ADMIN_PASSWORD:", env.PB_ADMIN_PASSWORD);
+
 const adminPb: PocketBase = new PocketBase(env.PB_URL);
 if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
 	try {
