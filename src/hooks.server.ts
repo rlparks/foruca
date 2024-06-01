@@ -2,6 +2,11 @@ import { env } from "$env/dynamic/private";
 import { error, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
+if (!env.PB_URL || !env.PB_ADMIN_EMAIL || !env.PB_ADMIN_PASSWORD) {
+	console.log("PB_URL, PB_ADMIN_EMAIL and PB_ADMIN_PASSWORD must be set");
+	process.exit(1);
+}
+
 const adminPb: PocketBase = new PocketBase(env.PB_URL);
 if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
 	try {
@@ -64,7 +69,9 @@ function requireAuth(user: AuthModel | undefined, path: string) {
 }
 
 async function initializeSchema(pb: PocketBase) {
-	await pb.admins.authWithPassword(env.PB_ADMIN_EMAIL, env.PB_ADMIN_PASSWORD);
+	if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
+		await pb.admins.authWithPassword(env.PB_ADMIN_EMAIL, env.PB_ADMIN_PASSWORD);
+	}
 
 	await pb.settings.update({
 		meta: {

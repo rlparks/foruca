@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package.json ./
 
-RUN yarn workspaces focus --production
+ENV NODE_ENV=production
 
 RUN yarn install
 
