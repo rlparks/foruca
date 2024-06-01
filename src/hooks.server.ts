@@ -25,6 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	try {
 		await event.locals.pb.health.check();
 	} catch (err) {
+		console.log(err);
 		return error(500, "Error: Unable to access the database.");
 	}
 
