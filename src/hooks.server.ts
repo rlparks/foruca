@@ -1,5 +1,5 @@
 import { env } from "$env/dynamic/private";
-import { json, redirect, type Handle } from "@sveltejs/kit";
+import { error, json, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
 const adminPb: PocketBase = new PocketBase(env.PB_URL);
@@ -25,7 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	try {
 		await event.locals.pb.health.check();
 	} catch (err) {
-		return json({ error: "Error: Unable to access the database." }, { status: 500 });
+		return error(500, "Error: Unable to access the database.");
 	}
 
 	event.locals.pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "");

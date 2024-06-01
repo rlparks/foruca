@@ -1,0 +1,10 @@
+services:
+  foruca:
+    image: rlpark/foruca
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      PB_URL: http://192.168.0.2:8080
+      PB_ADMIN_EMAIL: PBECCA@example.com
+      PB_ADMIN_PASSWORD: superSecurePassword
