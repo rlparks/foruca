@@ -26,6 +26,10 @@ export const actions = {
 				.authWithOAuth2Code(providerObj.name, code, providerObj.codeVerifier, redirectUrl);
 
 			let username = undefined;
+			if (authData.meta) {
+				username = authData.meta.username;
+			}
+
 			if (providerObj.name === "google" && authData.meta) {
 				username = authData.meta.email.split("@")[0];
 				authData.meta.username = username;
