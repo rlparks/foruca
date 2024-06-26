@@ -21,7 +21,7 @@
 	<div class="vr"></div>
 	<div>
 		<h2>{post.title}</h2>
-		<p>{post.body}</p>
+		<p id="body">{post.body}</p>
 	</div>
 </div>
 
@@ -39,5 +39,9 @@
 
 	h2 {
 		margin-top: 0;
+	}
+
+	#body {
+		white-space: pre-wrap;
 	}
 </style>
