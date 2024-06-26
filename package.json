@@ -30,7 +30,6 @@
 		"vite": "^5.0.3"
 	},
 	"type": "module",
-	"packageManager": "yarn@4.2.2",
 	"dependencies": {
 		"pocketbase": "^0.21.3"
 	}
