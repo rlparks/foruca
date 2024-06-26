@@ -4,13 +4,13 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install
+RUN npm i
 
 # copy code
 COPY . .
 
 # build
-RUN yarn build
+RUN npm run build
 
 # lighter image
 FROM node:22-slim as server
@@ -22,7 +22,7 @@ COPY --from=builder /app/package.json ./
 
 ENV NODE_ENV=production
 
-RUN yarn install
+RUN npm i 
 
 # internal port
 EXPOSE 3000
