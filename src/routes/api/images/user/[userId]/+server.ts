@@ -27,7 +27,8 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 			}
 		});
 	} catch (err) {
-		console.error("Error retrieving user:", err);
+		// commenting out, as PB returns an error when not authenticated
+		// console.error("Error retrieving user:", err);
 		return new Response(JSON.stringify({ error: "Error: User not found." }), {
 			status: 404,
 			headers: {
