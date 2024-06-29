@@ -3,7 +3,7 @@ import type { Actions } from "./$types";
 import type { AuthProviderInfo } from "pocketbase";
 
 export const actions = {
-	default: async ({ locals, request }) => {
+	default: async ({ locals, request, cookies }) => {
 		const pb = locals.pb;
 
 		try {
@@ -54,6 +54,13 @@ export const actions = {
 			return fail(400, { error: "Error: Cannot parse body." });
 		}
 
-		return redirect(303, "/");
+		// a little silly, isn't it?
+		const postLoginRedirectUrl = `/${(cookies.get("foruca-oidc-login-redirect") ?? "/")?.slice(1)}`;
+
+		cookies.delete("foruca-oidc-login-redirect", {
+			path: "/"
+		});
+
+		return redirect(303, postLoginRedirectUrl);
 	}
 } satisfies Actions;

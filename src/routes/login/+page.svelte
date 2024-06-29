@@ -12,6 +12,16 @@
 
 	function performRedirect(provider: AuthProviderInfo) {
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
+
+		if (redirect) {
+			let redirectCookieString = `foruca-oidc-login-redirect=${redirect}; Path=/; SameSite=strict; Max-Age=180;`;
+			const isSecure = window.location.protocol === "https:";
+			if (isSecure) {
+				redirectCookieString += " Secure;";
+			}
+			window.document.cookie = redirectCookieString;
+		}
+
 		window.location.href = provider.authUrl + oidcRedirectUrl;
 	}
 

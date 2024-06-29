@@ -53,7 +53,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const result = await resolve(event);
 
 	// TODO
-	result.headers.set("set-cookie", event.locals.pb.authStore.exportToCookie({ secure: false }));
+	result.headers.append("set-cookie", event.locals.pb.authStore.exportToCookie({ secure: false }));
 
 	return result;
 };
