@@ -5,6 +5,10 @@ import type { User } from "$lib/types";
 export const GET: RequestHandler = async ({ locals, params }) => {
 	const { userId } = params;
 
+	if (!locals.user) {
+		return json({ error: "Unauthorized" }, { status: 401 });
+	}
+
 	try {
 		const userRecord = await locals.pb.collection<User>("users").getOne(userId);
 		// console.log("userRecord:", userRecord);
