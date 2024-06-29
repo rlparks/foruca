@@ -32,7 +32,7 @@
 		document.getElementById("usernameInput")?.focus();
 
 		if (redirect) {
-			error = "Please log in to access this route.";
+			error = "Please login to access this page.";
 		}
 	});
 </script>
