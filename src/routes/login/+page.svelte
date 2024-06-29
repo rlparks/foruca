@@ -1,17 +1,18 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
-	import { goto } from "$app/navigation";
 	import type { AuthProviderInfo } from "pocketbase";
 
 	const { data } = $props();
 	const { redirect } = $derived(data);
 
-	const redirectUrl = $derived(browser ? `${window.location.origin}/login/callback` : undefined);
+	const oidcRedirectUrl = $derived(
+		browser ? `${window.location.origin}/login/callback` : undefined
+	);
 
 	function performRedirect(provider: AuthProviderInfo) {
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
-		window.location.href = provider.authUrl + redirectUrl;
+		window.location.href = provider.authUrl + oidcRedirectUrl;
 	}
 
 	let loginButtonText = $state("Login");
@@ -38,7 +39,7 @@
 			<p class="text-center error">{error}</p>
 		{/if}
 		<form
-			action="/api/auth/login"
+			action="/api/auth/login?redirect={redirect}"
 			method="post"
 			use:enhance={() => {
 				loginButtonText = "Logging in...";
@@ -49,8 +50,6 @@
 					loginButtonText = "Login";
 					if (result.type === "failure" && result?.data?.error) {
 						error = String(result?.data?.error);
-					} else if (result.type === "redirect" && redirect) {
-						goto(redirect);
 					}
 				};
 			}}
