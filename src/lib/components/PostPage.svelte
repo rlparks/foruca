@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { DEFAULT_PER_PAGE } from "$lib";
 	import type { Post } from "$lib/types";
 	import { PostHolder } from ".";
 
@@ -16,6 +17,7 @@
 
 	const startingPostNumber = $derived((page - 1) * perPage + 1);
 	const endingPostNumber = $derived(startingPostNumber + posts.length - 1);
+	const perPageParam = $derived(perPage === DEFAULT_PER_PAGE ? "" : `&perPage=${perPage}`);
 </script>
 
 <div>
@@ -25,7 +27,9 @@
 		{/each}
 		<div id="pagination">
 			{#if page > 1 && posts.length > 0}
-				<a class="nav-link" href="/?page={page - 1}"> <div class="button">{"<"}</div></a>
+				<a class="nav-link" href="/?page={page - 1}{perPageParam}">
+					<div class="button">{"<"}</div></a
+				>
 			{:else}
 				<div class="page-button"></div>
 			{/if}
@@ -35,7 +39,9 @@
 				</p>
 			</div>
 			{#if endingPostNumber < totalItems && posts.length > 0}
-				<a class="nav-link" href="/?page={page + 1}"> <div class="button">{">"}</div></a>
+				<a class="nav-link" href="/?page={page + 1}{perPageParam}">
+					<div class="button">{">"}</div></a
+				>
 			{:else}
 				<div class="page-button"></div>
 			{/if}
