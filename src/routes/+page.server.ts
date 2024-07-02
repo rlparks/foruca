@@ -1,7 +1,7 @@
-import type { Post } from "$lib/types";
+import { DEFAULT_PER_PAGE } from "$lib";
+import type { SafePost } from "$lib/types";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import { DEFAULT_PER_PAGE } from "$lib";
 
 export const load = (async ({ fetch, url }) => {
 	const params = Object.fromEntries(url.searchParams);
@@ -15,12 +15,12 @@ export const load = (async ({ fetch, url }) => {
 		return error(postsRes.status, await postsRes.json());
 	}
 
-	const posts = await postsRes.json();
+	const postsResJson = await postsRes.json();
 
 	return {
-		posts: posts.items as Post[],
-		page: posts.page as number,
-		perPage: posts.perPage as number,
-		totalItems: posts.totalItems as number
+		posts: postsResJson.posts as SafePost[],
+		page: postsResJson.page as number,
+		perPage: postsResJson.perPage as number,
+		totalItems: postsResJson.totalItems as number
 	};
 }) satisfies PageServerLoad;

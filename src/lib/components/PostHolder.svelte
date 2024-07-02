@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Post } from "$lib/types";
+	import type { SafePost, SafeUser } from "$lib/types";
 	import UserPortrait from "./UserPortrait.svelte";
 
-	const { post }: { post: Post } = $props();
+	const { post }: { post: SafePost } = $props();
 
-	const owner = $derived(post?.expand?.owner);
+	const owner: SafeUser | null = $derived(post.owner);
 
 	const createdDate: Date = $derived(new Date(post.created));
 

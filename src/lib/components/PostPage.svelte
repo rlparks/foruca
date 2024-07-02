@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DEFAULT_PER_PAGE } from "$lib";
-	import type { Post } from "$lib/types";
+	import type { SafePost } from "$lib/types";
 	import { PostHolder } from ".";
 
 	const {
@@ -9,7 +9,7 @@
 		perPage,
 		totalItems
 	}: {
-		posts: Post[];
+		posts: SafePost[];
 		page: number;
 		perPage: number;
 		totalItems: number;

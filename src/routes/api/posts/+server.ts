@@ -1,7 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import type { Post } from "$lib/types";
-import { DEFAULT_PER_PAGE } from "$lib";
+import type { RawPost, SafePost } from "$lib/types";
+import { DEFAULT_PER_PAGE, makePostSafe } from "$lib";
 
 export const GET: RequestHandler = async ({ locals, url }) => {
 	const params = url.searchParams;
@@ -18,10 +18,21 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		return error(400, { message: "Invalid parameters" });
 	}
 
-	const posts = await locals.pb.collection("posts").getList<Post>(page, perPage, {
+	const postsRes = await locals.pb.collection("posts").getList<RawPost>(page, perPage, {
 		sort: "-created",
 		expand: "owner"
 	});
 
-	return json(posts);
+	const safePosts: SafePost[] = [];
+
+	for (const postKey in postsRes.items) {
+		safePosts[postKey] = makePostSafe(postsRes.items[postKey]);
+	}
+
+	return json({
+		posts: safePosts,
+		page: postsRes.page,
+		perPage: postsRes.perPage,
+		totalItems: postsRes.totalItems
+	});
 };

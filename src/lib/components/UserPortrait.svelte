@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import type { User } from "$lib/types";
-	const { user }: { user: User } = $props();
+	import type { SafeUser } from "$lib/types";
+	const { user }: { user: SafeUser | null } = $props();
 </script>
 
 {#if user}
 	<div>
-		{#if user.avatar}
+		{#if user.hasAvatar}
 			<img
 				src={$page.url.origin + `/api/images/user/${user.id}`}
 				alt={user.username + "'s avatar"}

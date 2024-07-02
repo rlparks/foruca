@@ -1,4 +1,4 @@
-import type { Post } from "$lib/types";
+import type { RawPost } from "$lib/types";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
@@ -21,7 +21,7 @@ export const actions = {
 
 		let createdPost;
 		try {
-			createdPost = await locals.pb.collection("posts").create<Post>(post);
+			createdPost = await locals.pb.collection("posts").create<RawPost>(post);
 		} catch (err) {
 			return fail(500, { error: "Error: Failed to create post." });
 		}
