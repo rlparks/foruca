@@ -20,7 +20,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 
 	const postsRes = await locals.pb.collection("posts").getList<RawPost>(page, perPage, {
 		sort: "-created",
-		expand: "owner"
+		expand: "owner, board"
 	});
 
 	const safePosts: SafePost[] = [];

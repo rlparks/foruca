@@ -20,7 +20,7 @@ if (env.PB_ADMIN_EMAIL && env.PB_ADMIN_PASSWORD) {
 		console.log("PB admin already exists");
 	} finally {
 		if (adminPb) {
-			await adminPb.authStore.clear();
+			adminPb.authStore.clear();
 		}
 	}
 }
@@ -84,6 +84,22 @@ async function initializeSchema(pb: PocketBase) {
 		await pb.collections.update(users.name, {
 			viewRule: "@request.auth.id != ''"
 		});
+
+		const boards = await pb.collections.create({
+			name: "boards",
+			type: "base",
+			listRule: "",
+			viewRule: "",
+			createRule: "@request.auth.id != ''",
+			schema: [
+				{
+					name: "name",
+					type: "text",
+					required: true
+				}
+			]
+		});
+
 		const posts = await pb.collections.create({
 			name: "posts",
 			type: "base",
@@ -106,6 +122,15 @@ async function initializeSchema(pb: PocketBase) {
 					required: true,
 					options: {
 						collectionId: users.id,
+						maxSelect: 1
+					}
+				},
+				{
+					name: "board",
+					type: "relation",
+					required: true,
+					options: {
+						collectionId: boards.id,
 						maxSelect: 1
 					}
 				}

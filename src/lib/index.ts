@@ -1,6 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-import type { RawPost, RawUser, SafePost, SafeUser } from "./types";
+import type { RawBoard, RawPost, RawUser, SafeBoard, SafePost, SafeUser } from "./types";
 
 /**
  * The default number of posts on each page.
@@ -39,6 +39,21 @@ export function makePostSafe(post: RawPost): SafePost {
 		title: post.title,
 		body: post.body,
 		owner: post?.expand?.owner ? hideUserInfo(post.expand.owner) : null,
+		board: post?.expand?.board ? makeBoardSafe(post.expand.board) : null,
 		created: post.created
+	};
+}
+
+/**
+ * Removes unnecessary info from Board objects
+ * returned from PocketBase.
+ *
+ * @param board the full {@link RawBoard} object
+ * @returns a {@link SafeBoard} object with a minimum amount of info
+ */
+export function makeBoardSafe(board: RawBoard): SafeBoard {
+	return {
+		id: board.id,
+		name: board.name
 	};
 }
