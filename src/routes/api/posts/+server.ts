@@ -1,7 +1,7 @@
-import { error, json } from "@sveltejs/kit";
-import type { RequestHandler } from "./$types";
-import type { RawPost, SafePost } from "$lib/types";
 import { DEFAULT_PER_PAGE, makePostSafe } from "$lib";
+import type { RawPost, SafePost } from "$lib/types";
+import { json } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ({ locals, url }) => {
 	const params = url.searchParams;
@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 	}
 
 	if (isNaN(page) || isNaN(perPage)) {
-		return error(400, { message: "Invalid parameters" });
+		return json({ error: "Error: Invalid parameters." }, { status: 400 });
 	}
 
 	const postsRes = await locals.pb.collection("posts").getList<RawPost>(page, perPage, {
