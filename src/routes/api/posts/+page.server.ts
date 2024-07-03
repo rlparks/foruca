@@ -19,9 +19,10 @@ export const actions = {
 			owner: locals.user?.id
 		};
 
-		let createdPost;
+		// let createdPost;
 		try {
-			createdPost = await locals.pb.collection("posts").create<RawPost>(post);
+			// createdPost =
+			await locals.pb.collection("posts").create<RawPost>(post);
 		} catch (err) {
 			return fail(500, { error: "Error: Failed to create post." });
 		}

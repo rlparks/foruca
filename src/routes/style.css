@@ -1,134 +1,131 @@
 :root {
-    --color-primary: rgb(204, 0, 255);
-    --color-primary-dark: rgb(153, 0, 204);
-    --color-secondary: rgb(117, 0, 146);
-    --color-secondary-dark: rgb(88, 0, 110);
+	--color-primary: rgb(204, 0, 255);
+	--color-primary-dark: rgb(153, 0, 204);
+	--color-secondary: rgb(117, 0, 146);
+	--color-secondary-dark: rgb(88, 0, 110);
 
-    --color-dark: rgb(24, 24, 26);
-    --color-light: rgb(233, 233, 233);
-    --color-accent: var(--color-light);
+	--color-dark: rgb(24, 24, 26);
+	--color-light: rgb(233, 233, 233);
+	--color-accent: var(--color-light);
 
-    --color-black: rgb(0, 0, 0);
-    --color-white: rgb(255, 255, 255);
+	--color-black: rgb(0, 0, 0);
+	--color-white: rgb(255, 255, 255);
 
-    --font-body: sans-serif;
-    --color-text: var(--color-white);
-    --color-background: var(--color-dark);
+	--font-body: sans-serif;
+	--color-text: var(--color-white);
+	--color-background: var(--color-dark);
 
-    --height-header: 3.5rem;
-    --border-radius-button: 5px;
+	--height-header: 3.5rem;
+	--border-radius-button: 5px;
 
-    background-color: var(--color-background);
-    color: var(--color-text);
-    font-family: var(--font-body);
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-family: var(--font-body);
 }
 
 body {
-    margin: 0 0 1em 0;
+	margin: 0 0 1em 0;
 }
 
 .theme-light {
-    --color-background: var(--color-light);
-    --color-text: var(--color-black);
-    --color-accent: var(--color-dark);
+	--color-background: var(--color-light);
+	--color-text: var(--color-black);
+	--color-accent: var(--color-dark);
 }
 
 .button {
-    --button-background: var(--color-primary);
-    --button-hover-background: var(--color-primary-dark);
-    display: inline-block;
-    background-color: var(--button-background);
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: var(--border-radius-button);
-    cursor: pointer;
-    text-align: center;
-    vertical-align: middle;
-
-
+	--button-background: var(--color-primary);
+	--button-hover-background: var(--color-primary-dark);
+	display: inline-block;
+	background-color: var(--button-background);
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: var(--border-radius-button);
+	cursor: pointer;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .button:hover {
-    background-color: var(--button-hover-background);
+	background-color: var(--button-hover-background);
 }
 
 a {
-    --color-a-hover: var(--color-primary-dark);
-    color: var(--color-primary);
-    text-decoration: none;
-
+	--color-a-hover: var(--color-primary-dark);
+	color: var(--color-primary);
+	text-decoration: none;
 }
 
 a:hover {
-    color: var(--color-a-hover);
+	color: var(--color-a-hover);
 }
 
 .nav-link {
-    --nav-link-hover: var(--color-accent);
-    color: var(--color-text);
+	--nav-link-hover: var(--color-accent);
+	color: var(--color-text);
 }
 
 .nav-link:hover {
-    color: var(--nav-link-hover);
+	color: var(--nav-link-hover);
 }
 
 .text-center {
-    text-align: center;
+	text-align: center;
 }
 
 .center-h {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .center-v {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .vr {
-    display: inline-block;
-    align-self: stretch;
-    border-left: 1px solid var(--color-accent);
-    min-height: 1em;
-    max-height: 95%;
-    margin: 0 1em;
+	display: inline-block;
+	align-self: stretch;
+	border-left: 1px solid var(--color-accent);
+	min-height: 1em;
+	max-height: 95%;
+	margin: 0 1em;
 }
 
 .page-title {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 form input,
 button,
 textarea {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border-radius: var(--border-radius-button);
-    border: 1px solid var(--color-accent);
-    font-size: inherit;
-    font-family: inherit;
-    color: inherit;
+	margin: 0.5rem 0;
+	padding: 0.5rem;
+	border-radius: var(--border-radius-button);
+	border: 1px solid var(--color-accent);
+	font-size: inherit;
+	font-family: inherit;
+	color: inherit;
 }
 
 form label {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 form input,
 textarea {
-    background-color: var(--color-background);
+	background-color: var(--color-background);
 }
 
 h1 {
-    margin: 0.6em 0;
-    font-size: 1.75em;
+	margin: 0.6em 0;
+	font-size: 1.75em;
 }
 
 @media (max-width: 600px) {
-    .deflex {
-        display: block;
-    }
+	.deflex {
+		display: block;
+	}
 }

@@ -6,7 +6,7 @@
 	action="/api/auth/logout"
 	method="POST"
 	use:enhance={() => {
-		return async function ({ update, result }) {
+		return async function ({ update }) {
 			await update();
 		};
 	}}
