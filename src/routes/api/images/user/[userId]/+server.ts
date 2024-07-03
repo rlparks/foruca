@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		const fileUrl = locals.pb.files.getUrl(userRecord, userRecord.avatar);
 		// console.log("fileUrl:", fileUrl);
 		if (!fileUrl) {
-			return json({ error: "Error: User has no avatar." }, { status: 404 });
+			return json({ error: "User has no avatar." }, { status: 404 });
 		}
 
 		const imgResponse = await fetch(fileUrl);
@@ -33,7 +33,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	} catch (err) {
 		// commenting out, as PB returns an error when not authenticated
 		// console.error("Error retrieving user:", err);
-		return new Response(JSON.stringify({ error: "Error: User not found." }), {
+		return new Response(JSON.stringify({ error: "User not found." }), {
 			status: 404,
 			headers: {
 				"Content-Type": "application/json"

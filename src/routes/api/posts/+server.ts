@@ -11,11 +11,11 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		page = parseInt(params.get("page") ?? "1");
 		perPage = parseInt(params.get("perPage") ?? String(DEFAULT_PER_PAGE));
 	} catch (err) {
-		return json({ error: "Error: Invalid parameters." }, { status: 400 });
+		return json({ error: "Invalid parameters." }, { status: 400 });
 	}
 
 	if (isNaN(page) || isNaN(perPage)) {
-		return json({ error: "Error: Invalid parameters." }, { status: 400 });
+		return json({ error: "Invalid parameters." }, { status: 400 });
 	}
 
 	const postsRes = await locals.pb.collection("posts").getList<RawPost>(page, perPage, {
