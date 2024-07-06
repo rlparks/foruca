@@ -12,7 +12,7 @@
 	<Title />
 	<div class="center-v">
 		<!-- {#if user} -->
-		<a class="nav-link" href="/new"> <div class="button">+ New Post</div></a>
+		<a class="nav-link" href="/new"><div class="button">+ New Post</div></a>
 		<!-- {/if} -->
 	</div>
 	{@render account()}
