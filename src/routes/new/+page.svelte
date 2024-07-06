@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from "$app/forms";
-	import type { ActionData, PageData } from "./$types.js";
+	import type { PageData } from "./$types.js";
 
 	type Props = {
 		data: PageData;
