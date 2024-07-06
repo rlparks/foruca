@@ -14,6 +14,7 @@
 
 <svelte:head>
 	<title>foruca</title>
+	<meta name="description" content="A classic form application." />
 </svelte:head>
 
 <div class="center-h">

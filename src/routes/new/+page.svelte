@@ -13,6 +13,11 @@
 	let loading = $state(false);
 </script>
 
+<svelte:head>
+	<title>foruca · New Post</title>
+	<meta name="description" content="Create a new post." />
+</svelte:head>
+
 <h1 class="text-center">New Post</h1>
 
 {#if form?.error}

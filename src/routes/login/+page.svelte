@@ -39,6 +39,7 @@
 
 <svelte:head>
 	<title>foruca · login</title>
+	<meta name="description" content="Login to foruca." />
 </svelte:head>
 
 <h1 class="text-center page-title">Login</h1>
