@@ -17,6 +17,7 @@
 		<UserPortrait user={owner} />
 		<p class="text-center">{niceDate}</p>
 		<p class="text-center">{niceTime}</p>
+		<p class="text-center">{post.board?.name}</p>
 	</div>
 	<div class="vr"></div>
 	<div>
