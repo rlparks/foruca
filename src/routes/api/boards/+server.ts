@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ locals }) => {
 	try {
 		// get boards in alphabetical order
 		const boardRes = await locals.pb
-			.collection(TABLE_NAMES.users)
+			.collection(TABLE_NAMES.boards)
 			.getFullList<RawBoard>({ sort: "name" });
 
 		const safeBoards: SafeBoard[] = [];

@@ -1,21 +1,55 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
+	import { applyAction, enhance } from "$app/forms";
+	import type { ActionData, PageData } from "./$types.js";
 
-	const { data } = $props();
+	type Props = {
+		data: PageData;
+		form: {
+			error?: string;
+		};
+	};
+	const { data, form }: Props = $props();
+
+	let loading = $state(false);
 </script>
 
 <h1 class="text-center">New Post</h1>
 
+{#if form?.error}
+	<p class="text-center error">{form?.error}</p>
+{/if}
+
 <div class="center-h">
-	<form action="/api/posts" method="POST" use:enhance>
+	<form
+		action="/api/posts"
+		method="POST"
+		use:enhance={() => {
+			loading = true;
+
+			return async function ({ update, result }) {
+				// this is weird due to the form action being in a separate
+				// route in /api
+				// https://github.com/sveltejs/kit/discussions/8015#discussioncomment-4349837
+				await applyAction(result);
+				await update();
+				loading = false;
+			};
+		}}
+	>
+		<label>
+			Board
+			<select name="boardId">
+				<option value="">Select Board</option>
+				{#each data.boards as board (board.id)}
+					<option value={board.id}>{board.name}</option>
+				{/each}
+			</select>
+		</label>
 		<label>Title<input type="text" name="title" required /></label>
 		<label>Body<textarea name="body" required></textarea></label>
-		<button type="submit" class="button">Submit</button>
+		<button type="submit" class="button" disabled={loading}>Submit</button>
 	</form>
 </div>
-{#each data.boards as board (board.id)}
-	<p>{board.name}</p>
-{/each}
 
 <style>
 	form {
