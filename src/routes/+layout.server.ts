@@ -1,3 +1,5 @@
+import { makeUserSafe } from "$lib";
+import type { RawUser } from "$lib/types";
 import type { LayoutServerLoad } from "./$types";
 
 export const load = (async ({ locals }) => {
@@ -5,7 +7,7 @@ export const load = (async ({ locals }) => {
 		// console.log("user:", locals.user);
 
 		return {
-			user: locals.user
+			user: makeUserSafe(locals.user as RawUser)
 		};
 	}
 

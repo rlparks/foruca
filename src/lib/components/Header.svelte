@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import type { AuthModel } from "pocketbase";
+	import type { SafeUser } from "$lib/types";
 	import LogoutButton from "./LogoutButton.svelte";
-	import Title from "./Title.svelte";
 	import ThemeSwitcher from "./ThemeSwitcher.svelte";
+	import Title from "./Title.svelte";
 
-	const { user }: { user: AuthModel | undefined } = $props();
-	// $effect(() => {
-	// 	console.log("user:", user);
-	// });
+	const { user }: { user: SafeUser | undefined } = $props();
 </script>
 
 <header>
@@ -25,7 +22,7 @@
 	<div id="container-account">
 		<ThemeSwitcher />
 		{#if user}
-			{#if user.avatar}
+			{#if user.hasAvatar}
 				<img
 					src={$page.url.origin + `/api/images/user/${user.id}`}
 					alt={user.username + "'s avatar"}

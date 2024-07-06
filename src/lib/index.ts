@@ -23,7 +23,7 @@ export const TABLE_NAMES = {
  * @param user the full {@link RawUser} object
  * @returns a {@link SafeUser} object with a minimum amount of info
  */
-export function hideUserInfo(user: RawUser): SafeUser {
+export function makeUserSafe(user: RawUser): SafeUser {
 	return {
 		id: user.id,
 		username: user.username,
@@ -47,7 +47,7 @@ export function makePostSafe(post: RawPost): SafePost {
 		id: post.id,
 		title: post.title,
 		body: post.body,
-		owner: post?.expand?.owner ? hideUserInfo(post.expand.owner) : null,
+		owner: post?.expand?.owner ? makeUserSafe(post.expand.owner) : null,
 		board: post?.expand?.board ? makeBoardSafe(post.expand.board) : null,
 		created: post.created
 	};
