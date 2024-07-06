@@ -8,6 +8,15 @@ import type { RawBoard, RawPost, RawUser, SafeBoard, SafePost, SafeUser } from "
 export const DEFAULT_PER_PAGE = 10;
 
 /**
+ * Constants of all database tables.
+ */
+export const TABLE_NAMES = {
+	boards: "boards",
+	posts: "posts",
+	users: "users"
+};
+
+/**
  * Removes unnecessary info from User objects returned from
  * PocketBase, like email.
  *

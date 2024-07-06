@@ -1,5 +1,6 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+import { TABLE_NAMES } from "$lib";
 
 // in dev, trying to access /api/auth/login in the browser gives a 500 error "missing +page.svelte"
 // in production, this is a 404 as it should be
@@ -11,7 +12,7 @@ export const actions = {
 		};
 
 		try {
-			await locals.pb.collection("users").authWithPassword(body.username, body.password);
+			await locals.pb.collection(TABLE_NAMES.users).authWithPassword(body.username, body.password);
 			console.log("LOGIN SUCCESS: " + body.username);
 		} catch (err) {
 			// console.log(err);

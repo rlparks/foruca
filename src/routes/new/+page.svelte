@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+
+	const { data } = $props();
 </script>
 
 <h1 class="text-center">New Post</h1>
@@ -11,6 +13,9 @@
 		<button type="submit" class="button">Submit</button>
 	</form>
 </div>
+{#each data.boards as board (board.id)}
+	<p>{board.name}</p>
+{/each}
 
 <style>
 	form {

@@ -1,7 +1,8 @@
+import type { SafeBoard } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
-// because this is a protected page, this empty load function
-// makes the client make a server call and get redirected
-export const load = (async () => {
-	return {};
+export const load = (async ({ fetch }) => {
+	const boards = (await (await fetch("/api/boards")).json()) as SafeBoard[];
+
+	return { boards };
 }) satisfies PageServerLoad;

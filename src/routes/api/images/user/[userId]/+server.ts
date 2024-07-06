@@ -1,6 +1,7 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import type { RawUser } from "$lib/types";
+import { TABLE_NAMES } from "$lib";
 
 export const GET: RequestHandler = async ({ locals, params }) => {
 	const { userId } = params;
@@ -10,7 +11,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	}
 
 	try {
-		const userRecord = await locals.pb.collection<RawUser>("users").getOne(userId);
+		const userRecord = await locals.pb.collection<RawUser>(TABLE_NAMES.users).getOne(userId);
 		// console.log("userRecord:", userRecord);
 
 		const fileUrl = locals.pb.files.getUrl(userRecord, userRecord.avatar);

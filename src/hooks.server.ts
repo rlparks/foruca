@@ -1,4 +1,5 @@
 import { env } from "$env/dynamic/private";
+import { TABLE_NAMES } from "$lib";
 import { error, redirect, type Handle } from "@sveltejs/kit";
 import PocketBase, { type AuthModel } from "pocketbase";
 
@@ -80,13 +81,13 @@ async function initializeSchema(pb: PocketBase) {
 	});
 
 	try {
-		const users = await pb.collections.getOne("users");
+		const users = await pb.collections.getOne(TABLE_NAMES.users);
 		await pb.collections.update(users.name, {
 			viewRule: "@request.auth.id != ''"
 		});
 
 		const boards = await pb.collections.create({
-			name: "boards",
+			name: TABLE_NAMES.boards,
 			type: "base",
 			listRule: "",
 			viewRule: "",
@@ -97,11 +98,12 @@ async function initializeSchema(pb: PocketBase) {
 					type: "text",
 					required: true
 				}
-			]
+			],
+			indexes: ["CREATE UNIQUE INDEX `idx_72kwgjc` ON `boards` (`name`)"]
 		});
 
 		const posts = await pb.collections.create({
-			name: "posts",
+			name: TABLE_NAMES.posts,
 			type: "base",
 			listRule: "",
 			viewRule: "",

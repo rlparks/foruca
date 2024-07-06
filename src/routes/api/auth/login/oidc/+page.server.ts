@@ -1,6 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 import type { AuthProviderInfo } from "pocketbase";
+import { TABLE_NAMES } from "$lib";
 
 export const actions = {
 	default: async ({ locals, request, cookies }) => {
@@ -22,7 +23,7 @@ export const actions = {
 			const redirectUrl = request.headers.get("referer")?.split("?")[0] ?? "/";
 
 			const authData = await pb
-				.collection("users")
+				.collection(TABLE_NAMES.users)
 				.authWithOAuth2Code(providerObj.name, code, providerObj.codeVerifier, redirectUrl);
 
 			let username = undefined;
@@ -46,7 +47,7 @@ export const actions = {
 				avatar = await avatarRes.blob();
 			}
 
-			await pb.collection("users").update(authData.record.id, { username, name, avatar });
+			await pb.collection(TABLE_NAMES.users).update(authData.record.id, { username, name, avatar });
 
 			console.log("OIDC LOGIN SUCCESS: " + authData?.meta?.username);
 		} catch (err) {

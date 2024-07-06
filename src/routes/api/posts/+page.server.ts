@@ -1,6 +1,7 @@
 import type { RawPost } from "$lib/types";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+import { TABLE_NAMES } from "$lib";
 
 export const actions = {
 	default: async ({ locals, request }) => {
@@ -22,7 +23,7 @@ export const actions = {
 		// let createdPost;
 		try {
 			// createdPost =
-			await locals.pb.collection("posts").create<RawPost>(post);
+			await locals.pb.collection(TABLE_NAMES.posts).create<RawPost>(post);
 		} catch (err) {
 			return fail(500, { error: "Error: Failed to create post." });
 		}

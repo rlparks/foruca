@@ -1,4 +1,4 @@
-import { DEFAULT_PER_PAGE, makePostSafe } from "$lib";
+import { DEFAULT_PER_PAGE, makePostSafe, TABLE_NAMES } from "$lib";
 import type { RawPost, SafePost } from "$lib/types";
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		return json({ error: "Invalid parameters." }, { status: 400 });
 	}
 
-	const postsRes = await locals.pb.collection("posts").getList<RawPost>(page, perPage, {
+	const postsRes = await locals.pb.collection(TABLE_NAMES.posts).getList<RawPost>(page, perPage, {
 		sort: "-created",
 		expand: "owner, board"
 	});
