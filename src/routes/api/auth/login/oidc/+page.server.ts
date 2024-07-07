@@ -47,9 +47,20 @@ export const actions = {
 				avatar = await avatarRes.blob();
 			}
 
-			await pb.collection(TABLE_NAMES.users).update(authData.record.id, { username, name, avatar });
+			try {
+				await pb
+					.collection(TABLE_NAMES.users)
+					.update(authData.record.id, { username, name, avatar });
+			} catch (err) {
+				if (err instanceof ClientResponseError) {
+					console.error(
+						"Error updating user, likely due to duplicate username:",
+						err.originalError.data.data
+					);
+				}
+			}
 
-			console.log("OIDC LOGIN SUCCESS: " + authData?.meta?.username);
+			console.log("OIDC LOGIN SUCCESS: " + authData.record.username);
 		} catch (err) {
 			if (err instanceof ClientResponseError) {
 				console.error("Client response error:", err.originalError.data.data);
