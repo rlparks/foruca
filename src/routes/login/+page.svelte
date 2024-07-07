@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 	import { enhance } from "$app/forms";
+	import { OIDC_REDIRECT_COOKIE_NAME } from "$lib";
 	import type { AuthProviderInfo } from "pocketbase";
 
 	const { data } = $props();
@@ -14,7 +15,7 @@
 		window.sessionStorage.setItem("provider", JSON.stringify(provider));
 
 		if (redirect) {
-			let redirectCookieString = `foruca-oidc-login-redirect=${redirect}; Path=/; SameSite=strict; Max-Age=180;`;
+			let redirectCookieString = `${OIDC_REDIRECT_COOKIE_NAME}=${redirect}; Path=/; SameSite=strict; Max-Age=180;`;
 			const isSecure = window.location.protocol === "https:";
 			if (isSecure) {
 				redirectCookieString += " Secure;";

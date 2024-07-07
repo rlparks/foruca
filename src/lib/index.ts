@@ -17,6 +17,12 @@ export const TABLE_NAMES = {
 };
 
 /**
+ * The name of the cookie used to store the post login redirect
+ * URL for OIDC login.
+ */
+export const OIDC_REDIRECT_COOKIE_NAME = "foruca-oidc-login-redirect";
+
+/**
  * Removes unnecessary info from User objects returned from
  * PocketBase, like email.
  *

@@ -1,7 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
-import type { AuthProviderInfo } from "pocketbase";
-import { TABLE_NAMES } from "$lib";
+import { ClientResponseError, type AuthProviderInfo } from "pocketbase";
+import { OIDC_REDIRECT_COOKIE_NAME, TABLE_NAMES } from "$lib";
 
 export const actions = {
 	default: async ({ locals, request, cookies }) => {
@@ -51,14 +51,16 @@ export const actions = {
 
 			console.log("OIDC LOGIN SUCCESS: " + authData?.meta?.username);
 		} catch (err) {
-			console.error(err);
+			if (err instanceof ClientResponseError) {
+				console.error("Client response error:", err.originalError.data.data);
+			}
 			return fail(400, { error: "Error: Cannot parse body." });
 		}
 
 		// a little silly, isn't it?
-		const postLoginRedirectUrl = `/${(cookies.get("foruca-oidc-login-redirect") ?? "/")?.slice(1)}`;
+		const postLoginRedirectUrl = `/${(cookies.get(OIDC_REDIRECT_COOKIE_NAME) ?? "/")?.slice(1)}`;
 
-		cookies.delete("foruca-oidc-login-redirect", {
+		cookies.delete(OIDC_REDIRECT_COOKIE_NAME, {
 			path: "/"
 		});
 
