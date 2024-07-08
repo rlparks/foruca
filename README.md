@@ -1,38 +1,26 @@
-# create-svelte
+# foruca
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A classic form application, just like the old days. Supports boards, OpenID login, and threads (coming soon!).
 
-## Creating a project
+## Built With
 
-If you're seeing this, you've probably already done this step. Congrats!
+- [SvelteKit](https://kit.svelte.dev/)
+- [PocketBase](https://pocketbase.io/)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Getting started (Docker Compose)
 
-# create a new project in my-app
-npm create svelte@latest my-app
+Download the provided `compose.yaml` and `pb-Dockerfile` files and place them in the same directory. Configure the ports as you wish and set these environment variables:
+
+```
+PB_URL
+PB_ADMIN_EMAIL
+PB_ADMIN_PASSWORD
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+For security reasons, it is recommended to not provide the PocketBase container an outside port. To start the application, run:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+docker compose up -d
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+foruca should now be accessible at `http://localhost:3000`!
