@@ -1,7 +1,7 @@
 services:
   foruca:
     container_name: foruca
-    image: rlparks/foruca
+    image: rlparks/foruca:main
     ports:
       - 3000:3000
     restart: unless-stopped

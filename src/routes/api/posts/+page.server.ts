@@ -39,6 +39,8 @@ export const actions = {
 		const board = (await (await fetch(`/api/boards/${boardId}`)).json()) as SafeBoard;
 
 		// return a redirect to the new post
-		return redirect(303, `/boards/${board.name}/${createdPost.id}`);
+		// return redirect(303, `/boards/${board.name}/${createdPost.id}`);
+
+		return redirect(303, "/");
 	}
 } satisfies Actions;
