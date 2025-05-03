@@ -1,4 +1,4 @@
-FROM node:22 as builder
+FROM node:22 AS builder
 
 WORKDIR /app
 
@@ -10,18 +10,16 @@ COPY . .
 
 RUN npm run build
 
-FROM node:22-slim as server
+FROM node:22-slim AS server
 
 WORKDIR /app
 
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/package.json ./
 
 ENV NODE_ENV=production
-
-RUN npm i --omit=dev
 
 # internal port
 EXPOSE 3000
 
+# run!
 CMD [ "node", "build" ]
