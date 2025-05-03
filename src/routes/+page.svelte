@@ -54,7 +54,9 @@
 	]);
 </script>
 
-<div class="container mx-auto flex flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row lg:px-8">
+<div
+	class="container mx-auto flex flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row md:items-baseline lg:px-8"
+>
 	<WelcomeText />
-	<PostList {posts} boardName="Board Name" />
+	<PostList {posts} boardName="All Posts" />
 </div>
