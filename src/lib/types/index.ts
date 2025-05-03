@@ -8,11 +8,9 @@ export type Account = {
 export type Session = {
 	id: string;
 	accountId: string;
-	tokenHash: string;
 	createdAt: Date;
 	lastActivityAt: Date;
 	lastIp: string;
 	userAgent: string;
 	expiresAt: Date;
-	oidcIdToken: string;
 };
