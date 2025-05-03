@@ -1,6 +1,6 @@
 <script lang="ts">
-	import BoardList from '$lib/components/BoardList.svelte';
 	import PostList from '$lib/components/PostList.svelte';
+	import WelcomeText from '$lib/components/WelcomeText.svelte';
 
 	let boards = $state([
 		{ id: 1, name: 'General Discussion' },
@@ -52,13 +52,9 @@
 			timestamp: '3d ago'
 		}
 	]);
-
-	let selectedBoardId = $state<number | null>(null);
 </script>
 
-<div class="min-h-screen">
-	<div class="container mx-auto flex flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row lg:px-8">
-		<BoardList bind:selectedBoard={selectedBoardId} {boards} />
-		<PostList {posts} boardName="Board Name" />
-	</div>
+<div class="container mx-auto flex flex-col gap-6 px-4 py-6 sm:px-6 md:flex-row lg:px-8">
+	<WelcomeText />
+	<PostList {posts} boardName="Board Name" />
 </div>
