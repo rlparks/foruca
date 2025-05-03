@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS account (
     username TEXT NOT NULL UNIQUE,
     display_name TEXT NOT NULL,
     is_admin BOOLEAN NOT NULL
-)
+);
 
 CREATE TABLE IF NOT EXISTS session (
     id TEXT PRIMARY KEY,
@@ -15,4 +15,4 @@ CREATE TABLE IF NOT EXISTS session (
     user_agent TEXT NOT NULL,
     expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
     oidc_id_token TEXT NOT NULL -- used to log the user out of the OIDC provider
-)
+);
