@@ -10,7 +10,7 @@
 	]);
 
 	let title = $state("");
-	let selectedBoardId = $state(boards.length > 0 ? boards[0].id : "");
+	let selectedBoardId = $state(boards[0] ? boards[0].id : "");
 	let content = $state("");
 </script>
 
