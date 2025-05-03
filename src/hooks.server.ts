@@ -2,11 +2,7 @@ import { queries } from "$lib/server/db/queries";
 import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
-const account = await queries.createAccount({
-	displayName: "Becc",
-	username: "becc",
-	isAdmin: true,
-});
+const account = await queries.getAccountById("LTuGw16pTbElMTqkHDi6Q");
 console.log(account);
 
 const setLocals: Handle = async ({ event, resolve }) => {
