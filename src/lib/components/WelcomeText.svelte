@@ -1,4 +1,4 @@
-<aside class="w-full p-4 md:w-1/4 lg:w-1/5">
+<aside class="w-full md:w-1/4 lg:w-1/5">
 	<h2 class="mb-4 border-b pb-2 text-lg font-semibold text-gray-700">
 		Welcome to <span class="text-blue-600">foruca</span>
 	</h2>
