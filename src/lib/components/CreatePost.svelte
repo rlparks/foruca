@@ -1,17 +1,17 @@
 <script>
-	import { enhance } from '$app/forms';
+	import { enhance } from "$app/forms";
 
 	let boards = $state([
-		{ id: 1, name: 'General Discussion' },
-		{ id: 2, name: 'Tech Talk' },
-		{ id: 3, name: 'Introductions' },
-		{ id: 4, name: 'Off-Topic' },
-		{ id: 5, name: 'Site Feedback' }
+		{ id: 1, name: "General Discussion" },
+		{ id: 2, name: "Tech Talk" },
+		{ id: 3, name: "Introductions" },
+		{ id: 4, name: "Off-Topic" },
+		{ id: 5, name: "Site Feedback" },
 	]);
 
-	let title = $state('');
-	let selectedBoardId = $state(boards.length > 0 ? boards[0].id : '');
-	let content = $state('');
+	let title = $state("");
+	let selectedBoardId = $state(boards.length > 0 ? boards[0].id : "");
+	let content = $state("");
 </script>
 
 <div class="min-h-screen bg-gray-100 p-4 font-sans sm:p-6 lg:p-8">

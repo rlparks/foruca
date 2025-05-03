@@ -1,5 +1,5 @@
 <script lang="ts">
-	let boardSearchQuery = $state('');
+	let boardSearchQuery = $state("");
 </script>
 
 <header class="bg-white shadow-md">
@@ -35,7 +35,7 @@
 				</div>
 				{#if boardSearchQuery}
 					<button
-						onclick={() => (boardSearchQuery = '')}
+						onclick={() => (boardSearchQuery = "")}
 						type="button"
 						class="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none"
 						aria-label="Clear search"

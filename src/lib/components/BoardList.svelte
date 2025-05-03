@@ -18,8 +18,8 @@
 					onclick={() => selectBoard(null)}
 					class={`w-full rounded-md px-3 py-2 text-left text-sm font-medium transition duration-150 ease-in-out ${
 						selectedBoard === null
-							? 'bg-blue-100 font-bold text-blue-700'
-							: 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+							? "bg-blue-100 font-bold text-blue-700"
+							: "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
 					}`}
 				>
 					All Posts
@@ -31,8 +31,8 @@
 						onclick={() => selectBoard(board.id)}
 						class={`w-full rounded-md px-3 py-2 text-left text-sm font-medium transition duration-150 ease-in-out ${
 							selectedBoard === board.id
-								? 'bg-blue-100 font-bold text-blue-700'
-								: 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+								? "bg-blue-100 font-bold text-blue-700"
+								: "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
 						}`}
 					>
 						{board.name}

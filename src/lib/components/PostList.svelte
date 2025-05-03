@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PostListItem from './PostListItem.svelte';
+	import PostListItem from "./PostListItem.svelte";
 
 	type Post = {
 		id: number;
