@@ -1,14 +1,57 @@
+import { getCurrentFormattedDateTime } from "$lib";
+import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { queries } from "$lib/server/db/queries";
-import type { Handle } from "@sveltejs/kit";
+import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
 const account = await queries.getAccountById("LTuGw16pTbElMTqkHDi6Q");
 console.log(account);
 
-const setLocals: Handle = async ({ event, resolve }) => {
-	const result = await resolve(event);
+const handleAuth: Handle = async ({ event, resolve }) => {
+	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);
+	if (!sessionToken) {
+		event.locals.session = null;
+		event.locals.account = null;
+		return resolve(event);
+	}
 
-	return result;
+	// user has some kind of token
+	const ipAddress = event.getClientAddress();
+	const userAgent = event.request.headers.get("user-agent") || "";
+	try {
+		const validationResult = await validateSessionToken(sessionToken, {
+			ipAddress,
+			userAgent,
+		});
+
+		if (!validationResult) {
+			event.cookies.delete(SESSION_COOKIE_NAME, { path: "/" });
+			event.locals.session = null;
+			event.locals.account = null;
+			return resolve(event);
+		}
+
+		const { session, user } = validationResult;
+		event.cookies.set(SESSION_COOKIE_NAME, sessionToken, {
+			path: "/",
+			sameSite: "strict",
+			expires: session.expiresAt,
+			httpOnly: true,
+			secure: true,
+		});
+
+		event.locals.session = session;
+		event.locals.account = user;
+
+		return resolve(event);
+	} catch (err) {
+		const currentTime = getCurrentFormattedDateTime();
+		console.error(
+			`${currentTime} · ${ipAddress} · ${userAgent} · Error during authentication: ${err}`,
+		);
+
+		return error(500, "Error during authentication!");
+	}
 };
 
 const setHeaders: Handle = async ({ event, resolve }) => {
@@ -31,4 +74,4 @@ const setHeaders: Handle = async ({ event, resolve }) => {
 	return result;
 };
 
-export const handle = sequence(setLocals, setHeaders);
+export const handle = sequence(handleAuth, setHeaders);
