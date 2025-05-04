@@ -92,11 +92,11 @@ export const queries = {
 	) {
 		try {
 			const { lastActivityAt, lastIp, userAgent, expiresAt } = newFields;
-			const [row] = await sql<{ id: string }[]>`UPDATE session
+			const [row] = await sql<Session[]>`UPDATE session
                                     SET last_activity_at = ${lastActivityAt}, last_ip = ${lastIp},
                                         user_agent = ${userAgent}, expires_at = ${expiresAt}
                                     WHERE id = ${sessionId}
-                                    RETURNING id;`;
+                                    RETURNING id, account_id, created_at, last_activity_at, last_ip, user_agent, expires_at;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);

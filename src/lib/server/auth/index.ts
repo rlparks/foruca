@@ -33,6 +33,7 @@ export async function createSession(
 	return { token, expiresAt };
 }
 
+// TODO: homk
 export async function validateSessionToken(
 	token: string,
 	attemptDetails: { ipAddress: string; userAgent: string },
@@ -66,17 +67,16 @@ export async function validateSessionToken(
 		session.expiresAt = new Date(Date.now() + SESSION_EXPIRATION);
 	}
 
-	await queries.updateSessionById(session.id, {
+	const updatedSession = await queries.updateSessionById(session.id, {
 		lastActivityAt: new Date(),
 		expiresAt: session.expiresAt,
 		lastIp: session.lastIp,
 		userAgent: session.userAgent,
 	});
 
-	const returnableSession = {
-		id: session.id,
-		expiresAt: session.expiresAt,
-	};
+	if (!updatedSession) {
+		throw new Error("Session disappeared!");
+	}
 
 	const user = {
 		id: session.accountId,
@@ -85,7 +85,7 @@ export async function validateSessionToken(
 		isAdmin: session.accountIsAdmin,
 	};
 
-	return { session: returnableSession, user };
+	return { session: updatedSession, user };
 }
 
 function generateSessionToken() {
