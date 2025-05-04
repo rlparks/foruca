@@ -62,14 +62,54 @@ export const queries = {
 	async getSessionByTokenHash(tokenHash: string) {
 		type TokenHashSelect = {
 			id: string;
-			account_id: string;
-			expires_at: Date;
+			expiresAt: Date;
+			lastIp: string;
+			userAgent: string;
+
+			accountId: string;
+			accountUsername: string;
+			accountDisplayName: string;
+			accountIsAdmin: boolean;
 		};
 
 		try {
-			const [row] = await sql<TokenHashSelect[]>`SELECT id, account_id, expires_at
+			const [row] = await sql<TokenHashSelect[]>`
+                                    SELECT id, account_id, expires_at, last_ip, user_agent,
+                                    a.username AS accountUsername, a.display_name AS accountDisplayName,
+                                    a.is_admin AS accountIsAdmin
                                     FROM session
+                                    LEFT JOIN account a ON a.id = session.account_id
                                     WHERE token_hash = ${tokenHash};`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	},
+
+	async updateSessionById(
+		sessionId: string,
+		newFields: { lastActivityAt: Date; lastIp: string; userAgent: string; expiresAt: Date },
+	) {
+		try {
+			const { lastActivityAt, lastIp, userAgent, expiresAt } = newFields;
+			const [row] = await sql<{ id: string }[]>`UPDATE session
+                                    SET last_activity_at = ${lastActivityAt}, last_ip = ${lastIp},
+                                        user_agent = ${userAgent}, expires_at = ${expiresAt}
+                                    WHERE id = ${sessionId}
+                                    RETURNING id;`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	},
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async deleteSessionById(sessionId: string) {
+		try {
+			const [row] = await sql<{ id: string }[]>`DELETE FROM session WHERE id = ${sessionId}
+                                    RETURNING id;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
