@@ -42,13 +42,13 @@ export async function validateSessionToken(
 	const session = await getSessionByTokenHash(tokenHash);
 
 	if (!session) {
-		return null;
+		return { session: null, user: null };
 	}
 
 	const sessionIsExpired = Date.now() > session.expiresAt.getTime();
 	if (sessionIsExpired) {
 		await invalidateSession(session.id);
-		return null;
+		return { session: null, user: null };
 	}
 
 	// we know session is valid

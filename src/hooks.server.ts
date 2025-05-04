@@ -20,20 +20,16 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	const ipAddress = event.getClientAddress();
 	const userAgent = event.request.headers.get("user-agent") || "";
 	try {
-		const validationResult = await validateSessionToken(sessionToken, {
+		const { session, user } = await validateSessionToken(sessionToken, {
 			ipAddress,
 			userAgent,
 		});
 
-		if (!validationResult) {
+		if (session) {
+			setSessionCookie(event.cookies, sessionToken, session.expiresAt);
+		} else {
 			deleteSessionCookie(event.cookies);
-			event.locals.session = null;
-			event.locals.account = null;
-			return resolve(event);
 		}
-
-		const { session, user } = validationResult;
-		setSessionCookie(event.cookies, sessionToken, session.expiresAt);
 
 		event.locals.session = session;
 		event.locals.account = user;
