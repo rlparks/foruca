@@ -1,6 +1,6 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
-import { setSessionCookie } from "$lib/server/auth/helpers";
+import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
 import { queries } from "$lib/server/db/queries";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
@@ -26,7 +26,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 		});
 
 		if (!validationResult) {
-			event.cookies.delete(SESSION_COOKIE_NAME, { path: "/" });
+			deleteSessionCookie(event.cookies);
 			event.locals.session = null;
 			event.locals.account = null;
 			return resolve(event);

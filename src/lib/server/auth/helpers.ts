@@ -10,3 +10,7 @@ export function setSessionCookie(cookies: Cookies, sessionToken: string, expires
 		secure: true,
 	});
 }
+
+export function deleteSessionCookie(cookies: Cookies) {
+	cookies.delete(SESSION_COOKIE_NAME, { path: "/" });
+}
