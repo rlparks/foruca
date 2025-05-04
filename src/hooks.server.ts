@@ -1,5 +1,6 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
+import { setSessionCookie } from "$lib/server/auth/helpers";
 import { queries } from "$lib/server/db/queries";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
@@ -32,13 +33,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 		}
 
 		const { session, user } = validationResult;
-		event.cookies.set(SESSION_COOKIE_NAME, sessionToken, {
-			path: "/",
-			sameSite: "strict",
-			expires: session.expiresAt,
-			httpOnly: true,
-			secure: true,
-		});
+		setSessionCookie(event.cookies, sessionToken, session.expiresAt);
 
 		event.locals.session = session;
 		event.locals.account = user;
