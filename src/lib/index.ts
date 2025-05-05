@@ -1,5 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 
+export const OIDC_STATE_KEY = "foruca_oidc_state";
+
 /**
  * Formats a `Date` into something nice to look at.
  *
