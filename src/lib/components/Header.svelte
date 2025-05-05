@@ -6,6 +6,8 @@
 	};
 	let { account }: Props = $props();
 
+	$inspect(account);
+
 	let boardSearchQuery = $state("");
 </script>
 
@@ -65,12 +67,22 @@
 		</div>
 
 		<div class="flex-shrink-0">
-			<a
-				href="/login"
-				class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
-			>
-				Login
-			</a>
+			{#if !account}
+				<a
+					href="/login"
+					class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
+				>
+					Login
+				</a>
+			{:else}
+				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
+				<a
+					href="/"
+					class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
+				>
+					Logout {account.username}
+				</a>
+			{/if}
 		</div>
 	</nav>
 </header>
