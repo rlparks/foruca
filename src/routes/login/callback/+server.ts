@@ -1,7 +1,9 @@
 import { env } from "$env/dynamic/private";
-import { OIDC_STATE_KEY } from "$lib";
-import { getAuthProviderInfo } from "$lib/server/auth";
-import { error } from "@sveltejs/kit";
+import { getCurrentFormattedDateTime, OIDC_STATE_KEY } from "$lib";
+import { createSession, getAuthProviderInfo } from "$lib/server/auth";
+import { setSessionCookie } from "$lib/server/auth/helpers";
+import { queries } from "$lib/server/db/queries";
+import { error, redirect } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
 const { OIDC_CLIENT_ID, OIDC_CLIENT_SECRET, OIDC_USERNAME_CLAIM } = env;
@@ -36,9 +38,14 @@ export const GET: RequestHandler = async (event) => {
 		return error(400, "Missing username");
 	}
 
-	console.log(username);
+	const ipAddress = event.getClientAddress();
+	const userAgent = event.request.headers.get("user-agent") || "";
 
-	return new Response();
+	const session = await loginAccount(username, id_token, ipAddress, userAgent);
+
+	setSessionCookie(event.cookies, session.token, session.expiresAt);
+
+	return redirect(303, "/");
 };
 
 async function getAccessToken(tokenEndpoint: string, code: string, redirectUri: string) {
@@ -122,4 +129,31 @@ function validateUserInfoJson(userInfoJson: unknown): userInfoJson is {
 		OIDC_USERNAME_CLAIM in userInfoJson &&
 		typeof tempJson[OIDC_USERNAME_CLAIM] === "string"
 	);
+}
+
+async function loginAccount(
+	username: string,
+	idToken: string,
+	ipAddress: string,
+	userAgent: string,
+) {
+	const account = await queries.getAccountByUsername(username);
+	if (!account) {
+		console.log(
+			`${getCurrentFormattedDateTime()} · Account "${username}" attempted login but does not exist.`,
+		);
+		return error(400, "Account does not exist");
+	}
+
+	try {
+		const session = await createSession(account.id, idToken, ipAddress, userAgent);
+		const sessionExpiry = session.expiresAt.toLocaleDateString();
+		console.log(
+			`${getCurrentFormattedDateTime()} · Account "${username}" logged in, session expiring on ${sessionExpiry}.`,
+		);
+		return session;
+	} catch (err) {
+		console.error("Error creating session:", err);
+		return error(500, "Failed to create session");
+	}
 }
