@@ -39,6 +39,20 @@ export const queries = {
 	/**
 	 * @throws on DB connection error
 	 */
+	async getAccountByUsername(username: string) {
+		try {
+			const [row] = await sql<Account[]>`SELECT id, username, display_name, is_admin
+                                                FROM account
+                                                WHERE username = ${username};`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	},
+
+	/**
+	 * @throws on DB connection error
+	 */
 	async createSession(session: Omit<Session, "id">, tokenHash: string, oidcIdToken: string) {
 		const id = generateTextId();
 
