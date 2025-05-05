@@ -14,3 +14,10 @@ export type Session = {
 	userAgent: string;
 	expiresAt: Date;
 };
+
+export type AuthInfo = {
+	authEndpoint: string;
+	tokenEndpoint: string;
+	userinfoEndpoint: string;
+	endSessionEndpoint: string;
+};

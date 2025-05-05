@@ -1,11 +1,5 @@
 import { env } from "$env/dynamic/private";
-
-type AuthInfo = {
-	authEndpoint: string;
-	tokenEndpoint: string;
-	userinfoEndpoint: string;
-	endSessionEndpoint: string;
-};
+import type { AuthInfo } from "$lib/types";
 
 const SCOPES = ["openid", "profile"] as const;
 
