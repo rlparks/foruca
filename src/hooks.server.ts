@@ -1,11 +1,10 @@
 import { getCurrentFormattedDateTime } from "$lib";
-import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
+import { getAuthProviderInfo, SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
-import { getAuthInfo } from "$lib/server/auth/provider";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
-console.log(await getAuthInfo("e"));
+console.log(await getAuthProviderInfo());
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);

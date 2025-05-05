@@ -5,7 +5,6 @@ type AuthInfo = {
 	tokenEndpoint: string;
 	userinfoEndpoint: string;
 	endSessionEndpoint: string;
-	state: string;
 };
 
 const SCOPES = ["openid", "profile"] as const;
@@ -13,12 +12,13 @@ const SCOPES = ["openid", "profile"] as const;
 let authInfo: AuthInfo | undefined = undefined;
 
 export async function getAuthInfo(state: string) {
+	const clientId = env.OIDC_CLIENT_ID;
 	if (authInfo) {
-		return authInfo;
+		const authEndpoint = setAuthEndpointParams(authInfo.authEndpoint, clientId, state);
+		return { ...authInfo, authEndpoint, state };
 	}
 
 	const oidcDiscoveryUrl = env.OIDC_DISCOVERY_URL;
-	const clientId = env.OIDC_CLIENT_ID;
 	if (!oidcDiscoveryUrl || !clientId) {
 		throw new Error("OIDC_DISCOVERY_URL or OIDC_CLIENT_ID is not set");
 	}
@@ -27,17 +27,15 @@ export async function getAuthInfo(state: string) {
 
 	const endpoints = await validateDiscoveryResponse(discoveryResponse);
 
-	const authEndpoint = setAuthEndpointParams(endpoints.authEndpoint, clientId, state);
-
 	authInfo = {
-		authEndpoint,
+		authEndpoint: endpoints.authEndpoint,
 		tokenEndpoint: endpoints.tokenEndpoint,
 		userinfoEndpoint: endpoints.userinfoEndpoint,
 		endSessionEndpoint: endpoints.endSessionEndpoint,
-		state,
 	};
 
-	return authInfo;
+	const authEndpoint = setAuthEndpointParams(authInfo.authEndpoint, clientId, state);
+	return { ...authInfo, authEndpoint, state };
 }
 
 function setAuthEndpointParams(authEndpoint: string, clientId: string, state: string) {

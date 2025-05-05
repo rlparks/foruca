@@ -1,4 +1,5 @@
 import { generateTextId } from "$lib/server";
+import { getAuthInfo } from "$lib/server/auth/provider";
 import { queries } from "$lib/server/db/queries";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { encodeHexLowerCase } from "@oslojs/encoding";
@@ -7,6 +8,11 @@ export const SESSION_COOKIE_NAME = "foruca-auth-session";
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 const SESSION_EXPIRATION = 30 * DAY_IN_MS;
+
+export async function getAuthProviderInfo() {
+	const state = generateTextId();
+	return await getAuthInfo(state);
+}
 
 export async function createSession(
 	accountId: string,
