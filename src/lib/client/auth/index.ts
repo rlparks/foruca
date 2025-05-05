@@ -5,7 +5,7 @@ import type { AuthInfo } from "$lib/types";
  * Redirects to the OIDC provider to login.
  * Gives an alert if parameters are missing.
  */
-function performRedirect(
+export function performRedirect(
 	authInfo: { state: string } & AuthInfo,
 	oidcRedirectUrl: string | undefined,
 ) {

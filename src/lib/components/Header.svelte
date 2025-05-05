@@ -1,4 +1,18 @@
 <script lang="ts">
+	import { browser } from "$app/environment";
+	import { performRedirect } from "$lib/client/auth";
+	import type { Account, AuthInfo } from "$lib/types";
+
+	type Props = {
+		account: Account | null;
+		authInfo: AuthInfo & { state: string };
+	};
+	let { account, authInfo }: Props = $props();
+
+	const oidcRedirectUrl = $derived(
+		browser ? `${window.location.origin}/login/callback` : undefined,
+	);
+
 	let boardSearchQuery = $state("");
 </script>
 
@@ -58,12 +72,12 @@
 		</div>
 
 		<div class="flex-shrink-0">
-			<a
-				href="/login"
-				class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
+			<button
+				onclick={() => performRedirect(authInfo, oidcRedirectUrl)}
+				class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
 			>
 				Login
-			</a>
+			</button>
 		</div>
 	</nav>
 </header>

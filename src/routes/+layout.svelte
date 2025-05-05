@@ -2,9 +2,9 @@
 	import Header from "$lib/components/Header.svelte";
 	import "../app.css";
 
-	let { children } = $props();
+	let { children, data } = $props();
 </script>
 
-<Header />
+<Header account={data.account} authInfo={data.authInfo} />
 
 {@render children()}
