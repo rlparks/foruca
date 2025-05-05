@@ -1,12 +1,11 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
-import { queries } from "$lib/server/db/queries";
+import { getAuthInfo } from "$lib/server/auth/provider";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
-const account = await queries.getAccountById("LTuGw16pTbElMTqkHDi6Q");
-console.log(account);
+console.log(await getAuthInfo("e"));
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);
