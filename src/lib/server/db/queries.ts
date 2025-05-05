@@ -89,8 +89,8 @@ export const queries = {
 		try {
 			const [row] = await sql<TokenHashSelect[]>`
                                     SELECT session.id, account_id, expires_at, last_ip, user_agent,
-                                    a.username AS accountUsername, a.display_name AS accountDisplayName,
-                                    a.is_admin AS accountIsAdmin
+                                    a.username AS account_username, a.display_name AS account_display_name,
+                                    a.is_admin AS account_is_admin
                                     FROM session
                                     LEFT JOIN account a ON a.id = session.account_id
                                     WHERE token_hash = ${tokenHash};`;
