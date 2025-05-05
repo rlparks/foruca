@@ -88,7 +88,7 @@ export const queries = {
 
 		try {
 			const [row] = await sql<TokenHashSelect[]>`
-                                    SELECT id, account_id, expires_at, last_ip, user_agent,
+                                    SELECT session.id, account_id, expires_at, last_ip, user_agent,
                                     a.username AS accountUsername, a.display_name AS accountDisplayName,
                                     a.is_admin AS accountIsAdmin
                                     FROM session
