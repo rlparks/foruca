@@ -101,8 +101,22 @@ export async function logoutUser(event: RequestEvent) {
 		return fail(401, { message: "Cannot logout!" });
 	}
 
+	const session = await queries.getOidcIdTokenBySessionId(event.locals.session.id);
+
 	deleteSessionCookie(event.cookies);
 	await invalidateSession(event.locals.session.id);
+
+	// log out of ID provider
+	if (session) {
+		const { oidcIdToken } = session;
+		const { endSessionEndpoint } = await getAuthProviderInfo();
+
+		const logoutUrl = new URL(endSessionEndpoint);
+		logoutUrl.searchParams.set("id_token_hint", oidcIdToken);
+		logoutUrl.searchParams.set("post_logout_redirect_uri", `${event.url.origin}/`);
+
+		return redirect(303, logoutUrl.toString());
+	}
 
 	return redirect(303, "/");
 }

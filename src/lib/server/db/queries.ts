@@ -100,6 +100,27 @@ export const queries = {
 		}
 	},
 
+	/**
+	 * Useful for logout
+	 * @throws on DB connection error
+	 */
+	async getOidcIdTokenBySessionId(sessionId: string) {
+		type OidcIdTokenSelect = {
+			id: string;
+			oidcIdToken: string;
+		};
+
+		try {
+			const [row] = await sql<OidcIdTokenSelect[]>`
+                                    SELECT id, oidc_id_token
+                                    FROM session
+                                    WHERE id = ${sessionId};`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	},
+
 	async updateSessionById(
 		sessionId: string,
 		newFields: { lastActivityAt: Date; lastIp: string; userAgent: string; expiresAt: Date },
