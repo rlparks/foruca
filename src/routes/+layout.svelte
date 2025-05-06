@@ -5,6 +5,6 @@
 	let { children, data } = $props();
 </script>
 
-<Header account={data.account} authInfo={data.authInfo} />
+<Header account={data.account} />
 
 {@render children()}
