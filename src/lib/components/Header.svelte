@@ -6,8 +6,6 @@
 	};
 	let { account }: Props = $props();
 
-	$inspect(account);
-
 	let boardSearchQuery = $state("");
 </script>
 
