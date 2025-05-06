@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from "$app/forms";
 	import type { Account } from "$lib/types";
 
 	type Props = {
@@ -74,12 +75,14 @@
 				</a>
 			{:else}
 				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
-				<a
-					href="/"
-					class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
-				>
-					Logout {account.username}
-				</a>
+				<form action="/" method="POST" use:enhance>
+					<button
+						type="submit"
+						class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
+					>
+						Logout {account.username}
+					</button>
+				</form>
 			{/if}
 		</div>
 	</nav>
