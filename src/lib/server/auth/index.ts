@@ -1,8 +1,10 @@
 import { generateTextId } from "$lib/server";
+import { deleteSessionCookie } from "$lib/server/auth/helpers";
 import { getAuthInfo } from "$lib/server/auth/provider";
 import { queries } from "$lib/server/db/queries";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { encodeHexLowerCase } from "@oslojs/encoding";
+import { type RequestEvent, fail, redirect } from "@sveltejs/kit";
 
 export const SESSION_COOKIE_NAME = "foruca-auth-session";
 
@@ -92,6 +94,17 @@ export async function validateSessionToken(
 	};
 
 	return { session: updatedSession, user };
+}
+
+export async function logoutUser(event: RequestEvent) {
+	if (!event.locals.session) {
+		return fail(401, { message: "Cannot logout!" });
+	}
+
+	deleteSessionCookie(event.cookies);
+	await invalidateSession(event.locals.session.id);
+
+	return redirect(303, "/");
 }
 
 function generateSessionToken() {
