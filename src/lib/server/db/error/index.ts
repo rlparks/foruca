@@ -3,6 +3,7 @@ import PostgresConnectionError from "./PostgresConnectionError";
 import UniqueConstraintViolation from "./UniqueConstraintViolation";
 
 export function parsePgError(err: unknown) {
+	console.error("parse: ", JSON.stringify(err));
 	const uniqueViolation = parseUniqueViolation(err);
 
 	if (uniqueViolation) {
