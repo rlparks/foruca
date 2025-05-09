@@ -36,6 +36,10 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 		console.error(
 			`${currentTime} · ${ipAddress} · ${userAgent} · Error during authentication: ${err}`,
 		);
+		if (err instanceof Error) {
+			console.error(err.message);
+			console.error(err.stack);
+		}
 
 		return error(500, "Error during authentication!");
 	}
