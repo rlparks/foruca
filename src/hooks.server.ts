@@ -1,13 +1,18 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
-import { queries } from "$lib/server/db/queries";
+import { getInstance } from "$lib/server/db/postgres";
+import { Queries } from "$lib/server/db/queries";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
-const handleAuth: Handle = async ({ event, resolve }) => {
-	event.locals.queries = queries;
+const setupDb: Handle = async ({ event, resolve }) => {
+	event.locals.queries = new Queries(getInstance());
 
+	return resolve(event);
+};
+
+const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);
 	if (!sessionToken) {
 		event.locals.session = null;
@@ -68,4 +73,4 @@ const setHeaders: Handle = async ({ event, resolve }) => {
 	return result;
 };
 
-export const handle = sequence(handleAuth, setHeaders);
+export const handle = sequence(setupDb, handleAuth, setHeaders);

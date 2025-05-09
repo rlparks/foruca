@@ -1,9 +1,13 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
-import { sql } from "$lib/server/db/postgres";
 import type { Account, Session } from "$lib/types";
+import postgres from "postgres";
 
-export const queries = {
+export class Queries {
+	private readonly sql: postgres.Sql;
+	constructor(sql: postgres.Sql) {
+		this.sql = sql;
+	}
 	/**
 	 * @throws if duplicate username
 	 * @throws on DB connection error
@@ -14,41 +18,43 @@ export const queries = {
 		const { username, displayName, isAdmin } = account;
 
 		try {
-			const [row] = await sql<Account[]>`INSERT INTO account (id, username, display_name, is_admin)
+			const [row] = await this.sql<
+				Account[]
+			>`INSERT INTO account (id, username, display_name, is_admin)
                                             VALUES (${id}, ${username}, ${displayName}, ${isAdmin})
                                             RETURNING id, username, display_name, is_admin;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 	/**
 	 * @throws on DB connection error
 	 */
 	async getAccountById(id: string) {
 		try {
-			const [row] = await sql<Account[]>`SELECT id, username, display_name, is_admin
+			const [row] = await this.sql<Account[]>`SELECT id, username, display_name, is_admin
                                                 FROM account
                                                 WHERE id = ${id};`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	/**
 	 * @throws on DB connection error
 	 */
 	async getAccountByUsername(username: string) {
 		try {
-			const [row] = await sql<Account[]>`SELECT id, username, display_name, is_admin
+			const [row] = await this.sql<Account[]>`SELECT id, username, display_name, is_admin
                                                 FROM account
                                                 WHERE username = ${username};`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	/**
 	 * @throws on DB connection error
@@ -58,17 +64,17 @@ export const queries = {
 
 		const { accountId, createdAt, lastActivityAt, lastIp, userAgent, expiresAt } = session;
 
-		const sessionColumns = sql`
+		const sessionColumns = this.sql`
             id, account_id, token_hash, oidc_id_token, created_at, last_activity_at, last_ip, user_agent, expires_at
         `;
 
 		try {
-			await sql`INSERT INTO session (${sessionColumns})
+			await this.sql`INSERT INTO session (${sessionColumns})
                        VALUES (${id}, ${accountId}, ${tokenHash}, ${oidcIdToken}, ${createdAt}, ${lastActivityAt}, ${lastIp}, ${userAgent}, ${expiresAt});`;
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	/**
 	 * @throws on DB connection error
@@ -87,7 +93,7 @@ export const queries = {
 		};
 
 		try {
-			const [row] = await sql<TokenHashSelect[]>`
+			const [row] = await this.sql<TokenHashSelect[]>`
                                     SELECT session.id, account_id, expires_at, last_ip, user_agent,
                                     a.username AS account_username, a.display_name AS account_display_name,
                                     a.is_admin AS account_is_admin
@@ -98,7 +104,7 @@ export const queries = {
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	/**
 	 * Useful for logout
@@ -111,7 +117,7 @@ export const queries = {
 		};
 
 		try {
-			const [row] = await sql<OidcIdTokenSelect[]>`
+			const [row] = await this.sql<OidcIdTokenSelect[]>`
                                     SELECT id, oidc_id_token
                                     FROM session
                                     WHERE id = ${sessionId};`;
@@ -119,7 +125,7 @@ export const queries = {
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	async updateSessionById(
 		sessionId: string,
@@ -127,7 +133,7 @@ export const queries = {
 	) {
 		try {
 			const { lastActivityAt, lastIp, userAgent, expiresAt } = newFields;
-			const [row] = await sql<Session[]>`UPDATE session
+			const [row] = await this.sql<Session[]>`UPDATE session
                                     SET last_activity_at = ${lastActivityAt}, last_ip = ${lastIp},
                                         user_agent = ${userAgent}, expires_at = ${expiresAt}
                                     WHERE id = ${sessionId}
@@ -136,18 +142,18 @@ export const queries = {
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
+	}
 
 	/**
 	 * @throws on DB connection error
 	 */
 	async deleteSessionById(sessionId: string) {
 		try {
-			const [row] = await sql<{ id: string }[]>`DELETE FROM session WHERE id = ${sessionId}
+			const [row] = await this.sql<{ id: string }[]>`DELETE FROM session WHERE id = ${sessionId}
                                     RETURNING id;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}
-	},
-};
+	}
+}
