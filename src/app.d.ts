@@ -11,7 +11,10 @@ declare global {
 			account: Account | null;
 			session: Session | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			pageTitle: string;
+			pageDescription: string;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}
