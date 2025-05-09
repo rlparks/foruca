@@ -7,6 +7,5 @@ main = ".svelte-kit/cloudflare/_worker.js"
 directory = ".svelte-kit/cloudflare"
 binding = "ASSETS"
 
-[env.staging.observability]
+[observability.logs]
 enabled = true
-head_sampling_rate = 100
