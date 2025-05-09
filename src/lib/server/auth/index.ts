@@ -4,7 +4,7 @@ import { getAuthInfo } from "$lib/server/auth/provider";
 import { queries } from "$lib/server/db/queries";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { encodeHexLowerCase } from "@oslojs/encoding";
-import { type RequestEvent, fail, redirect } from "@sveltejs/kit";
+import { type RequestEvent, redirect } from "@sveltejs/kit";
 
 export const SESSION_COOKIE_NAME = "foruca-auth-session";
 
@@ -98,7 +98,7 @@ export async function validateSessionToken(
 
 export async function logoutUser(event: RequestEvent) {
 	if (!event.locals.session) {
-		return fail(401, { message: "Cannot logout!" });
+		return redirect(303, "/");
 	}
 
 	const session = await queries.getOidcIdTokenBySessionId(event.locals.session.id);
