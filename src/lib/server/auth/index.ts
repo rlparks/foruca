@@ -1,7 +1,6 @@
 import { generateTextId } from "$lib/server";
 import { deleteSessionCookie } from "$lib/server/auth/helpers";
 import { getAuthInfo } from "$lib/server/auth/provider";
-import { queries } from "$lib/server/db/queries";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { encodeHexLowerCase } from "@oslojs/encoding";
 import { type RequestEvent, redirect } from "@sveltejs/kit";
@@ -17,6 +16,7 @@ export async function getAuthProviderInfo() {
 }
 
 export async function createSession(
+	event: RequestEvent,
 	accountId: string,
 	oidcIdToken: string,
 	ipAddress: string,
@@ -36,18 +36,19 @@ export async function createSession(
 		expiresAt,
 	};
 
-	await queries.createSession(newSession, tokenHash, oidcIdToken);
+	await event.locals.queries.createSession(newSession, tokenHash, oidcIdToken);
 
 	return { token, expiresAt };
 }
 
 // TODO: homk
 export async function validateSessionToken(
+	event: RequestEvent,
 	token: string,
 	attemptDetails: { ipAddress: string; userAgent: string },
 ) {
 	const tokenHash = hashToken(token);
-	const session = await getSessionByTokenHash(tokenHash);
+	const session = await getSessionByTokenHash(event, tokenHash);
 
 	if (!session) {
 		return { session: null, user: null };
@@ -55,7 +56,7 @@ export async function validateSessionToken(
 
 	const sessionIsExpired = Date.now() > session.expiresAt.getTime();
 	if (sessionIsExpired) {
-		await invalidateSession(session.id);
+		await invalidateSession(event, session.id);
 		return { session: null, user: null };
 	}
 
@@ -75,7 +76,7 @@ export async function validateSessionToken(
 		session.expiresAt = new Date(Date.now() + SESSION_EXPIRATION);
 	}
 
-	const updatedSession = await queries.updateSessionById(session.id, {
+	const updatedSession = await event.locals.queries.updateSessionById(session.id, {
 		lastActivityAt: new Date(),
 		expiresAt: session.expiresAt,
 		lastIp: session.lastIp,
@@ -101,10 +102,10 @@ export async function logoutUser(event: RequestEvent) {
 		return redirect(303, "/");
 	}
 
-	const session = await queries.getOidcIdTokenBySessionId(event.locals.session.id);
+	const session = await event.locals.queries.getOidcIdTokenBySessionId(event.locals.session.id);
 
 	deleteSessionCookie(event.cookies);
-	await invalidateSession(event.locals.session.id);
+	await invalidateSession(event, event.locals.session.id);
 
 	// log out of ID provider
 	if (session) {
@@ -129,10 +130,10 @@ function hashToken(token: string) {
 	return encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 }
 
-async function getSessionByTokenHash(tokenHash: string) {
-	return await queries.getSessionByTokenHash(tokenHash);
+async function getSessionByTokenHash(event: RequestEvent, tokenHash: string) {
+	return await event.locals.queries.getSessionByTokenHash(tokenHash);
 }
 
-async function invalidateSession(sessionId: string) {
-	return await queries.deleteSessionById(sessionId);
+async function invalidateSession(event: RequestEvent, sessionId: string) {
+	return await event.locals.queries.deleteSessionById(sessionId);
 }

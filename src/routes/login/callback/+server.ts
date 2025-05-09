@@ -2,9 +2,8 @@ import { env } from "$env/dynamic/private";
 import { getCurrentFormattedDateTime, OIDC_STATE_KEY } from "$lib";
 import { createSession, getAuthProviderInfo } from "$lib/server/auth";
 import { setSessionCookie } from "$lib/server/auth/helpers";
-import { queries } from "$lib/server/db/queries";
 import { error, redirect } from "@sveltejs/kit";
-import type { RequestHandler } from "./$types";
+import type { RequestEvent, RequestHandler } from "./$types";
 
 const { OIDC_CLIENT_ID, OIDC_CLIENT_SECRET, OIDC_USERNAME_CLAIM } = env;
 
@@ -41,7 +40,7 @@ export const GET: RequestHandler = async (event) => {
 	const ipAddress = event.getClientAddress();
 	const userAgent = event.request.headers.get("user-agent") || "";
 
-	const session = await loginAccount(username, id_token, ipAddress, userAgent);
+	const session = await loginAccount(event, username, id_token, ipAddress, userAgent);
 
 	setSessionCookie(event.cookies, session.token, session.expiresAt);
 
@@ -132,12 +131,13 @@ function validateUserInfoJson(userInfoJson: unknown): userInfoJson is {
 }
 
 async function loginAccount(
+	event: RequestEvent,
 	username: string,
 	idToken: string,
 	ipAddress: string,
 	userAgent: string,
 ) {
-	const account = await queries.getAccountByUsername(username);
+	const account = await event.locals.queries.getAccountByUsername(username);
 	if (!account) {
 		console.log(
 			`${getCurrentFormattedDateTime()} · Account "${username}" attempted login but does not exist.`,
@@ -146,7 +146,7 @@ async function loginAccount(
 	}
 
 	try {
-		const session = await createSession(account.id, idToken, ipAddress, userAgent);
+		const session = await createSession(event, account.id, idToken, ipAddress, userAgent);
 		const sessionExpiry = session.expiresAt.toLocaleDateString();
 		console.log(
 			`${getCurrentFormattedDateTime()} · Account "${username}" logged in, session expiring on ${sessionExpiry}.`,

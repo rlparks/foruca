@@ -1,10 +1,13 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
+import { queries } from "$lib/server/db/queries";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
 const handleAuth: Handle = async ({ event, resolve }) => {
+	event.locals.queries = queries;
+
 	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);
 	if (!sessionToken) {
 		event.locals.session = null;
@@ -16,7 +19,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	const ipAddress = event.getClientAddress();
 	const userAgent = event.request.headers.get("user-agent") || "";
 	try {
-		const { session, user } = await validateSessionToken(sessionToken, {
+		const { session, user } = await validateSessionToken(event, sessionToken, {
 			ipAddress,
 			userAgent,
 		});
