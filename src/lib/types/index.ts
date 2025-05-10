@@ -21,3 +21,11 @@ export type AuthInfo = {
 	userinfoEndpoint: string;
 	endSessionEndpoint: string;
 };
+
+export type Board = {
+	id: string;
+	createdAt: Date;
+	name: string;
+	description: string | null;
+	public: boolean;
+};

@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS session (
     expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
     oidc_id_token TEXT NOT NULL -- used to log the user out of the OIDC provider
 );
+
+CREATE TABLE IF NOT EXISTS board (
+    id TEXT PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    public BOOLEAN NOT NULL
+);
