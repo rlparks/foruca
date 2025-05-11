@@ -4,7 +4,7 @@
 	import HelpText from "$lib/components/HelpText.svelte";
 	import Input from "$lib/components/Input.svelte";
 
-	let { data } = $props();
+	let { form } = $props();
 </script>
 
 <div
@@ -20,6 +20,10 @@
 	</HelpText>
 	<div class="flex w-full justify-center">
 		<form method="POST" use:enhance>
+			{#if form?.message}
+				<p class="mb-4 text-red-500">{form.message}</p>
+			{/if}
+
 			<Input label="Board Name" name="boardName" type="text" helpText="Limited to 50 characters." />
 
 			<Input

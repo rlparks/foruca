@@ -1,4 +1,5 @@
 import type { Board } from "$lib/types";
+import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async () => {
@@ -8,20 +9,34 @@ export const load = (async () => {
 export const actions: Actions = {
 	default: async (event) => {
 		const formData = await event.request.formData();
-		const body = Object.fromEntries(formData.entries()) as {
+		const { boardName, boardDescription, privateBoard } = Object.fromEntries(
+			formData.entries(),
+		) as {
 			boardName: string;
 			boardDescription: string;
 			privateBoard?: "on";
 		};
 
+		if (!boardName || !boardDescription) {
+			return fail(400, { message: "Please fill out all fields" });
+		}
+
+		if (boardName.length > 50) {
+			return fail(400, { message: "Board name cannot exceed 50 characters" });
+		}
+
 		const newBoard: Omit<Board, "id"> = {
-			name: body.boardName,
-			description: body.boardDescription,
-			isPublic: body.privateBoard !== "on",
+			name: boardName,
+			description: boardDescription,
+			isPublic: privateBoard !== "on",
 			createdAt: new Date(),
 		};
 
 		const createdBoard = await event.locals.queries.createBoard(newBoard);
-		console.log(createdBoard);
+		if (!createdBoard) {
+			return fail(400, { message: "borked" });
+		}
+
+		return redirect(303, "/admin/boards");
 	},
 };

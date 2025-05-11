@@ -21,6 +21,6 @@ CREATE TABLE IF NOT EXISTS board (
     id TEXT PRIMARY KEY,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     name TEXT NOT NULL UNIQUE,
-    description TEXT,
+    description TEXT NOT NULL,
     is_public BOOLEAN NOT NULL
 );

@@ -172,6 +172,7 @@ export class Queries {
 	}
 
 	/**
+	 * @throws if duplicate board name
 	 * @throws on DB connection error
 	 */
 	async createBoard(board: Omit<Board, "id">) {
