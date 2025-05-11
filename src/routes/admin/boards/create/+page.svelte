@@ -22,7 +22,19 @@
 		<form method="POST" use:enhance>
 			<Input label="Board Name" name="boardName" type="text" helpText="Limited to 50 characters." />
 
-			<Input label="Board Description" name="boardDescription" type="text" />
+			<Input
+				label="Board Description"
+				name="boardDescription"
+				type="text"
+				helpText="Displays in the aside."
+			/>
+
+			<Input
+				label="Private Board"
+				name="privateBoard"
+				type="checkbox"
+				helpText="Posts will be visible only to logged-in users."
+			/>
 
 			<Button type="submit" color="blue" font="small">Create Board</Button>
 		</form>
