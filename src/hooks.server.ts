@@ -1,6 +1,7 @@
 import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
+import Security from "$lib/server/auth/Security";
 import { getInstance } from "$lib/server/db/postgres";
 import { Queries } from "$lib/server/db/Queries";
 import { error, type Handle } from "@sveltejs/kit";
@@ -54,6 +55,8 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 };
 
 const setHeaders: Handle = async ({ event, resolve }) => {
+	event.locals.security = new Security(event);
+
 	const start = performance.now();
 
 	const result = await resolve(event);

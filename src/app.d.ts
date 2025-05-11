@@ -1,3 +1,4 @@
+import type Security from "$lib/server/auth/Security";
 import type { Queries } from "$lib/server/db/Queries";
 import type { Account, Session } from "$lib/types";
 
@@ -8,6 +9,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			queries: Queries;
+			security: Security;
 			account: Account | null;
 			session: Session | null;
 		}
