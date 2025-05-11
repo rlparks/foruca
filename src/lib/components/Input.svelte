@@ -1,0 +1,28 @@
+<script lang="ts">
+	const inputId = $props.id();
+
+	type Props = {
+		label: string;
+		name: string;
+		value?: string;
+		helpText?: string;
+		type: "text";
+	};
+
+	let { label, name, value = $bindable(), type, helpText }: Props = $props();
+</script>
+
+<div class="mb-4">
+	<label for={inputId} class="mb-1 block text-sm font-medium text-gray-700">
+		{label}
+	</label>
+	<input
+		id={inputId}
+		{type}
+		bind:value
+		class="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 sm:text-sm"
+	/>
+	{#if helpText}
+		<p class="mt-1 text-xs text-gray-500">{helpText}</p>
+	{/if}
+</div>
