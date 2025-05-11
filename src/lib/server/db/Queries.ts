@@ -177,12 +177,14 @@ export class Queries {
 	async createBoard(board: Omit<Board, "id">) {
 		const id = generateTextId();
 
-		const { name, description, isPublic } = board;
+		const { name, description, createdAt, isPublic } = board;
 
 		try {
-			const [row] = await this.sql<Board[]>`INSERT INTO board (id, name, description, isPublic)
-                                            VALUES (${id}, ${name}, ${description}, ${isPublic})
-                                            RETURNING id, created_at, name, description, isPublic;`;
+			const [row] = await this.sql<
+				Board[]
+			>`INSERT INTO board (id, name, description, created_at, is_public)
+                VALUES (${id}, ${name}, ${description}, ${createdAt}, ${isPublic})
+                RETURNING id, created_at, name, description, is_public;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);

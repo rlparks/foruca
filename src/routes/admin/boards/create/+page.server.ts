@@ -1,3 +1,4 @@
+import type { Board } from "$lib/types";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async () => {
@@ -12,6 +13,15 @@ export const actions: Actions = {
 			boardDescription: string;
 			privateBoard?: "on";
 		};
-		console.log(body);
+
+		const newBoard: Omit<Board, "id"> = {
+			name: body.boardName,
+			description: body.boardDescription,
+			isPublic: body.privateBoard !== "on",
+			createdAt: new Date(),
+		};
+
+		const createdBoard = await event.locals.queries.createBoard(newBoard);
+		console.log(createdBoard);
 	},
 };
