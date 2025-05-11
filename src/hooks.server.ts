@@ -2,7 +2,7 @@ import { getCurrentFormattedDateTime } from "$lib";
 import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
 import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
 import { getInstance } from "$lib/server/db/postgres";
-import { Queries } from "$lib/server/db/queries";
+import { Queries } from "$lib/server/db/Queries";
 import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 

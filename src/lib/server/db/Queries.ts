@@ -1,6 +1,6 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
-import type { Account, Session } from "$lib/types";
+import type { Account, Board, Session } from "$lib/types";
 import postgres from "postgres";
 
 export class Queries {
@@ -152,6 +152,20 @@ export class Queries {
 			const [row] = await this.sql<{ id: string }[]>`DELETE FROM session WHERE id = ${sessionId}
                                     RETURNING id;`;
 			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async getBoards() {
+		try {
+			const rows = await this.sql<
+				Board[]
+			>`SELECT id, created_at, name, description, public FROM board;`;
+			return rows;
 		} catch (err) {
 			throw parsePgError(err);
 		}
