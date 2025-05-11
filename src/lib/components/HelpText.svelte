@@ -9,7 +9,7 @@
 	let { title, body }: Props = $props();
 </script>
 
-<aside class="w-full md:w-1/4 lg:w-1/5">
+<aside class="w-full flex-shrink-0 md:w-1/4 lg:w-1/5">
 	<h2 class="mb-4 border-b pb-2 text-lg font-semibold text-gray-700">
 		{@render title?.()}
 	</h2>
