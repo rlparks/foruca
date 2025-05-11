@@ -26,21 +26,23 @@
 			<div class="overflow-hidden rounded-lg bg-white shadow">
 				<ul class="divide-y divide-gray-200">
 					{#each boards as board (board.id)}
-						<li class="p-4 transition duration-150 ease-in-out hover:bg-gray-50">
-							<div class="mb-1 flex items-center justify-between">
-								<p class="text-lg font-semibold">
-									{board.name}
-								</p>
-								<span class="text-xs text-gray-500">{board.createdAt}</span>
-							</div>
-							<div class="text-sm text-gray-600">
-								<span>
-									{board.description}
-								</span>
-								<span class="mx-2 text-gray-300">|</span>
-								<span>1 mikbillion posts</span>
-							</div>
-						</li>
+						<a href={`/admin/boards/${board.id}`}>
+							<li class="p-4 transition duration-150 ease-in-out hover:bg-gray-50">
+								<div class="mb-1 flex items-center justify-between">
+									<p class="text-lg font-semibold">
+										{board.name}
+									</p>
+									<span class="text-xs text-gray-500">{board.createdAt}</span>
+								</div>
+								<div class="text-sm text-gray-600">
+									<span>
+										{board.description}
+									</span>
+									<span class="mx-2 text-gray-300">|</span>
+									<span>1 mikbillion posts</span>
+								</div>
+							</li>
+						</a>
 					{:else}
 						<li class="p-4 text-center text-gray-500">No boards found. Try creating one?</li>
 					{/each}
