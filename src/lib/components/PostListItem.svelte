@@ -25,7 +25,7 @@
 			by <span class="font-medium text-gray-700">{post.author}</span> in
 			<span class="font-medium text-indigo-600">{post.board}</span></span
 		>
-		<span class="mx-2 text-gray-300">|</span>
+		<span class="mx-1 text-gray-300">|</span>
 		<span>{post.replies} replies</span>
 	</div>
 </li>

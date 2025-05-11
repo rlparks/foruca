@@ -38,7 +38,7 @@
 									<span>
 										{board.description}
 									</span>
-									<span class="mx-2 text-gray-300">|</span>
+									<span class="mx-1 text-gray-300">|</span>
 									<span>1 mikbillion posts</span>
 								</div>
 							</li>
