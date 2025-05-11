@@ -1,13 +1,8 @@
 <script lang="ts">
-	type Post = {
-		id: number;
-		title: string;
-		author: string;
-		board: string;
-		replies: number;
-		timestamp: string;
-	};
-	let { post }: { post: Post } = $props();
+	import { getFormattedDateTime } from "$lib";
+	import type { PostWithAccountAndReplyCount } from "$lib/types/bonus";
+
+	let { post }: { post: PostWithAccountAndReplyCount } = $props();
 </script>
 
 <li class="p-4 transition duration-150 ease-in-out hover:bg-gray-50">
@@ -18,14 +13,11 @@
 		>
 			{post.title}
 		</a>
-		<span class="text-xs text-gray-500">{post.timestamp}</span>
+		<span class="text-xs text-gray-500">{getFormattedDateTime(post.createdAt)}</span>
 	</div>
 	<div class="text-sm text-gray-600">
-		<span>
-			by <span class="font-medium text-gray-700">{post.author}</span> in
-			<span class="font-medium text-indigo-600">{post.board}</span></span
-		>
+		<span> by <span class="font-medium text-gray-700">{post.accountDisplayName}</span></span>
 		<span class="mx-1 text-gray-300">|</span>
-		<span>{post.replies} replies</span>
+		<span>{post.replyCount} replies</span>
 	</div>
 </li>

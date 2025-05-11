@@ -1,17 +1,9 @@
 <script lang="ts">
 	import Button from "$lib/components/Button.svelte";
+	import type { PostWithAccountAndReplyCount } from "$lib/types/bonus";
 	import PostListItem from "./PostListItem.svelte";
 
-	type Post = {
-		id: number;
-		title: string;
-		author: string;
-		board: string;
-		replies: number;
-		timestamp: string;
-	};
-
-	let { posts, boardName }: { posts: Post[]; boardName: string } = $props();
+	let { posts, boardName }: { posts: PostWithAccountAndReplyCount[]; boardName: string } = $props();
 </script>
 
 <main class="w-full md:w-3/4 lg:w-4/5">
