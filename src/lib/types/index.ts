@@ -27,5 +27,5 @@ export type Board = {
 	createdAt: Date;
 	name: string;
 	description: string | null;
-	public: boolean;
+	isPublic: boolean;
 };

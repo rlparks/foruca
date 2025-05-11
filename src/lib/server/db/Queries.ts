@@ -164,8 +164,26 @@ export class Queries {
 		try {
 			const rows = await this.sql<
 				Board[]
-			>`SELECT id, created_at, name, description, public FROM board;`;
+			>`SELECT id, created_at, name, description, isPublic FROM board;`;
 			return rows;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async createBoard(board: Omit<Board, "id">) {
+		const id = generateTextId();
+
+		const { name, description, isPublic } = board;
+
+		try {
+			const [row] = await this.sql<Board[]>`INSERT INTO board (id, name, description, isPublic)
+                                            VALUES (${id}, ${name}, ${description}, ${isPublic})
+                                            RETURNING id, created_at, name, description, isPublic;`;
+			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}

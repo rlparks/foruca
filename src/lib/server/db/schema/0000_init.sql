@@ -22,5 +22,5 @@ CREATE TABLE IF NOT EXISTS board (
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     name TEXT NOT NULL UNIQUE,
     description TEXT,
-    public BOOLEAN NOT NULL
+    is_public BOOLEAN NOT NULL
 );
