@@ -1,7 +1,7 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
 import type { Account, Board, Post, Session } from "$lib/types";
-import type { PostWithAccountAndReplyCount } from "$lib/types/bonus";
+import type { PostListPost } from "$lib/types/bonus";
 import postgres from "postgres";
 
 export class Queries {
@@ -259,15 +259,17 @@ export class Queries {
 	 */
 	async getTopLevelPostsByBoardId(boardId: string) {
 		try {
-			const rows = await this.sql<PostWithAccountAndReplyCount[]>`
+			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count
+                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
                 LEFT JOIN post r ON r.parent_id = p.id
+                LEFT JOIN board b ON b.id = p.board_id
                 WHERE p.parent_id IS NULL AND p.board_id = ${boardId}
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name;`;
+                    p.board_id, p.parent_id, a.display_name, b.name;`;
 			return rows;
 		} catch (err) {
 			throw parsePgError(err);

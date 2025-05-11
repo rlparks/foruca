@@ -1,6 +1,7 @@
 import type { Post } from "$lib/types";
 
-export type PostWithAccountAndReplyCount = {
+export type PostListPost = {
 	accountDisplayName: string;
 	replyCount: number;
+	boardName: string;
 } & Post;

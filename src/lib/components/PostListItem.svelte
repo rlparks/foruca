@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { getFormattedDateTime } from "$lib";
-	import type { PostWithAccountAndReplyCount } from "$lib/types/bonus";
+	import type { PostListPost } from "$lib/types/bonus";
 
-	let { post }: { post: PostWithAccountAndReplyCount } = $props();
+	let { post }: { post: PostListPost } = $props();
 </script>
 
 <li class="p-4 transition duration-150 ease-in-out hover:bg-gray-50">
