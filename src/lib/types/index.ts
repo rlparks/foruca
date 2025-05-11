@@ -29,3 +29,15 @@ export type Board = {
 	description: string | null;
 	isPublic: boolean;
 };
+
+export type Post = {
+	id: string;
+	createdAt: Date;
+	updatedAt: Date | null;
+	accountId: string;
+	title: string;
+	body: string;
+
+	boardId: string | null;
+	parentId: string | null;
+};

@@ -24,3 +24,15 @@ CREATE TABLE IF NOT EXISTS board (
     description TEXT NOT NULL,
     is_public BOOLEAN NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS post (
+    id TEXT PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    account_id TEXT NOT NULL REFERENCES account(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+
+    board_id TEXT REFERENCES board(id) ON DELETE CASCADE, -- if set, is top level post
+    parent_id TEXT REFERENCES post(id) ON DELETE CASCADE, -- if set, is a reply
+);
