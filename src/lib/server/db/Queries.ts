@@ -1,6 +1,6 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
-import type { Account, Board, Session } from "$lib/types";
+import type { Account, Board, Post, Session } from "$lib/types";
 import postgres from "postgres";
 
 export class Queries {
@@ -213,6 +213,45 @@ export class Queries {
 			>`INSERT INTO board (id, name, description, created_at, is_public)
                 VALUES (${id}, ${name}, ${description}, ${createdAt}, ${isPublic})
                 RETURNING id, created_at, name, description, is_public;`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async getTopLevelPosts() {
+		try {
+			const rows = await this.sql<
+				Post[]
+			>`SELECT id, created_at, updated_at, account_id, title, body,
+                board_id, parent_id
+                FROM post
+                WHERE parent_id IS NULL;`;
+			return rows;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async createPost(post: Omit<Post, "id">) {
+		const id = generateTextId();
+		const { createdAt, updatedAt, accountId, title, body, boardId, parentId } = post;
+
+		try {
+			const [row] = await this.sql<
+				Post[]
+			>`INSERT INTO post (id, created_at, updated_at, account_id, title, body,
+                board_id, parent_id)
+                VALUES (${id}, ${createdAt}, ${updatedAt}, ${accountId}, ${title}, ${body},
+                ${boardId}, ${parentId})
+                RETURNING id, created_at, updated_at, account_id, title, body,
+                board_id, parent_id;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
