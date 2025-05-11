@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
 	import type { Account } from "$lib/types";
+	import Button from "./Button.svelte";
 
 	type Props = {
 		account: Account | null;
@@ -67,21 +68,13 @@
 
 		<div class="flex-shrink-0">
 			{#if !account}
-				<a
-					href="/login"
-					class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
-				>
-					Login
-				</a>
+				<Button href="/login" color="blue" font="base">Login</Button>
 			{:else}
 				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
 				<form action="/" method="POST" use:enhance>
-					<button
-						type="submit"
-						class="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-blue-600 hover:shadow-md sm:text-base"
-					>
+					<Button type="submit" color="blue" font="base">
 						Logout {account.username}
-					</button>
+					</Button>
 				</form>
 			{/if}
 		</div>

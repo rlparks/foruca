@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from "$lib/components/Button.svelte";
 	import PostListItem from "./PostListItem.svelte";
 
 	type Post = {
@@ -16,12 +17,7 @@
 <main class="w-full md:w-3/4 lg:w-4/5">
 	<div class="mb-4 flex items-center justify-between">
 		<h2 class="justify-baseline text-xl font-semibold text-gray-800">{boardName}</h2>
-		<a
-			href="/create"
-			class="rounded-lg bg-green-500 px-5 py-2 font-semibold text-white shadow transition duration-200 ease-in-out hover:bg-green-600 hover:shadow-md"
-		>
-			Create Post
-		</a>
+		<Button href="/create" color="green" font="base">Create Post</Button>
 	</div>
 
 	<div class="overflow-hidden rounded-lg bg-white shadow">

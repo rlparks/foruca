@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from "$app/forms";
+	import Button from "$lib/components/Button.svelte";
 
 	let boards = $state([
 		{ id: 1, name: "General Discussion" },
@@ -73,19 +74,15 @@
 			</div>
 
 			<div class="mt-6 flex items-center justify-end gap-4 border-t pt-4">
-				<button
-					type="button"
-					class="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition duration-150 ease-in-out hover:bg-gray-50 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
-				>
-					Cancel
-				</button>
-				<button
+				<Button type="button" color="outline" font="small">Cancel</Button>
+				<Button
 					type="submit"
+					font="small"
+					color="blue"
 					disabled={!title || !selectedBoardId || !content}
-					class="rounded-md border border-transparent bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition duration-150 ease-in-out hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					Create Post
-				</button>
+				</Button>
 			</div>
 		</form>
 	</div>
