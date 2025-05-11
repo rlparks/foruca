@@ -164,7 +164,7 @@ export class Queries {
 		try {
 			const rows = await this.sql<
 				Board[]
-			>`SELECT id, created_at, name, description, isPublic FROM board;`;
+			>`SELECT id, created_at, name, description, is_public FROM board;`;
 			return rows;
 		} catch (err) {
 			throw parsePgError(err);

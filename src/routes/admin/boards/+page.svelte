@@ -24,7 +24,7 @@
 					<h2>{board.name}</h2>
 					<p>{board.description}</p>
 					<p>Created at: {board.createdAt}</p>
-					<p>Public: {board.public ? "Yes" : "No"}</p>
+					<p>Public: {board.isPublic}</p>
 				</div>
 			{/each}
 		{/await}
