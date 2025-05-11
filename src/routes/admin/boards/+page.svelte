@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getFormattedDateTime } from "$lib";
 	import Button from "$lib/components/Button.svelte";
 	import HelpText from "$lib/components/HelpText.svelte";
 
@@ -33,7 +34,9 @@
 										<p class="text-lg font-semibold">
 											{board.name}
 										</p>
-										<span class="text-xs text-gray-500">{board.createdAt}</span>
+										<span class="text-xs text-gray-500">
+											{getFormattedDateTime(board.createdAt)}
+										</span>
 									</div>
 									<div class="text-sm text-gray-600">
 										<span>
