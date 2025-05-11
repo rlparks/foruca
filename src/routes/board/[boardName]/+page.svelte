@@ -59,5 +59,5 @@
 			{data.board.description}
 		{/snippet}
 	</HelpText>
-	<PostList {posts} boardName={data.board.name} />
+	<PostList {posts} boardName={"Posts in " + data.board.name} />
 </div>
