@@ -171,12 +171,28 @@ export class Queries {
 		}
 	}
 
+	/**
+	 * @throws on DB connection error
+	 */
 	async getPublicBoards() {
 		try {
 			const rows = await this.sql<Board[]>`SELECT id, created_at, name, description, is_public
                                                     FROM board
                                                     WHERE is_public = true;`;
 			return rows;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+	/**
+	 * @throws on DB connection error
+	 */
+	async getBoardByName(name: string) {
+		try {
+			const [row] = await this.sql<Board[]>`SELECT id, created_at, name, description, is_public
+                                                    FROM board
+                                                    WHERE name = ${name};`;
+			return row;
 		} catch (err) {
 			throw parsePgError(err);
 		}
