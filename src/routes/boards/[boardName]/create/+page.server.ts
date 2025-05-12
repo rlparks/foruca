@@ -16,16 +16,18 @@ export const actions: Actions = {
 			postTitle: string;
 			postBody: string;
 		};
+		const trimmedPostTitle = postTitle.trim();
+		const trimmedPostBody = postBody.trim();
 
-		if (!postTitle || !postBody) {
+		if (!trimmedPostTitle || !trimmedPostBody) {
 			return fail(400, { message: "Please fill in all fields" });
 		}
 
-		if (postTitle.length > 100) {
+		if (trimmedPostTitle.length > 100) {
 			return fail(400, { message: "Title is too long" });
 		}
 
-		if (postBody.length > 2000) {
+		if (trimmedPostBody.length > 2000) {
 			return fail(400, { message: "Body is too long" });
 		}
 
@@ -41,8 +43,8 @@ export const actions: Actions = {
 		}
 
 		const post = await event.locals.queries.createPost({
-			title: postTitle.trim(),
-			body: postBody.trim(),
+			title: trimmedPostTitle,
+			body: trimmedPostBody,
 			boardId: board.id,
 			accountId: event.locals.account.id,
 			createdAt: new Date(),

@@ -17,17 +17,20 @@ export const actions: Actions = {
 			privateBoard?: "on";
 		};
 
-		if (!boardName || !boardDescription) {
+		const trimmedBoardName = boardName.trim();
+		const trimmedBoardDescription = boardDescription.trim();
+
+		if (!trimmedBoardName || !trimmedBoardDescription) {
 			return fail(400, { message: "Please fill out all fields" });
 		}
 
-		if (boardName.length > 50) {
+		if (trimmedBoardName.length > 50) {
 			return fail(400, { message: "Board name cannot exceed 50 characters" });
 		}
 
 		const newBoard: Omit<Board, "id"> = {
-			name: boardName.trim(),
-			description: boardDescription.trim(),
+			name: trimmedBoardName,
+			description: trimmedBoardDescription,
 			isPublic: privateBoard !== "on",
 			createdAt: new Date(),
 		};
