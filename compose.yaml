@@ -1,0 +1,26 @@
+services:
+  foruca:
+    container_name: foruca
+    image: ghcr.io/rlparks/foruca:main
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://root:mysecretpassword@foruca-db:5432/local
+      OIDC_DISCOVERY_URL: https://example.com/.well-known
+      OIDC_USERNAME_CLAIM: preferred_username
+      OIDC_CLIENT_ID: example
+      OIDC_CLIENT_SECRET: example
+    depends_on:
+      - foruca-db
+  foruca-db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: local
+    volumes:
+      - ./db:/var/lib/postgresql/data
