@@ -1,18 +1,16 @@
 <script lang="ts">
-	import { Header } from "$lib/components";
-	import type { Snippet } from "svelte";
-	import type { LayoutData } from "./$types";
-	import "./style.css";
+	import { page } from "$app/state";
+	import Header from "$lib/components/Header.svelte";
+	import "../app.css";
 
-	interface Props {
-		data: LayoutData;
-		children: Snippet;
-	}
-
-	let { data, children }: Props = $props();
-	let user = $derived(data.user);
+	let { children, data } = $props();
 </script>
 
-<Header {user} />
+<svelte:head>
+	<title>foruca {page.data.pageTitle ? "· " + page.data.pageTitle : ""}</title>
+	<meta name="description" content={page.data.pageDescription} />
+</svelte:head>
+
+<Header account={data.account} />
 
 {@render children()}

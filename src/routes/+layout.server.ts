@@ -1,17 +1,7 @@
-import { makeUserSafe } from "$lib";
-import type { RawUser } from "$lib/types";
 import type { LayoutServerLoad } from "./$types";
 
-export const load = (async ({ locals }) => {
-	if (locals.user) {
-		// console.log("user:", locals.user);
+export const load = (async (event) => {
+	const { account } = event.locals;
 
-		return {
-			user: makeUserSafe(locals.user as RawUser)
-		};
-	}
-
-	return {
-		user: undefined
-	};
+	return { account, pageTitle: "", pageDescription: "the forum application." };
 }) satisfies LayoutServerLoad;

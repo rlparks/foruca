@@ -1,16 +1,22 @@
-import PocketBase, { type AuthModel } from "pocketbase";
+import type Security from "$lib/server/auth/Security";
+import type { Queries } from "$lib/server/db/Queries";
+import type { Account, Session } from "$lib/types";
 
-// See https://kit.svelte.dev/docs/types#app
+// See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			pb: PocketBase;
-			adminPb: PocketBase;
-			user: AuthModel | undefined;
+			queries: Queries;
+			security: Security;
+			account: Account | null;
+			session: Session | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			pageTitle: string;
+			pageDescription: string;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

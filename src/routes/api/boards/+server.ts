@@ -1,22 +1,20 @@
-import { makeBoardSafe, TABLE_NAMES } from "$lib";
-import type { RawBoard, SafeBoard } from "$lib/types";
-import { json } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
-export const GET: RequestHandler = async ({ locals }) => {
+// response will include only the boards the user has access to
+export const GET: RequestHandler = async (event) => {
+	const canViewPrivateBoards = event.locals.security.isAuthenticated();
+
 	try {
-		// get boards in alphabetical order
-		const boardRes = await locals.pb
-			.collection(TABLE_NAMES.boards)
-			.getFullList<RawBoard>({ sort: "name" });
-
-		const safeBoards: SafeBoard[] = [];
-		for (const boardKey in boardRes) {
-			safeBoards[boardKey] = makeBoardSafe(boardRes[boardKey]);
+		if (canViewPrivateBoards) {
+			const boards = await event.locals.queries.getBoards();
+			return json(boards);
+		} else {
+			const boards = await event.locals.queries.getPublicBoards();
+			return json(boards);
 		}
-
-		return json(safeBoards);
 	} catch (err) {
-		return json({ error: "Error retrieving boards." }, { status: 500 });
+		console.error(err);
+		return error(500, "Error fetching boards");
 	}
 };
