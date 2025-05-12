@@ -1,6 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
+// response will include only the boards the user has access to
 export const GET: RequestHandler = async (event) => {
 	const canViewPrivateBoards = event.locals.security.isAuthenticated();
 
