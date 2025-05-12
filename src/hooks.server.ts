@@ -8,7 +8,7 @@ import { error, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
 const setupDb: Handle = async ({ event, resolve }) => {
-	event.locals.queries = new Queries(getInstance());
+	event.locals.queries = new Queries(getInstance(true));
 
 	return resolve(event);
 };

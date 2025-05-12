@@ -1,9 +1,15 @@
 import { env } from "$env/dynamic/private";
 import postgres from "postgres";
 
-export function getInstance() {
+let client: postgres.Sql | null = null;
+
+export function getInstance(cache: boolean) {
+	if (cache && client) {
+		return client;
+	}
 	const url = env.DATABASE_URL ?? "";
 	if (!url) throw new Error("Environment variable DATABASE_URL is not set");
 
-	return postgres(url, { transform: postgres.camel });
+	client = postgres(url, { transform: postgres.camel });
+	return client;
 }
