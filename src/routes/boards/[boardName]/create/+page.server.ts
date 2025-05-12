@@ -41,8 +41,8 @@ export const actions: Actions = {
 		}
 
 		const post = await event.locals.queries.createPost({
-			title: postTitle,
-			body: postBody,
+			title: postTitle.trim(),
+			body: postBody.trim(),
 			boardId: board.id,
 			accountId: event.locals.account.id,
 			createdAt: new Date(),

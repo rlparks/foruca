@@ -26,8 +26,8 @@ export const actions: Actions = {
 		}
 
 		const newBoard: Omit<Board, "id"> = {
-			name: boardName,
-			description: boardDescription,
+			name: boardName.trim(),
+			description: boardDescription.trim(),
 			isPublic: privateBoard !== "on",
 			createdAt: new Date(),
 		};
