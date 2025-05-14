@@ -13,7 +13,8 @@
 			Welcome to <span class="text-blue-600">foruca</span>
 		{/snippet}
 		{#snippet body()}
-			The forum application that "works".
+			<p class="mb-2">The forum application that "works".</p>
+			<p>To get started, navigate to a board and make a post!</p>
 		{/snippet}
 	</HelpText>
 	<PostList posts={data.posts} boardName="All Of Them" showBoardName={true} />
