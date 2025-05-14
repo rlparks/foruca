@@ -269,7 +269,8 @@ export class Queries {
                 LEFT JOIN board b ON b.id = p.board_id
                 WHERE p.parent_id IS NULL AND p.board_id = ${boardId}
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name, b.name;`;
+                    p.board_id, p.parent_id, a.display_name, b.name
+                ORDER BY p.created_at DESC;`;
 			return rows;
 		} catch (err) {
 			throw parsePgError(err);
