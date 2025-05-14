@@ -22,7 +22,7 @@
 					{/if}
 				</span>
 				<span class="mx-1 text-gray-300">|</span>
-				<span>{post.replyCount} replies</span>
+				<span>{post.replyCount} {post.replyCount === 1 ? "reply" : "replies"}</span>
 			</div>
 		</li>
 	</a>
