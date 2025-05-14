@@ -2,7 +2,7 @@
 	import { getFormattedDateTime } from "$lib";
 	import type { PostListPost } from "$lib/types/bonus";
 
-	let { post }: { post: PostListPost } = $props();
+	let { post, showBoardName }: { post: PostListPost; showBoardName: boolean } = $props();
 </script>
 
 <div>
@@ -15,7 +15,12 @@
 				<span class="text-xs text-gray-500">{getFormattedDateTime(post.createdAt)}</span>
 			</div>
 			<div class="text-sm text-gray-600">
-				<span> by <span class="font-medium text-gray-700">{post.accountDisplayName}</span></span>
+				<span>
+					by <span class="font-medium text-gray-700">{post.accountDisplayName}</span>
+					{#if showBoardName}
+						in <span class="font-medium text-gray-700">{post.boardName}</span>
+					{/if}
+				</span>
 				<span class="mx-1 text-gray-300">|</span>
 				<span>{post.replyCount} replies</span>
 			</div>
