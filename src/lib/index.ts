@@ -9,7 +9,12 @@ export const OIDC_STATE_KEY = "foruca-oidc-state";
  * @returns a nicely formatted date/time string
  */
 export function getFormattedDateTime(date: Date): string {
-	const dateString = date.toISOString().split("T")[0];
+	// use user's favorite date flavor
+	const dateString = date.toLocaleDateString(undefined, {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	});
 	return `${dateString} ${date.toLocaleTimeString()}`;
 }
 
