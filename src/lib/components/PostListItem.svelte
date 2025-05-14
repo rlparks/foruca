@@ -9,7 +9,7 @@
 	<a href={`/boards/${post.boardName}/${post.id}`}>
 		<li class="p-4 transition duration-150 ease-in-out hover:bg-gray-50">
 			<div class="mb-1 flex items-center justify-between">
-				<p class="text-lg font-semibold">
+				<p class="truncate text-lg font-semibold">
 					{post.title}
 				</p>
 				<span class="text-xs text-gray-500">{getFormattedDateTime(post.createdAt)}</span>
