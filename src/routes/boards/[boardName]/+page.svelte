@@ -4,4 +4,4 @@
 	let { data } = $props();
 </script>
 
-<PostList posts={data.posts} boardName={data.board.name} />
+<PostList posts={data.posts} boardName={data.board.name} showBoardName={false} />

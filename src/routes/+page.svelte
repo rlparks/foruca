@@ -14,5 +14,5 @@
 			The forum application that "works".
 		{/snippet}
 	</HelpText>
-	<PostList posts={[]} boardName="All Posts" />
+	<PostList posts={[]} boardName="All Posts" showBoardName={true} />
 </div>

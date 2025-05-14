@@ -3,7 +3,11 @@
 	import type { PostListPost } from "$lib/types/bonus";
 	import PostListItem from "./PostListItem.svelte";
 
-	let { posts, boardName }: { posts: PostListPost[]; boardName: string } = $props();
+	let {
+		posts,
+		boardName,
+		showBoardName,
+	}: { posts: PostListPost[]; boardName: string; showBoardName: boolean } = $props();
 </script>
 
 <main class="w-full md:w-3/4 lg:w-4/5">
@@ -15,7 +19,7 @@
 	<div class="overflow-hidden rounded-lg bg-white shadow">
 		<ul class="divide-y divide-gray-200">
 			{#each posts as post (post.id)}
-				<PostListItem {post} />
+				<PostListItem {post} {showBoardName} />
 			{:else}
 				<li class="p-4 text-center text-gray-500">No posts found.</li>
 			{/each}
