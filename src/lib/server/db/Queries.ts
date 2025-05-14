@@ -240,23 +240,6 @@ export class Queries {
 	/**
 	 * @throws on DB connection error
 	 */
-	async getTopLevelPostsByBoardName(boardName: string) {
-		try {
-			const [row] = await this.sql<Post[]>`
-                SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id
-                FROM post p
-                JOIN board b ON b.id = p.board_id
-                WHERE parent_id IS NULL AND b.name = ${boardName};`;
-			return row;
-		} catch (err) {
-			throw parsePgError(err);
-		}
-	}
-
-	/**
-	 * @throws on DB connection error
-	 */
 	async getTopLevelPostsByBoardId(boardId: string) {
 		try {
 			const rows = await this.sql<PostListPost[]>`
