@@ -247,6 +247,29 @@ export class Queries {
 	/**
 	 * @throws on DB connection error
 	 */
+	async getPublicTopLevelPosts() {
+		try {
+			const rows = await this.sql<PostListPost[]>`
+                SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
+                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    b.name AS board_name
+                FROM post p
+                LEFT JOIN account a ON a.id = p.account_id
+                LEFT JOIN post r ON r.parent_id = p.id
+                LEFT JOIN board b ON b.id = p.board_id
+                WHERE p.parent_id IS NULL AND b.is_public = true
+                GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
+                    p.board_id, p.parent_id, a.display_name, b.name
+                ORDER BY p.created_at DESC;`;
+			return rows;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 */
 	async getTopLevelPostsByBoardId(boardId: string) {
 		try {
 			const rows = await this.sql<PostListPost[]>`
