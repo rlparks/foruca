@@ -1,6 +1,8 @@
 <script lang="ts">
 	import HelpText from "$lib/components/HelpText.svelte";
 	import PostList from "$lib/components/PostList.svelte";
+
+	let { data } = $props();
 </script>
 
 <div
@@ -14,5 +16,5 @@
 			The forum application that "works".
 		{/snippet}
 	</HelpText>
-	<PostList posts={[]} boardName="All Posts" showBoardName={true} />
+	<PostList posts={data.posts} boardName="All Of Them" showBoardName={true} />
 </div>
