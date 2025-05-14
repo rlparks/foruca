@@ -13,9 +13,14 @@
 			Welcome to <span class="text-blue-600">foruca</span>
 		{/snippet}
 		{#snippet body()}
-			<p class="mb-2">The forum application that "works".</p>
-			<p>To get started, navigate to a board and make a post!</p>
+			<span class="mb-2 block">The forum application that "works".</span>
+			<span class="block">To get started, navigate to a board and make a post!</span>
 		{/snippet}
 	</HelpText>
-	<PostList posts={data.posts} boardName="All Of Them" showBoardName={true} />
+	<PostList
+		posts={data.posts}
+		boardName="All Of Them"
+		showBoardName={true}
+		showCreatePost={false}
+	/>
 </div>

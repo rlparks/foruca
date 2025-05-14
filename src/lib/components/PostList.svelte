@@ -3,17 +3,22 @@
 	import type { PostListPost } from "$lib/types/bonus";
 	import PostListItem from "./PostListItem.svelte";
 
-	let {
-		posts,
-		boardName,
-		showBoardName,
-	}: { posts: PostListPost[]; boardName: string; showBoardName: boolean } = $props();
+	type Props = {
+		posts: PostListPost[];
+		boardName: string;
+		showBoardName: boolean;
+		showCreatePost: boolean;
+	};
+
+	let { posts, boardName, showBoardName, showCreatePost }: Props = $props();
 </script>
 
 <main class="w-full md:w-3/4 lg:w-4/5">
 	<div class="mb-4 flex items-center justify-between">
 		<h2 class="justify-baseline text-xl font-semibold text-gray-800">Posts in {boardName}</h2>
-		<Button href={`/boards/${boardName}/create`} color="green" font="base">Create Post</Button>
+		{#if showCreatePost}
+			<Button href={`/boards/${boardName}/create`} color="green" font="base">Create Post</Button>
+		{/if}
 	</div>
 
 	<div class="overflow-hidden rounded-lg bg-white shadow">
