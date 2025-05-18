@@ -26,7 +26,10 @@
 		</div>
 	</div>
 
-	<div class="overflow-hidden rounded-lg bg-white p-4 shadow">
-		{data.post.body}
+	<div class="overflow-hidden rounded-lg bg-white shadow">
+		<p class="p-4">{data.post.body}</p>
+		<button class="w-full cursor-pointer bg-gray-50 p-4 text-center transition hover:bg-gray-100">
+			Reply
+		</button>
 	</div>
 </main>
