@@ -9,6 +9,7 @@
 <svelte:head>
 	<title>{page.data.pageTitle}</title>
 	<meta name="description" content={page.data.pageDescription} />
+	<meta name="og:description" content={page.data.pageDescription} />
 </svelte:head>
 
 <Header account={data.account} />
