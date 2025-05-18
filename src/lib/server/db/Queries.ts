@@ -228,15 +228,14 @@ export class Queries {
 			const rows = await this.sql<
 				PostListPost[]
 			>`SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
-                LEFT JOIN post r ON r.parent_id = p.id
+                LEFT JOIN reply r ON r.post_id = p.id
                 LEFT JOIN board b ON b.id = p.board_id
-                WHERE p.parent_id IS NULL
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name, b.name
+                    p.board_id, a.display_name, b.name
                 ORDER BY p.created_at DESC;`;
 			return rows;
 		} catch (err) {
@@ -251,15 +250,15 @@ export class Queries {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
-                LEFT JOIN post r ON r.parent_id = p.id
+                LEFT JOIN reply r ON r.post_id = p.id
                 LEFT JOIN board b ON b.id = p.board_id
-                WHERE p.parent_id IS NULL AND b.is_public = true
+                WHERE b.is_public = true
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name, b.name
+                    p.board_id, a.display_name, b.name
                 ORDER BY p.created_at DESC;`;
 			return rows;
 		} catch (err) {
@@ -274,15 +273,15 @@ export class Queries {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
-                LEFT JOIN post r ON r.parent_id = p.id
+                LEFT JOIN reply r ON r.post_id = p.id
                 LEFT JOIN board b ON b.id = p.board_id
-                WHERE p.parent_id IS NULL AND p.board_id = ${boardId}
+                WHERE p.board_id = ${boardId}
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, p.parent_id, a.display_name, b.name
+                    p.board_id, a.display_name, b.name
                 ORDER BY p.created_at DESC;`;
 			return rows;
 		} catch (err) {
@@ -295,17 +294,17 @@ export class Queries {
 	 */
 	async createPost(post: Omit<Post, "id">) {
 		const id = generateTextId();
-		const { createdAt, updatedAt, accountId, title, body, boardId, parentId } = post;
+		const { createdAt, updatedAt, accountId, title, body, boardId } = post;
 
 		try {
 			const [row] = await this.sql<
 				Post[]
 			>`INSERT INTO post (id, created_at, updated_at, account_id, title, body,
-                board_id, parent_id)
+                board_id)
                 VALUES (${id}, ${createdAt}, ${updatedAt}, ${accountId}, ${title}, ${body},
-                ${boardId}, ${parentId})
+                ${boardId})
                 RETURNING id, created_at, updated_at, account_id, title, body,
-                board_id, parent_id;`;
+                board_id;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
@@ -321,8 +320,7 @@ export class Queries {
 				(Post & { boardName: string; boardIsPublic: boolean; accountDisplayName: string })[]
 			>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                       p.board_id, p.parent_id,
-                       b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name
+                       p.board_id, b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name
                 FROM post p
                 LEFT JOIN board b ON b.id = p.board_id
                 LEFT JOIN account a ON a.id = p.account_id

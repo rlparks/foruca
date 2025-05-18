@@ -54,7 +54,6 @@ export const actions: Actions = {
 			accountId: event.locals.account.id,
 			createdAt: new Date(),
 			updatedAt: null,
-			parentId: null,
 		});
 
 		if (!post) {

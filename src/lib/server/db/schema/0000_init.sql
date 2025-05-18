@@ -33,6 +33,5 @@ CREATE TABLE IF NOT EXISTS post (
     title TEXT NOT NULL,
     body TEXT NOT NULL,
 
-    board_id TEXT REFERENCES board(id) ON DELETE CASCADE, -- if set, is top level post
-    parent_id TEXT REFERENCES post(id) ON DELETE CASCADE -- if set, is a reply
+    board_id TEXT NOT NULL REFERENCES board(id) ON DELETE CASCADE
 );

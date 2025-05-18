@@ -39,5 +39,4 @@ export type Post = {
 	body: string;
 
 	boardId: string | null;
-	parentId: string | null;
 };
