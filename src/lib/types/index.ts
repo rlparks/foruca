@@ -40,3 +40,14 @@ export type Post = {
 
 	boardId: string | null;
 };
+
+export type Reply = {
+	id: string;
+	createdAt: Date;
+	updatedAt: Date | null;
+	accountId: string;
+	body: string;
+
+	postId: string;
+	parentId: string | null;
+};
