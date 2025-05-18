@@ -311,4 +311,25 @@ export class Queries {
 			throw parsePgError(err);
 		}
 	}
+
+	/**
+	 * @throws on DB connection error
+	 */
+	async getPostById(postId: string) {
+		try {
+			const [row] = await this.sql<
+				(Post & { boardName: string; boardIsPublic: boolean; accountDisplayName: string })[]
+			>`
+                SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
+                       p.board_id, p.parent_id,
+                       b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name
+                FROM post p
+                LEFT JOIN board b ON b.id = p.board_id
+                LEFT JOIN account a ON a.id = p.account_id
+                WHERE p.id = ${postId};`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
 }
