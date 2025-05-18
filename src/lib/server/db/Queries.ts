@@ -317,14 +317,23 @@ export class Queries {
 	async getPostById(postId: string) {
 		try {
 			const [row] = await this.sql<
-				(Post & { boardName: string; boardIsPublic: boolean; accountDisplayName: string })[]
+				(Post & {
+					boardName: string;
+					boardIsPublic: boolean;
+					accountDisplayName: string;
+					replyCount: number;
+				})[]
 			>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                       p.board_id, b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name
+                       p.board_id, b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name,
+                       COUNT(r.id) AS reply_count
                 FROM post p
                 LEFT JOIN board b ON b.id = p.board_id
                 LEFT JOIN account a ON a.id = p.account_id
-                WHERE p.id = ${postId};`;
+                LEFT JOIN reply r ON r.post_id = p.id
+                WHERE p.id = ${postId}
+                GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
+                         p.board_id, b.name, b.is_public, a.display_name;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);

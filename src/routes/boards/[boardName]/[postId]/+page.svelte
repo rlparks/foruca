@@ -23,7 +23,7 @@
 				<p class="text-gray-500">
 					{getFormattedDateTime(data.post.createdAt)}
 				</p>
-				<p class="text-gray-500">1 mikbillion replies</p>
+				<p class="text-gray-500">{data.post.replyCount} replies</p>
 			</div>
 		</div>
 	</div>
