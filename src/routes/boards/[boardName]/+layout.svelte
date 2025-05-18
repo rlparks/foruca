@@ -9,7 +9,9 @@
 >
 	<HelpText>
 		{#snippet title()}
-			{data.board.name}
+			<a href="/boards/{data.board.name}" class="text-blue-600 transition hover:text-blue-700">
+				{data.board.name}
+			</a>
 		{/snippet}
 		{#snippet body()}
 			{data.board.description}
