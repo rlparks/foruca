@@ -4,6 +4,10 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<meta name="og:title" content={`${data.post.boardName} · ${data.post.title}`} />
+</svelte:head>
+
 <main class="w-full md:w-3/4 lg:w-4/5">
 	<div class="mb-4 min-h-10">
 		<div class="flex items-center justify-between">
