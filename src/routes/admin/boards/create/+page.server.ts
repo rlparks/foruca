@@ -8,6 +8,7 @@ export const load = (async () => {
 
 export const actions: Actions = {
 	default: async (event) => {
+		event.locals.security.enforceAdmin();
 		const formData = await event.request.formData();
 		const { boardName, boardDescription, privateBoard } = Object.fromEntries(
 			formData.entries(),
