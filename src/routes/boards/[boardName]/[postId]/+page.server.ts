@@ -17,5 +17,5 @@ export const load = (async (event) => {
 		return redirect(303, `/boards/${post.boardName}/${postId}`);
 	}
 
-	return { post };
+	return { post, pageTitle: post.title, pageDescription: `Post in ${post.boardName}` };
 }) satisfies PageServerLoad;
