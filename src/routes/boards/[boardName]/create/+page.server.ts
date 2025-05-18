@@ -61,8 +61,6 @@ export const actions: Actions = {
 			return fail(500, { message: "Failed to create post" });
 		}
 
-		return redirect(303, `/boards/${boardName}`);
-		// TODO: redirect to new post
-		// return redirect(303, `/boards/${boardName}/${post.id}`);
+		return redirect(303, `/boards/${boardName}/${post.id}`);
 	},
 };
