@@ -223,7 +223,7 @@ export class Queries {
 	/**
 	 * @throws on DB connection error
 	 */
-	async getTopLevelPosts() {
+	async getPosts() {
 		try {
 			const rows = await this.sql<
 				PostListPost[]
@@ -246,7 +246,7 @@ export class Queries {
 	/**
 	 * @throws on DB connection error
 	 */
-	async getPublicTopLevelPosts() {
+	async getPublicPosts() {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
@@ -269,7 +269,7 @@ export class Queries {
 	/**
 	 * @throws on DB connection error
 	 */
-	async getTopLevelPostsByBoardId(boardId: string) {
+	async getPostsByBoardId(boardId: string) {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,

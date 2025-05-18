@@ -14,7 +14,7 @@ export const load = (async (event) => {
 		return error(404, "Board not found");
 	}
 
-	const posts = await event.locals.queries.getTopLevelPostsByBoardId(board.id);
+	const posts = await event.locals.queries.getPostsByBoardId(board.id);
 
 	return { board, posts, pageTitle: board.name, pageDescription: board.description };
 }) satisfies PageServerLoad;
