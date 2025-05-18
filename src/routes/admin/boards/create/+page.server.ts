@@ -2,8 +2,9 @@ import type { Board } from "$lib/types";
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
-export const load = (async () => {
-	return {};
+export const load = (async (event) => {
+	event.locals.security.enforceAdmin();
+	return { pageTitle: "Create Board", pageDescription: "Admin: create a new board" };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

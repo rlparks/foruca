@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>foruca {page.data.pageTitle ? "· " + page.data.pageTitle : ""}</title>
+	<title>{page.data.pageTitle}</title>
 	<meta name="description" content={page.data.pageDescription} />
 </svelte:head>
 

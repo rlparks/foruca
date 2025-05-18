@@ -4,7 +4,12 @@ import type { Actions, PageServerLoad } from "./$types";
 export const load = (async (event) => {
 	event.locals.security.enforceAuthenticated();
 
-	return {};
+	const boardName = event.params.boardName;
+
+	return {
+		pageTitle: `Create Post · ${boardName}`,
+		pageDescription: `Create a new post in ${boardName}`,
+	};
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

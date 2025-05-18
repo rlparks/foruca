@@ -16,5 +16,5 @@ export const load = (async (event) => {
 
 	const posts = await event.locals.queries.getTopLevelPostsByBoardId(board.id);
 
-	return { board, posts };
+	return { board, posts, pageTitle: board.name, pageDescription: board.description };
 }) satisfies PageServerLoad;
