@@ -8,6 +8,7 @@
 
 <svelte:head>
 	<title>{page.data.pageTitle}</title>
+	<meta name="og:title" content={page.data.pageTitle} />
 	<meta name="description" content={page.data.pageDescription} />
 	<meta name="og:description" content={page.data.pageDescription} />
 </svelte:head>
