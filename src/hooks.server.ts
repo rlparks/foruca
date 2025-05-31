@@ -93,7 +93,7 @@ const posthogProxy: Handle = async ({ event, resolve }) => {
 		const headers = new Headers(event.request.headers);
 		headers.set("host", hostname);
 
-		const response = await fetch(url.toString(), {
+		const response = await event.fetch(url.toString(), {
 			method: event.request.method,
 			headers,
 			body: event.request.body,
