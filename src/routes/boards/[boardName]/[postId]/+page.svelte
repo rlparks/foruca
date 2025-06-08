@@ -27,7 +27,10 @@
 				<p class="text-gray-500">
 					{getFormattedDateTime(data.post.createdAt)}
 				</p>
-				<p class="text-gray-500">{data.post.replyCount} replies</p>
+				<p class="text-gray-500">
+					{data.post.replyCount}
+					{data.post.replyCount === 1 ? "reply" : "replies"}
+				</p>
 			</div>
 		</div>
 	</div>

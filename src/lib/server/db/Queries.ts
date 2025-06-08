@@ -228,7 +228,7 @@ export class Queries {
 			const rows = await this.sql<
 				PostListPost[]
 			>`SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id)::int AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
@@ -250,7 +250,7 @@ export class Queries {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id)::int AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
@@ -273,7 +273,7 @@ export class Queries {
 		try {
 			const rows = await this.sql<PostListPost[]>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
-                    p.board_id, a.display_name AS account_display_name, COUNT(r.id) AS reply_count,
+                    p.board_id, a.display_name AS account_display_name, COUNT(r.id)::int AS reply_count,
                     b.name AS board_name
                 FROM post p
                 LEFT JOIN account a ON a.id = p.account_id
@@ -326,7 +326,7 @@ export class Queries {
 			>`
                 SELECT p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
                        p.board_id, b.name AS board_name, b.is_public AS board_is_public, a.display_name AS account_display_name,
-                       COUNT(r.id) AS reply_count
+                       COUNT(r.id)::int AS reply_count
                 FROM post p
                 LEFT JOIN board b ON b.id = p.board_id
                 LEFT JOIN account a ON a.id = p.account_id
