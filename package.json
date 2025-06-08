@@ -27,6 +27,7 @@
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-svelte": "^3.9.1",
 		"globals": "^16.2.0",
+		"kysely-postgres-js": "^2.0.0",
 		"postgres": "^3.4.7",
 		"posthog-js": "^1.249.0",
 		"posthog-node": "^4.18.0",
