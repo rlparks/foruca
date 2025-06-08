@@ -1,6 +1,6 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
-import type { Account, Board, Post, Session } from "$lib/types";
+import type { Account, Board, Post, Reply, Session } from "$lib/types";
 import type { PostListPost } from "$lib/types/bonus";
 import postgres from "postgres";
 
@@ -334,6 +334,25 @@ export class Queries {
                 WHERE p.id = ${postId}
                 GROUP BY p.id, p.created_at, p.updated_at, p.account_id, p.title, p.body,
                          p.board_id, b.name, b.is_public, a.display_name;`;
+			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	/**
+	 * @throws on DB connection error
+	 * @throws if parent does not exist
+	 */
+	async createReply(reply: Omit<Reply, "id">) {
+		const id = generateTextId();
+		const { createdAt, updatedAt, accountId, postId, body, parentId } = reply;
+
+		try {
+			const [row] = await this.sql<Reply[]>`
+                INSERT INTO reply (id, created_at, updated_at, account_id, post_id, body, parent_id)
+                VALUES (${id}, ${createdAt}, ${updatedAt}, ${accountId}, ${postId}, ${body}, ${parentId})
+                RETURNING id, created_at, updated_at, account_id, post_id, body, parent_id;`;
 			return row;
 		} catch (err) {
 			throw parsePgError(err);
