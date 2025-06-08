@@ -39,7 +39,7 @@ export const actions: Actions = {
 			updatedAt: new Date(),
 			accountId,
 			postId,
-			body,
+			body: body.trim(),
 			parentId: parentId || null,
 		});
 

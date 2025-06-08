@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { getFormattedDateTime } from "$lib";
+	import Button from "$lib/components/Button.svelte";
+	import { slide } from "svelte/transition";
 
 	let { data } = $props();
+
+	let isReplying = $state(false);
 </script>
 
 <svelte:head>
@@ -30,8 +34,26 @@
 
 	<div class="overflow-hidden rounded-lg bg-white shadow">
 		<p class="p-4">{data.post.body}</p>
-		<button class="w-full cursor-pointer bg-gray-50 p-4 text-center transition hover:bg-gray-100">
-			Reply
-		</button>
+
+		{#if isReplying}
+			<form class="p-4" method="POST" transition:slide>
+				<textarea
+					name="body"
+					placeholder="Write your reply..."
+					class="w-full rounded border border-gray-300 p-2"
+				></textarea>
+				<Button color="blue" font="small" type="submit">Reply</Button>
+				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
+					Cancel
+				</Button>
+			</form>
+		{:else}
+			<button
+				onclick={() => (isReplying = true)}
+				class="w-full cursor-pointer bg-gray-50 p-4 text-center transition hover:bg-gray-100"
+			>
+				Reply
+			</button>
+		{/if}
 	</div>
 </main>
