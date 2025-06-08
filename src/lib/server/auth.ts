@@ -1,4 +1,6 @@
+import { env } from "$env/dynamic/private";
 import { betterAuth } from "better-auth";
+import { genericOAuth } from "better-auth/plugins";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import { getInstance } from "./db/postgres";
 
@@ -9,6 +11,19 @@ export const auth = betterAuth({
 		}),
 		type: "postgres",
 		casing: "snake", // doesn't seem to do anything?
+		plugins: [
+			genericOAuth({
+				config: [
+					{
+						providerId: "rebeccid",
+						clientId: env.OIDC_CLIENT_ID,
+						clientSecret: env.OIDC_CLIENT_SECRET,
+						discoveryUrl: env.OIDC_DISCOVERY_URL,
+						overrideUserInfo: true,
+					},
+				],
+			}),
+		],
 	},
 	user: {
 		fields: {

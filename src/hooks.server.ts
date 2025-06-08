@@ -1,11 +1,10 @@
-import { getCurrentFormattedDateTime } from "$lib";
-import { SESSION_COOKIE_NAME, validateSessionToken } from "$lib/server/auth";
-import { deleteSessionCookie, setSessionCookie } from "$lib/server/auth/helpers";
+import { auth } from "$lib/server/auth";
 import Security from "$lib/server/auth/Security";
 import { getInstance } from "$lib/server/db/postgres";
 import { Queries } from "$lib/server/db/Queries";
-import { error, type Handle } from "@sveltejs/kit";
+import { type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
+import { svelteKitHandler } from "better-auth/svelte-kit";
 
 const setupDb: Handle = async ({ event, resolve }) => {
 	event.locals.queries = new Queries(getInstance(true));
@@ -14,44 +13,7 @@ const setupDb: Handle = async ({ event, resolve }) => {
 };
 
 const handleAuth: Handle = async ({ event, resolve }) => {
-	const sessionToken = event.cookies.get(SESSION_COOKIE_NAME);
-	if (!sessionToken) {
-		event.locals.session = null;
-		event.locals.account = null;
-		return resolve(event);
-	}
-
-	// user has some kind of token
-	const ipAddress = event.getClientAddress();
-	const userAgent = event.request.headers.get("user-agent") || "";
-	try {
-		const { session, user } = await validateSessionToken(event, sessionToken, {
-			ipAddress,
-			userAgent,
-		});
-
-		if (session) {
-			setSessionCookie(event.cookies, sessionToken, session.expiresAt);
-		} else {
-			deleteSessionCookie(event.cookies);
-		}
-
-		event.locals.session = session;
-		event.locals.account = user;
-
-		return resolve(event);
-	} catch (err) {
-		const currentTime = getCurrentFormattedDateTime();
-		console.error(
-			`${currentTime} · ${ipAddress} · ${userAgent} · Error during authentication: ${err}`,
-		);
-		if (err instanceof Error) {
-			console.error(err.message);
-			console.error(err.stack);
-		}
-
-		return error(500, "Error during authentication!");
-	}
+	return svelteKitHandler({ event, resolve, auth });
 };
 
 const setHeaders: Handle = async ({ event, resolve }) => {
