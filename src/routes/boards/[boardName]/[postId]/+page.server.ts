@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async (event) => {
@@ -33,6 +33,15 @@ export const actions: Actions = {
 			body: string;
 			parentId: string | undefined;
 		};
+
+		if (!body || body.trim().length === 0) {
+			return fail(400, { message: "Reply body is required" });
+		}
+
+		const maxReplyLength = 5000;
+		if (body.length > maxReplyLength) {
+			return fail(400, { message: `Reply body must be less than ${maxReplyLength} characters` });
+		}
 
 		await event.locals.queries.createReply({
 			createdAt: new Date(),

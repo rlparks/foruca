@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { enhance } from "$app/forms";
 	import { getFormattedDateTime } from "$lib";
 	import Button from "$lib/components/Button.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 	import { slide } from "svelte/transition";
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	let isReplying = $state(false);
 </script>
@@ -40,8 +41,8 @@
 		<p class="p-4">{data.post.body}</p>
 
 		{#if isReplying}
-			<form class="p-4" method="POST" transition:slide>
-				<TextArea name="body" rows={5} label="Reply" />
+			<form class="p-4" method="POST" transition:slide use:enhance>
+				<TextArea name="body" rows={5} label="Reply" helpText={form?.message} />
 				<Button color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
 					Cancel
