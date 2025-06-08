@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getFormattedDateTime } from "$lib";
 	import Button from "$lib/components/Button.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 	import { slide } from "svelte/transition";
 
 	let { data } = $props();
@@ -40,12 +41,8 @@
 
 		{#if isReplying}
 			<form class="p-4" method="POST" transition:slide>
-				<textarea
-					name="body"
-					placeholder="Write your reply..."
-					class="w-full rounded border border-gray-300 p-2"
-				></textarea>
-				<Button color="blue" font="small" type="submit">Reply</Button>
+				<TextArea name="body" rows={5} label="Reply" />
+				<Button color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
 					Cancel
 				</Button>
