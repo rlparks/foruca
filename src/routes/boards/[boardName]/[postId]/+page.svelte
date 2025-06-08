@@ -41,7 +41,19 @@
 		<p class="p-4">{data.post.body}</p>
 
 		{#if isReplying}
-			<form class="p-4" method="POST" transition:slide use:enhance>
+			<form
+				class="bg-gray-50 p-4 pt-3"
+				method="POST"
+				transition:slide
+				use:enhance={() => {
+					return async (form) => {
+						if (form.result.type !== "failure") {
+							isReplying = false;
+						}
+						await form.update();
+					};
+				}}
+			>
 				<TextArea name="body" rows={5} label="Reply" helpText={form?.message} />
 				<Button color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
