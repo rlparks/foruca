@@ -1,18 +1,28 @@
 export type Account = {
 	id: string;
-	username: string;
-	displayName: string;
-	isAdmin: boolean;
+	userId: string;
+	accountId: string;
+	providerId: string;
+	accessToken?: string;
+	refreshToken?: string;
+	idToken?: string;
+	accessTokenExpiresAt?: Date;
+	refreshTokenExpiresAt?: Date;
+	scope?: string;
+	password?: string;
+	createdAt: Date;
+	updatedAt: Date;
 };
 
 export type Session = {
 	id: string;
-	accountId: string;
-	createdAt: Date;
-	lastActivityAt: Date;
-	lastIp: string;
-	userAgent: string;
 	expiresAt: Date;
+	token: string;
+	createdAt: Date;
+	updatedAt: Date;
+	ipAddress?: string;
+	userAgent?: string;
+	userId: string;
 };
 
 export type AuthInfo = {
@@ -34,20 +44,38 @@ export type Post = {
 	id: string;
 	createdAt: Date;
 	updatedAt: Date | null;
-	accountId: string;
+	userId: string;
 	title: string;
 	body: string;
-
-	boardId: string | null;
+	boardId: string;
 };
 
 export type Reply = {
 	id: string;
 	createdAt: Date;
 	updatedAt: Date | null;
-	accountId: string;
+	userId: string;
 	body: string;
 
 	postId: string;
 	parentId: string | null;
+};
+
+export type User = {
+	id: string;
+	name: string;
+	email: string;
+	emailVerified: boolean;
+	image?: string;
+	createdAt: Date;
+	updatedAt: Date;
+};
+
+export type Verification = {
+	id: string;
+	identifier: string;
+	value: string;
+	expiresAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
 };

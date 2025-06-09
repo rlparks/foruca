@@ -23,7 +23,7 @@
 				href="/accounts/{post.accountId}"
 				class="w-full p-4 pt-1 transition duration-150 ease-in-out hover:bg-gray-50 md:w-1/4"
 			>
-				by <span class="font-medium text-gray-700">{post.accountDisplayName}</span>
+				by <span class="font-medium text-gray-700">{post.accountName}</span>
 			</a>
 			{#if showBoardName}
 				<a
