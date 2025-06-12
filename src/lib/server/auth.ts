@@ -1,10 +1,17 @@
 import { env } from "$env/dynamic/private";
 import { betterAuth } from "better-auth";
-import { genericOAuth } from "better-auth/plugins";
+import { createAuthMiddleware, genericOAuth } from "better-auth/plugins";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import { getPlainInstance } from "./db/postgres";
 
 export const auth = betterAuth({
+	hooks: {
+		after: createAuthMiddleware(async (ctx) => {
+			if (ctx.path === "/sign-out") {
+				console.log("HELO");
+			}
+		}),
+	},
 	advanced: {
 		ipAddress: {
 			ipAddressHeaders: ["x-foruca-ip"],
