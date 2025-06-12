@@ -1,6 +1,6 @@
 import type Security from "$lib/server/auth/Security";
 import type { Queries } from "$lib/server/db/Queries";
-import type { Account, Session } from "$lib/types";
+import type { User } from "better-auth";
 
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
@@ -10,7 +10,7 @@ declare global {
 		interface Locals {
 			queries: Queries;
 			security: Security;
-			account: Account | null;
+			user: User | null;
 			session: Session | null;
 		}
 		interface PageData {

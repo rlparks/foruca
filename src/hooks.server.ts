@@ -13,7 +13,22 @@ const setupDb: Handle = async ({ event, resolve }) => {
 };
 
 const handleAuth: Handle = async ({ event, resolve }) => {
+	const ip = event.getClientAddress();
+	event.request.headers.set("x-client-ip", ip);
+
 	return svelteKitHandler({ event, resolve, auth });
+};
+
+const setLocals: Handle = async ({ event, resolve }) => {
+	const { user, session } = (await auth.api.getSession({ headers: event.request.headers })) ?? {
+		user: null,
+		session: null,
+	};
+
+	event.locals.user = user;
+	event.locals.session = session;
+
+	return resolve(event);
 };
 
 const setHeaders: Handle = async ({ event, resolve }) => {
@@ -69,4 +84,4 @@ const posthogProxy: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handle = sequence(posthogProxy, setupDb, handleAuth, setHeaders);
+export const handle = sequence(posthogProxy, setupDb, handleAuth, setLocals, setHeaders);

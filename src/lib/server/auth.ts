@@ -5,25 +5,35 @@ import { PostgresJSDialect } from "kysely-postgres-js";
 import { getInstance } from "./db/postgres";
 
 export const auth = betterAuth({
+	advanced: {
+		useSecureCookies: true,
+		cookiePrefix: "foruca",
+	},
+	plugins: [
+		genericOAuth({
+			config: [
+				{
+					providerId: "rebeccid",
+					clientId: env.OIDC_CLIENT_ID,
+					clientSecret: env.OIDC_CLIENT_SECRET,
+					discoveryUrl: env.OIDC_DISCOVERY_URL,
+					scopes: ["openid", "email", "profile"],
+				},
+			],
+		}),
+	],
+	socialProviders: {
+		github: {
+			clientId: env.GITHUB_CLIENT_ID,
+			clientSecret: env.GITHUB_CLIENT_SECRET,
+		},
+	},
 	database: {
 		dialect: new PostgresJSDialect({
 			postgres: getInstance(true),
 		}),
 		type: "postgres",
 		casing: "snake", // doesn't seem to do anything?
-		plugins: [
-			genericOAuth({
-				config: [
-					{
-						providerId: "rebeccid",
-						clientId: env.OIDC_CLIENT_ID,
-						clientSecret: env.OIDC_CLIENT_SECRET,
-						discoveryUrl: env.OIDC_DISCOVERY_URL,
-						overrideUserInfo: true,
-					},
-				],
-			}),
-		],
 	},
 	user: {
 		fields: {

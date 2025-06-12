@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+	import { authClient } from "$lib/auth-client";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
 	import type { Account } from "$lib/types";
 	import Button from "./Button.svelte";
@@ -24,13 +25,19 @@
 
 		<div class="flex-shrink-0">
 			{#if !account}
-				<Button href="/login" color="blue" font="base">Login</Button>
+				<Button
+					onclick={async () => {
+						await authClient.signIn.oauth2({
+							providerId: "rebeccid",
+						});
+					}}
+					color="blue"
+					font="base">Login</Button
+				>
 			{:else}
 				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
 				<form action="/" method="POST" use:enhance>
-					<Button type="submit" color="blue" font="base">
-						Logout {account.username}
-					</Button>
+					<Button type="submit" color="blue" font="base">Logout e</Button>
 				</form>
 			{/if}
 		</div>
