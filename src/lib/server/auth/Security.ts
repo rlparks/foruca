@@ -1,23 +1,23 @@
-import type { Account } from "$lib/types";
 import { error, type RequestEvent } from "@sveltejs/kit";
+import type { User } from "better-auth";
 
 export default class Security {
-	private readonly account: Account | null;
+	private readonly user: User | null;
 
 	constructor(event: RequestEvent) {
-		this.account = event.locals.account;
+		this.user = event.locals.user;
 	}
 
 	isAuthenticated() {
-		return this.account !== null;
+		return this.user !== null;
 	}
 
 	isAdmin() {
-		return this.account?.isAdmin ?? false;
+		return this.user?.isAdmin ?? false;
 	}
 
 	enforceAuthenticated() {
-		if (!this.account) {
+		if (!this.user) {
 			return error(401, "Unauthorized");
 		}
 
@@ -25,7 +25,7 @@ export default class Security {
 	}
 
 	enforceAdmin() {
-		if (!this.account?.isAdmin) {
+		if (!this.user?.isAdmin) {
 			return error(403, "Forbidden");
 		}
 

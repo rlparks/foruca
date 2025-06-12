@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
 	import { authClient } from "$lib/auth-client";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
-	import type { Account } from "$lib/types";
+	import type { User } from "better-auth";
 	import Button from "./Button.svelte";
 
 	type Props = {
-		account: Account | null;
+		user: User | null;
 	};
-	let { account }: Props = $props();
+
+	let { user }: Props = $props();
 </script>
 
 <header class="bg-white shadow-md">
@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="flex-shrink-0">
-			{#if !account}
+			{#if !user}
 				<Button
 					onclick={async () => {
 						await authClient.signIn.oauth2({
@@ -36,9 +36,16 @@
 				>
 			{:else}
 				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
-				<form action="/" method="POST" use:enhance>
-					<Button type="submit" color="blue" font="base">Logout e</Button>
-				</form>
+				<Button
+					type="submit"
+					color="blue"
+					onclick={async () => {
+						await authClient.signOut();
+					}}
+					font="base"
+				>
+					Logout {user.name}</Button
+				>
 			{/if}
 		</div>
 	</nav>

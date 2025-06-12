@@ -1,5 +1,4 @@
-import { logoutUser } from "$lib/server/auth";
-import type { Actions, PageServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async (event) => {
 	const canViewPrivateBoards = event.locals.security.isAuthenticated();
@@ -7,8 +6,4 @@ export const load: PageServerLoad = async (event) => {
 		? await event.locals.queries.getPosts()
 		: await event.locals.queries.getPublicPosts();
 	return { posts };
-};
-
-export const actions: Actions = {
-	default: logoutUser,
 };
