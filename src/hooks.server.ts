@@ -14,7 +14,8 @@ const setupDb: Handle = async ({ event, resolve }) => {
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const ip = event.getClientAddress();
-	event.request.headers.set("x-client-ip", ip);
+	event.request.headers.set("x-forwarded-for", ip);
+	console.log(event.request.headers.get("x-forwarded-for"));
 
 	return svelteKitHandler({ event, resolve, auth });
 };
@@ -24,6 +25,7 @@ const setLocals: Handle = async ({ event, resolve }) => {
 		user: null,
 		session: null,
 	};
+	console.log(session);
 
 	event.locals.user = user;
 	event.locals.session = session;

@@ -11,5 +11,15 @@ export function getInstance(cache: boolean) {
 	if (!url) throw new Error("Environment variable DATABASE_URL is not set");
 
 	client = postgres(url, { transform: postgres.camel });
+
+	return client;
+}
+
+export function getPlainInstance() {
+	const url = env.DATABASE_URL ?? "";
+	if (!url) throw new Error("Environment variable DATABASE_URL is not set");
+
+	client = postgres(url);
+
 	return client;
 }

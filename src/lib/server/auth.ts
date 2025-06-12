@@ -2,12 +2,13 @@ import { env } from "$env/dynamic/private";
 import { betterAuth } from "better-auth";
 import { genericOAuth } from "better-auth/plugins";
 import { PostgresJSDialect } from "kysely-postgres-js";
-import { getInstance } from "./db/postgres";
+import { getPlainInstance } from "./db/postgres";
 
 export const auth = betterAuth({
 	advanced: {
-		useSecureCookies: true,
-		cookiePrefix: "foruca",
+		ipAddress: {
+			ipAddressHeaders: ["x-foruca-ip"],
+		},
 	},
 	plugins: [
 		genericOAuth({
@@ -30,55 +31,46 @@ export const auth = betterAuth({
 	},
 	database: {
 		dialect: new PostgresJSDialect({
-			postgres: getInstance(true),
+			postgres: getPlainInstance(),
 		}),
 		type: "postgres",
-		casing: "snake", // doesn't seem to do anything?
 	},
-	user: {
+	verification: {
 		fields: {
-			name: "name",
-			email: "email",
-			emailVerified: "email_verified",
-			image: "image",
-			createdAt: "created_at",
-			updatedAt: "updated_at",
-		},
-	},
-	session: {
-		fields: {
-			userId: "user_id",
-			token: "token",
 			expiresAt: "expires_at",
-			ipAddress: "ip_address",
-			userAgent: "user_agent",
 			createdAt: "created_at",
 			updatedAt: "updated_at",
 		},
 	},
 	account: {
 		fields: {
-			userId: "user_id",
 			accountId: "account_id",
 			providerId: "provider_id",
+			userId: "user_id",
 			accessToken: "access_token",
 			refreshToken: "refresh_token",
-			idToken: "id_token",
 			accessTokenExpiresAt: "access_token_expires_at",
+			createdAt: "created_at",
+			updatedAt: "updated_at",
+			idToken: "id_token",
 			refreshTokenExpiresAt: "refresh_token_expires_at",
-			scope: "scope",
-			password: "password",
+		},
+	},
+	user: {
+		fields: {
+			emailVerified: "email_verified",
 			createdAt: "created_at",
 			updatedAt: "updated_at",
 		},
 	},
-	verification: {
+	session: {
 		fields: {
-			identifier: "identifier",
-			value: "value",
 			expiresAt: "expires_at",
 			createdAt: "created_at",
 			updatedAt: "updated_at",
+			ipAddress: "ip_address",
+			userAgent: "user_agent",
+			userId: "user_id",
 		},
 	},
 });
