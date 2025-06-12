@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidateAll } from "$app/navigation";
 	import { authClient } from "$lib/auth-client";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
 	import type { User } from "better-auth";
@@ -41,6 +42,7 @@
 					color="blue"
 					onclick={async () => {
 						await authClient.signOut();
+						await invalidateAll();
 					}}
 					font="base"
 				>
