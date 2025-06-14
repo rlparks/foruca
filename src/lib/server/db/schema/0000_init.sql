@@ -5,7 +5,11 @@ CREATE TABLE IF NOT EXISTS "user" (
     email_verified BOOLEAN NOT NULL,
     image TEXT,
     created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+    updated_at TIMESTAMP NOT NULL,
+    role TEXT,
+    banned BOOLEAN,
+    ban_reason TEXT,
+    ban_expires TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS session (
@@ -16,7 +20,8 @@ CREATE TABLE IF NOT EXISTS session (
     updated_at TIMESTAMP NOT NULL,
     ip_address TEXT,
     user_agent TEXT,
-    user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE
+    user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+    impersonated_by TEXT REFERENCES "user"(id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS account (

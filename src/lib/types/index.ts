@@ -23,6 +23,7 @@ export type Session = {
 	ipAddress?: string;
 	userAgent?: string;
 	userId: string;
+	impersonatedBy?: string;
 };
 
 export type AuthInfo = {
@@ -69,6 +70,10 @@ export type User = {
 	image?: string;
 	createdAt: Date;
 	updatedAt: Date;
+	role?: string;
+	banned?: boolean;
+	banReason?: string;
+	banExpires?: Date;
 };
 
 export type Verification = {

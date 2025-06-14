@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/private";
 import { betterAuth } from "better-auth";
-import { createAuthMiddleware, genericOAuth } from "better-auth/plugins";
+import { admin, createAuthMiddleware, genericOAuth } from "better-auth/plugins";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import { getPlainInstance } from "./db/postgres";
 
@@ -28,6 +28,21 @@ export const auth = betterAuth({
 					scopes: ["openid", "email", "profile"],
 				},
 			],
+		}),
+		admin({
+			schema: {
+				user: {
+					fields: {
+						banReason: "ban_reason",
+						banExpires: "ban_expires",
+					},
+				},
+				session: {
+					fields: {
+						impersonatedBy: "impersonated_by",
+					},
+				},
+			},
 		}),
 	],
 	socialProviders: {
