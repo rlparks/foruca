@@ -2,7 +2,7 @@
 	import { invalidateAll } from "$app/navigation";
 	import { authClient } from "$lib/auth-client";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
-	import type { User } from "better-auth";
+	import type { User } from "$lib/types";
 	import Button from "./Button.svelte";
 
 	type Props = {

@@ -1,5 +1,5 @@
+import type { User } from "$lib/types";
 import { error, type RequestEvent } from "@sveltejs/kit";
-import type { User } from "better-auth";
 
 export default class Security {
 	private readonly user: User | null;
@@ -13,7 +13,7 @@ export default class Security {
 	}
 
 	isAdmin() {
-		return this.user?.isAdmin ?? false;
+		return this.user?.role === "admin";
 	}
 
 	enforceAuthenticated() {
@@ -25,7 +25,7 @@ export default class Security {
 	}
 
 	enforceAdmin() {
-		if (!this.user?.isAdmin) {
+		if (this.user?.role !== "admin") {
 			return error(403, "Forbidden");
 		}
 

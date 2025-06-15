@@ -13,9 +13,7 @@ export const auth = betterAuth({
 		}),
 	},
 	advanced: {
-		ipAddress: {
-			ipAddressHeaders: ["x-foruca-ip"],
-		},
+		cookiePrefix: "foruca",
 	},
 	plugins: [
 		genericOAuth({

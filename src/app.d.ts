@@ -1,6 +1,6 @@
 import type Security from "$lib/server/auth/Security";
 import type { Queries } from "$lib/server/db/Queries";
-import type { User } from "better-auth";
+import type { Session, User } from "$lib/types";
 
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces

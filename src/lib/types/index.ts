@@ -20,10 +20,10 @@ export type Session = {
 	token: string;
 	createdAt: Date;
 	updatedAt: Date;
-	ipAddress?: string;
-	userAgent?: string;
+	ipAddress?: string | null;
+	userAgent?: string | null;
 	userId: string;
-	impersonatedBy?: string;
+	impersonatedBy?: string | null;
 };
 
 export type AuthInfo = {
@@ -67,13 +67,13 @@ export type User = {
 	name: string;
 	email: string;
 	emailVerified: boolean;
-	image?: string;
+	image?: string | null;
 	createdAt: Date;
 	updatedAt: Date;
-	role?: string;
-	banned?: boolean;
-	banReason?: string;
-	banExpires?: Date;
+	role?: string | null;
+	banned?: boolean | null;
+	banReason?: string | null;
+	banExpires?: Date | null;
 };
 
 export type Verification = {
