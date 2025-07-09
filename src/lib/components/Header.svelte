@@ -2,6 +2,7 @@
 	import { invalidateAll } from "$app/navigation";
 	import { authClient } from "$lib/auth-client";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
+	import LoginButton from "$lib/components/LoginButton.svelte";
 	import type { User } from "$lib/types";
 	import Button from "./Button.svelte";
 
@@ -10,6 +11,11 @@
 	};
 
 	let { user }: Props = $props();
+
+	async function signOut() {
+		await authClient.signOut();
+		await invalidateAll();
+	}
 </script>
 
 <header class="bg-white shadow-md">
@@ -26,26 +32,10 @@
 
 		<div class="flex-shrink-0">
 			{#if !user}
-				<Button
-					onclick={async () => {
-						await authClient.signIn.oauth2({
-							providerId: "rebeccid",
-						});
-					}}
-					color="blue"
-					font="base">Login</Button
-				>
+				<LoginButton />
 			{:else}
 				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
-				<Button
-					type="submit"
-					color="blue"
-					onclick={async () => {
-						await authClient.signOut();
-						await invalidateAll();
-					}}
-					font="base"
-				>
+				<Button type="submit" color="blue" onclick={signOut} font="base">
 					Logout {user.name}</Button
 				>
 			{/if}
