@@ -13,7 +13,7 @@ export default class Security {
 	}
 
 	isAdmin() {
-		return this.user?.role === "admin";
+		return this.user?.role?.split(",").includes("admin");
 	}
 
 	enforceAuthenticated() {
@@ -25,7 +25,7 @@ export default class Security {
 	}
 
 	enforceAdmin() {
-		if (this.user?.role !== "admin") {
+		if (!this.isAdmin()) {
 			return error(403, "Forbidden");
 		}
 
