@@ -53,35 +53,4 @@ const setHeaders: Handle = async ({ event, resolve }) => {
 	return result;
 };
 
-// https://posthog.com/docs/advanced/proxy/sveltekit
-const posthogProxy: Handle = async ({ event, resolve }) => {
-	const { pathname } = event.url;
-	if (pathname.startsWith("/ingest")) {
-		const hostname = pathname.startsWith("/ingest/static/")
-			? "us-assets.i.posthog.com"
-			: "us.i.posthog.com";
-
-		const url = new URL(event.request.url);
-		url.protocol = "https:";
-		url.hostname = hostname;
-		url.port = "443";
-		url.pathname = pathname.replace("/ingest/", "");
-
-		const headers = new Headers(event.request.headers);
-		headers.set("host", hostname);
-
-		const response = await event.fetch(url.toString(), {
-			method: event.request.method,
-			headers,
-			body: event.request.body,
-			duplex: "half",
-		} as RequestInit);
-
-		return response;
-	}
-
-	const response = await resolve(event);
-	return response;
-};
-
-export const handle = sequence(posthogProxy, setupDb, handleAuth, setLocals, setHeaders);
+export const handle = sequence(setupDb, handleAuth, setLocals, setHeaders);

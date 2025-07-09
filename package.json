@@ -29,8 +29,6 @@
 		"globals": "^16.2.0",
 		"kysely-postgres-js": "^2.0.0",
 		"postgres": "^3.4.7",
-		"posthog-js": "^1.252.0",
-		"posthog-node": "^4.18.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.12",
