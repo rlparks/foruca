@@ -1,7 +1,7 @@
 import { generateTextId } from "$lib/server";
 import { parsePgError } from "$lib/server/db/error";
 import type { Board, Post, Reply } from "$lib/types";
-import type { PostListPost } from "$lib/types/bonus";
+import type { PostListPost, PrettyReply } from "$lib/types/bonus";
 import postgres from "postgres";
 
 export class Queries {
@@ -185,6 +185,21 @@ export class Queries {
                 GROUP BY p.id, p.created_at, p.updated_at, p.user_id, p.title, p.body,
                          p.board_id, b.name, b.is_public, u.name;`;
 			return row;
+		} catch (err) {
+			throw parsePgError(err);
+		}
+	}
+
+	async getRepliesByPostId(postId: string) {
+		try {
+			const rows = await this.sql<PrettyReply[]>`
+                SELECT r.id, r.created_at, r.updated_at, r.user_id, r.post_id, r.body, r.parent_id,
+                       u.name AS user_name
+                FROM reply r
+                LEFT JOIN "user" u ON u.id = r.user_id
+                WHERE r.post_id = ${postId}
+                ORDER BY r.created_at;`;
+			return rows;
 		} catch (err) {
 			throw parsePgError(err);
 		}

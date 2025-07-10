@@ -19,7 +19,12 @@ export const load = (async (event) => {
 
 	const postBodyPreview = post.body.slice(0, 100);
 
-	return { post, pageTitle: post.title, pageDescription: postBodyPreview };
+	async function getReplies() {
+		const replies = await event.locals.queries.getRepliesByPostId(postId);
+		return replies;
+	}
+
+	return { post, pageTitle: post.title, pageDescription: postBodyPreview, replies: getReplies() };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

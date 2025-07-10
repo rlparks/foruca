@@ -37,7 +37,7 @@
 		</div>
 	</div>
 
-	<div class="overflow-hidden rounded-lg bg-white shadow">
+	<div class="mb-4 overflow-hidden rounded-lg bg-white shadow">
 		<p class="p-4">{data.post.body}</p>
 
 		{#if isReplying}
@@ -69,4 +69,10 @@
 			</button>
 		{/if}
 	</div>
+
+	{#await data.replies}
+		Loading replies...
+	{:then replies}
+		<pre>{JSON.stringify(replies, null, 2)}</pre>
+	{/await}
 </main>
