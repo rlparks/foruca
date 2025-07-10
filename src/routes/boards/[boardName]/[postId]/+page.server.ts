@@ -50,7 +50,7 @@ export const actions: Actions = {
 
 		await event.locals.queries.createReply({
 			createdAt: new Date(),
-			updatedAt: new Date(),
+			updatedAt: null,
 			userId,
 			postId,
 			body: body.trim(),
