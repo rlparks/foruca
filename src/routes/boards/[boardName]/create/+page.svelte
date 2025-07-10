@@ -3,7 +3,7 @@
 	import Button from "$lib/components/Button.svelte";
 	import Input from "$lib/components/Input.svelte";
 
-	let { data, form } = $props();
+	let { form } = $props();
 </script>
 
 <div class="flex w-full justify-center">

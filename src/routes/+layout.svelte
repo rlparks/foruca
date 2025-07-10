@@ -13,6 +13,6 @@
 	<meta name="og:description" content={page.data.pageDescription} />
 </svelte:head>
 
-<Header account={data.account} />
+<Header user={data.user} accountLinks={data.accountLinks} />
 
 {@render children()}

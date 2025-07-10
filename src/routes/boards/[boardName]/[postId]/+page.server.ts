@@ -26,7 +26,7 @@ export const actions: Actions = {
 	default: async (event) => {
 		event.locals.security.enforceAuthenticated();
 
-		const accountId = event.locals.account!.id; // will exist due to enforceAuthenticated
+		const userId = event.locals.user!.id; // will exist due to enforceAuthenticated
 		const postId = event.params.postId;
 		const formData = await event.request.formData();
 		const { body, parentId } = Object.fromEntries(formData.entries()) as {
@@ -46,7 +46,7 @@ export const actions: Actions = {
 		await event.locals.queries.createReply({
 			createdAt: new Date(),
 			updatedAt: new Date(),
-			accountId,
+			userId,
 			postId,
 			body: body.trim(),
 			parentId: parentId || null,

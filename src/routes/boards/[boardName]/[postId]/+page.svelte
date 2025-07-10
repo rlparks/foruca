@@ -22,7 +22,7 @@
 					{data.post.title}
 				</h2>
 				<p class="text-gray-500">
-					{data.post.accountDisplayName}
+					{data.post.userName}
 				</p>
 			</div>
 			<div class="w-full md:w-auto md:text-right">

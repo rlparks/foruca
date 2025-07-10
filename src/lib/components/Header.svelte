@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
+	import AccountMenu from "$lib/components/AccountMenu.svelte";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
-	import type { Account } from "$lib/types";
-	import Button from "./Button.svelte";
+	import LoginButton from "$lib/components/LoginButton.svelte";
+	import type { User } from "$lib/types";
+	import type { AccountMenuLink } from "$lib/types/bonus";
 
 	type Props = {
-		account: Account | null;
+		user: User | null;
+		accountLinks: AccountMenuLink[];
 	};
-	let { account }: Props = $props();
+
+	let { user, accountLinks }: Props = $props();
 </script>
 
 <header class="bg-white shadow-md">
@@ -23,15 +26,10 @@
 		</div>
 
 		<div class="flex-shrink-0">
-			{#if !account}
-				<Button href="/login" color="blue" font="base">Login</Button>
+			{#if !user}
+				<LoginButton />
 			{:else}
-				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
-				<form action="/" method="POST" use:enhance>
-					<Button type="submit" color="blue" font="base">
-						Logout {account.username}
-					</Button>
-				</form>
+				<AccountMenu {user} {accountLinks} />
 			{/if}
 		</div>
 	</nav>

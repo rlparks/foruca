@@ -43,15 +43,15 @@ export const actions: Actions = {
 			return fail(404, { message: "Board not found" });
 		}
 
-		if (!event.locals.account) {
-			throw new Error("somehow forgot account");
+		if (!event.locals.user) {
+			throw new Error("somehow forgot user");
 		}
 
 		const post = await event.locals.queries.createPost({
 			title: trimmedPostTitle,
 			body: trimmedPostBody,
 			boardId: board.id,
-			accountId: event.locals.account.id,
+			userId: event.locals.user.id,
 			createdAt: new Date(),
 			updatedAt: null,
 		});

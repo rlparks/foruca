@@ -27,7 +27,7 @@
 		blue: "bg-blue-500 hover:bg-blue-600 text-white",
 		green: "bg-green-500 hover:bg-green-600 text-white",
 		red: "bg-red-500 hover:bg-red-600 text-white",
-		outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50",
+		outline: "outline text-gray-700 hover:bg-gray-50",
 	};
 
 	const baseStyles =

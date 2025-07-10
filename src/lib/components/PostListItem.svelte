@@ -20,10 +20,10 @@
 	<div>
 		<div class="flex flex-col text-sm text-gray-600 md:flex-row">
 			<a
-				href="/accounts/{post.accountId}"
+				href="/users/{post.userId}"
 				class="w-full p-4 pt-1 transition duration-150 ease-in-out hover:bg-gray-50 md:w-1/4"
 			>
-				by <span class="font-medium text-gray-700">{post.accountDisplayName}</span>
+				by <span class="font-medium text-gray-700">{post.userName}</span>
 			</a>
 			{#if showBoardName}
 				<a
