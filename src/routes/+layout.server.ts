@@ -1,7 +1,16 @@
+import type { AccountMenuLink } from "$lib/types/bonus";
 import type { LayoutServerLoad } from "./$types";
+
+const normalUserLinks: AccountMenuLink[] = [];
+const adminUserLinks: AccountMenuLink[] = [{ href: "/admin", label: "Admin" }];
 
 export const load = (async (event) => {
 	const { user } = event.locals;
 
-	return { user, pageTitle: "foruca", pageDescription: "the forum application." };
+	return {
+		user,
+		pageTitle: "foruca",
+		pageDescription: "the forum application.",
+		accountLinks: event.locals.security.isAdmin() ? adminUserLinks : normalUserLinks,
+	};
 }) satisfies LayoutServerLoad;

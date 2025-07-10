@@ -3,13 +3,15 @@
 	import { authClient } from "$lib/auth-client";
 	import Button from "$lib/components/Button.svelte";
 	import type { User } from "$lib/types";
+	import type { AccountMenuLink } from "$lib/types/bonus";
 	import { slide } from "svelte/transition";
 
 	type Props = {
 		user: User;
+		accountLinks: AccountMenuLink[];
 	};
 
-	let { user }: Props = $props();
+	let { user, accountLinks }: Props = $props();
 
 	const wrapperClass = "account-menu-wrapper";
 
@@ -37,6 +39,13 @@
 
 	{#if isOpen}
 		<ul transition:slide class="absolute right-0 z-10 mt-2 w-30 rounded-md bg-white shadow-lg">
+			{#each accountLinks as link}
+				<li>
+					<a href={link.href} class="block px-4 py-2 hover:bg-gray-100">
+						{link.label}
+					</a>
+				</li>
+			{/each}
 			<li>
 				<button
 					onclick={signOut}

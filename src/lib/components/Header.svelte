@@ -3,12 +3,14 @@
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
 	import LoginButton from "$lib/components/LoginButton.svelte";
 	import type { User } from "$lib/types";
+	import type { AccountMenuLink } from "$lib/types/bonus";
 
 	type Props = {
 		user: User | null;
+		accountLinks: AccountMenuLink[];
 	};
 
-	let { user }: Props = $props();
+	let { user, accountLinks }: Props = $props();
 </script>
 
 <header class="bg-white shadow-md">
@@ -27,7 +29,7 @@
 			{#if !user}
 				<LoginButton />
 			{:else}
-				<AccountMenu {user} />
+				<AccountMenu {user} {accountLinks} />
 			{/if}
 		</div>
 	</nav>

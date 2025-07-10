@@ -5,3 +5,8 @@ export type PostListPost = {
 	replyCount: number;
 	boardName: string;
 } & Post;
+
+export type AccountMenuLink = {
+	href: string;
+	label: string;
+};
