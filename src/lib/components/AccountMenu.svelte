@@ -39,7 +39,7 @@
 
 	{#if isOpen}
 		<ul transition:slide class="absolute right-0 z-10 mt-2 w-30 rounded-md bg-white shadow-lg">
-			{#each accountLinks as link}
+			{#each accountLinks as link (link.label + link.href)}
 				<li>
 					<a href={link.href} class="block px-4 py-2 hover:bg-gray-100">
 						{link.label}
