@@ -11,12 +11,6 @@
 		});
 	}
 
-	async function signInGithub() {
-		await authClient.signIn.oauth2({
-			providerId: "github",
-		});
-	}
-
 	function handleClickOutside(event: MouseEvent) {
 		const target = event.target as HTMLElement;
 		if (!target.closest(`.${wrapperClass}`)) {
