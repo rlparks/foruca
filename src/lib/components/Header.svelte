@@ -1,21 +1,14 @@
 <script lang="ts">
-	import { invalidateAll } from "$app/navigation";
-	import { authClient } from "$lib/auth-client";
+	import AccountMenu from "$lib/components/AccountMenu.svelte";
 	import BoardSearcher from "$lib/components/BoardSearcher.svelte";
 	import LoginButton from "$lib/components/LoginButton.svelte";
 	import type { User } from "$lib/types";
-	import Button from "./Button.svelte";
 
 	type Props = {
 		user: User | null;
 	};
 
 	let { user }: Props = $props();
-
-	async function signOut() {
-		await authClient.signOut();
-		await invalidateAll();
-	}
 </script>
 
 <header class="bg-white shadow-md">
@@ -34,10 +27,7 @@
 			{#if !user}
 				<LoginButton />
 			{:else}
-				<!-- don't actually use GET /logout to logout or we'll have big pobem -->
-				<Button type="submit" color="blue" onclick={signOut} font="base">
-					Logout {user.name}</Button
-				>
+				<AccountMenu {user} />
 			{/if}
 		</div>
 	</nav>
