@@ -4,8 +4,6 @@ import type { Actions, PageServerLoad } from "./$types";
 export const load = (async (event) => {
 	event.locals.security.enforceAuthenticated();
 
-	const boardName = event.params.boardName;
-
 	return {};
 }) satisfies PageServerLoad;
 

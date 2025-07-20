@@ -17,8 +17,6 @@ export const load = (async (event) => {
 		return redirect(303, `/boards/${post.boardName}/${postId}`);
 	}
 
-	const postBodyPreview = post.body.slice(0, 100);
-
 	async function getReplies() {
 		const replies = await event.locals.queries.getRepliesByPostId(postId);
 		return replies;
