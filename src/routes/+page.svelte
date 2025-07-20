@@ -3,8 +3,18 @@
 	import MainColumns from "$lib/components/MainColumns.svelte";
 	import PostList from "$lib/components/PostList.svelte";
 
+	const title = "foruca";
+	const description = 'the forum application that "works"';
+
 	let { data } = $props();
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+	<meta name="og:title" content={title} />
+	<meta name="description" content={description} />
+	<meta name="og:description" content={description} />
+</svelte:head>
 
 <MainColumns>
 	<HelpText>

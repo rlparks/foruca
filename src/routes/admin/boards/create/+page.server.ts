@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async (event) => {
 	event.locals.security.enforceAdmin();
-	return { pageTitle: "Create Board", pageDescription: "Admin: create a new board" };
+	return {};
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

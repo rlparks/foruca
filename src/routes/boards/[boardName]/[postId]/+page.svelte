@@ -7,11 +7,17 @@
 
 	let { data, form } = $props();
 
+	const description =
+		data.post.body.length > 100 ? `${data.post.body.slice(0, 100)}...` : data.post.body;
+
 	let isReplying = $state(false);
 </script>
 
 <svelte:head>
+	<title>{data.post.title}</title>
 	<meta name="og:title" content={`${data.post.boardName} · ${data.post.title}`} />
+	<meta name="description" content={description} />
+	<meta name="og:description" content={description} />
 </svelte:head>
 
 <main class="w-full md:w-3/4 lg:w-4/5">

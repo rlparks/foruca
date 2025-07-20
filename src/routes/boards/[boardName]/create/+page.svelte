@@ -3,8 +3,17 @@
 	import Button from "$lib/components/Button.svelte";
 	import Input from "$lib/components/Input.svelte";
 
-	let { form } = $props();
+	let { data, form } = $props();
+	const title = `Create Post · ${data.board.name}`;
+	const description = `Create a new post in ${data.board.name}.`;
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+	<meta name="og:title" content={title} />
+	<meta name="description" content={description} />
+	<meta name="og:description" content={description} />
+</svelte:head>
 
 <div class="flex w-full justify-center">
 	<form method="POST" use:enhance>

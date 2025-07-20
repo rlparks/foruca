@@ -9,8 +9,6 @@ export const load = (async (event) => {
 
 	return {
 		user,
-		pageTitle: "foruca",
-		pageDescription: "the forum application.",
 		accountLinks: event.locals.security.isAdmin() ? adminUserLinks : normalUserLinks,
 	};
 }) satisfies LayoutServerLoad;

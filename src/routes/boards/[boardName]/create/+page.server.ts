@@ -6,10 +6,7 @@ export const load = (async (event) => {
 
 	const boardName = event.params.boardName;
 
-	return {
-		pageTitle: `Create Post · ${boardName}`,
-		pageDescription: `Create a new post in ${boardName}`,
-	};
+	return {};
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

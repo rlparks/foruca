@@ -24,7 +24,7 @@ export const load = (async (event) => {
 		return replies;
 	}
 
-	return { post, pageTitle: post.title, pageDescription: postBodyPreview, replies: getReplies() };
+	return { post, replies: getReplies() };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

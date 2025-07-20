@@ -5,7 +5,16 @@
 	import MainColumns from "$lib/components/MainColumns.svelte";
 
 	let { data } = $props();
+	const title = "Manage Boards";
+	const description = "foruca admin: manage boards";
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+	<meta name="og:title" content={title} />
+	<meta name="og:description" content={description} />
+</svelte:head>
 
 <MainColumns>
 	<HelpText>
