@@ -1,6 +1,8 @@
+import { getRequestEvent } from "$app/server";
 import { env } from "$env/dynamic/private";
 import { betterAuth } from "better-auth";
 import { admin, createAuthMiddleware, genericOAuth } from "better-auth/plugins";
+import { sveltekitCookies } from "better-auth/svelte-kit";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import { getPlainInstance } from "./db/postgres";
 
@@ -42,6 +44,7 @@ export const auth = betterAuth({
 				},
 			},
 		}),
+		sveltekitCookies(() => new Promise((resolve) => resolve(getRequestEvent()))), // ???
 	],
 	database: {
 		dialect: new PostgresJSDialect({

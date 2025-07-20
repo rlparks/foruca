@@ -1,3 +1,4 @@
+import { building } from "$app/environment";
 import { auth } from "$lib/server/auth";
 import Security from "$lib/server/auth/Security";
 import { getInstance } from "$lib/server/db/postgres";
@@ -16,7 +17,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	const ip = event.getClientAddress();
 	event.request.headers.set("x-forwarded-for", ip);
 
-	return svelteKitHandler({ event, resolve, auth });
+	return svelteKitHandler({ event, resolve, auth, building });
 };
 
 const setLocals: Handle = async ({ event, resolve }) => {
