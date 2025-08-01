@@ -27,13 +27,11 @@
 		blue: "bg-blue-500 hover:bg-blue-600 text-white",
 		green: "bg-green-500 hover:bg-green-600 text-white",
 		red: "bg-red-500 hover:bg-red-600 text-white",
-		outline: "outline text-gray-700 hover:bg-gray-50",
+		outline: "outline hover:bg-gray-50 dark:hover:bg-gray-900",
 	};
 
 	const baseStyles =
 		"cursor-pointer rounded-md px-4 py-2 text-sm font-medium shadow \
-        transition duration-200 ease-in-out \
-        hover:shadow-md \
         disabled:cursor-not-allowed disabled:opacity-50 \
         focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:outline-none";
 

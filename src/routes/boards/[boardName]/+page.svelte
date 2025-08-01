@@ -15,9 +15,10 @@
 	<meta name="og:description" content={description} />
 </svelte:head>
 
-<PostList
-	posts={data.posts}
-	boardName={data.board.name}
-	showBoardName={false}
-	showCreatePost={true}
-/>
+<header class="mb-6 space-y-4">
+	<h2 class="text-2xl font-bold">{data.board.name}</h2>
+
+	<p>{data.board.description}</p>
+</header>
+
+<PostList posts={data.posts} showBoardName={false} />

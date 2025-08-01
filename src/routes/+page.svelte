@@ -1,6 +1,4 @@
 <script lang="ts">
-	import HelpText from "$lib/components/HelpText.svelte";
-	import MainColumns from "$lib/components/MainColumns.svelte";
 	import PostList from "$lib/components/PostList.svelte";
 
 	const title = "foruca";
@@ -16,20 +14,10 @@
 	<meta name="og:description" content={description} />
 </svelte:head>
 
-<MainColumns>
-	<HelpText>
-		{#snippet title()}
-			Welcome to <span class="text-blue-600">foruca</span>
-		{/snippet}
-		{#snippet body()}
-			<span class="mb-2 block">The forum application that "works".</span>
-			<span class="block">To get started, navigate to a board and make a post!</span>
-		{/snippet}
-	</HelpText>
-	<PostList
-		posts={data.posts}
-		boardName="All Of Them"
-		showBoardName={true}
-		showCreatePost={false}
-	/>
-</MainColumns>
+<header class="mb-6 space-y-4">
+	<h2 class="text-2xl font-bold">Welcome to <span class="text-blue-600">foruca</span></h2>
+
+	<p>The forum application that "works".</p>
+</header>
+
+<PostList posts={data.posts} showBoardName={true} />

@@ -1,38 +1,65 @@
 <script lang="ts">
-	import { getFormattedDateTime } from "$lib";
 	import type { PostListPost } from "$lib/types/bonus";
 
 	let { post, showBoardName }: { post: PostListPost; showBoardName: boolean } = $props();
+
+	const linkWidth = $derived(showBoardName ? "w-1/4" : "w-1/3");
+
+	const isPostedToday = $derived.by(() => {
+		const today = new Date();
+		const postDate = new Date(post.createdAt);
+		return (
+			postDate.getDate() === today.getDate() &&
+			postDate.getMonth() === today.getMonth() &&
+			postDate.getFullYear() === today.getFullYear()
+		);
+	});
+
+	const dayInMs = 24 * 60 * 60 * 1000;
+	const isPostedWithinLastDay = $derived(new Date().getTime() - post.createdAt.getTime() < dayInMs);
+
+	const method = $derived(isPostedToday);
+	const timeWord = $derived(method ? "at" : "on");
+	const time = $derived(
+		method
+			? post.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+			: post.createdAt.toLocaleDateString(),
+	);
+
+	const fullTime = $derived(
+		post.createdAt.toLocaleString([], {
+			year: "numeric",
+			month: "numeric",
+			day: "numeric",
+			hour: "numeric",
+			minute: "2-digit",
+		}),
+	);
 </script>
 
-<li>
-	<a href={`/boards/${post.boardName}/${post.id}`}>
-		<div class="p-4 pb-2 transition duration-150 ease-in-out hover:bg-gray-50">
-			<div class="mb-1 flex items-center justify-between">
-				<p class="truncate text-lg font-semibold">
-					{post.title}
-				</p>
-				<span class="text-xs text-gray-500">{getFormattedDateTime(post.createdAt)}</span>
-			</div>
-			<span>{post.replyCount} {post.replyCount === 1 ? "reply" : "replies"}</span>
-		</div>
+<div>
+	<a class="block p-4 dark:hover:bg-gray-900" href="/boards/{post.boardName}/{post.id}">
+		{post.title}
 	</a>
-	<div>
-		<div class="flex flex-col text-sm text-gray-600 md:flex-row">
-			<a
-				href="/users/{post.userId}"
-				class="w-full p-4 pt-1 transition duration-150 ease-in-out hover:bg-gray-50 md:w-1/4"
-			>
-				by <span class="font-medium text-gray-700">{post.userName}</span>
+	<div class="flex flex-col *:flex-1 md:flex-row">
+		<div class="flex *:flex-1">
+			<a class="block truncate p-4 hover:bg-gray-800" href="/users/{post.userId}">
+				by <span class="text-blue-600">{post.userName}</span>
 			</a>
 			{#if showBoardName}
-				<a
-					href="/boards/{post.boardName}"
-					class="w-full p-4 pt-1 transition duration-150 ease-in-out hover:bg-gray-50 md:w-3/4"
-				>
-					in <span class="font-medium text-gray-700">{post.boardName}</span>
+				<a class="block truncate p-4 hover:bg-gray-800" href="/boards/{post.boardName}">
+					in <span class="text-blue-600">{post.boardName}</span>
 				</a>
 			{/if}
 		</div>
+		<div class="flex *:flex-1">
+			<p class="block truncate p-4" title={fullTime}>
+				{timeWord} <span class="text-blue-600">{time}</span>
+			</p>
+			<p class="block p-4">
+				<span class={post.replyCount > 0 ? "text-blue-600" : ""}>{post.replyCount}</span>
+				{post.replyCount === 1 ? "reply" : "replies"}
+			</p>
+		</div>
 	</div>
-</li>
+</div>
