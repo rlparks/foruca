@@ -6,7 +6,7 @@
 	let { children, data } = $props();
 </script>
 
-<div class="flex min-h-dvh dark:bg-black dark:text-gray-100">
+<div class="flex min-h-dvh">
 	<div class="sticky top-0 hidden h-dvh w-[200px] flex-shrink-0 md:block">
 		<Sidebar user={data.user} />
 	</div>
