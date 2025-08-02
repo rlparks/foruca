@@ -1,4 +1,12 @@
 <script lang="ts">
+	import type { User } from "$lib/types";
+	import AccountMenu from "./AccountMenu.svelte";
+
+	type Props = {
+		user: User | null;
+	};
+
+	let { user }: Props = $props();
 </script>
 
 <div class="h-full border-r p-4">
@@ -13,6 +21,6 @@
 			<p>e</p>
 		</div>
 
-		<div>Login</div>
+		<AccountMenu {user} />
 	</div>
 </div>

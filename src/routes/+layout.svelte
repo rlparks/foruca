@@ -8,7 +8,7 @@
 
 <div class="flex min-h-dvh dark:bg-black dark:text-gray-100">
 	<div class="sticky top-0 hidden h-dvh w-[200px] flex-shrink-0 md:block">
-		<Sidebar />
+		<Sidebar user={data.user} />
 	</div>
 
 	<div class="flex w-full justify-center px-8 py-6">

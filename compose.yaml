@@ -7,10 +7,14 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://root:mysecretpassword@foruca-db:5432/local
-      OIDC_DISCOVERY_URL: https://example.com/.well-known
+      OIDC_DISCOVERY_URL: https://example.com/.well-known/openid-configuration
       OIDC_USERNAME_CLAIM: preferred_username
-      OIDC_CLIENT_ID: example
-      OIDC_CLIENT_SECRET: example
+      OIDC_CLIENT_ID: e
+      OIDC_CLIENT_SECRET: e
+      GITHUB_CLIENT_ID: e
+      GITHUB_CLIENT_SECRET: e
+      BETTER_AUTH_SECRET: e
+      BETTER_AUTH_URL: http://localhost:5173
     depends_on:
       - foruca-db
   foruca-db:
