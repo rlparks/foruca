@@ -3,8 +3,6 @@
 
 	let { post, showBoardName }: { post: PostListPost; showBoardName: boolean } = $props();
 
-	const linkWidth = $derived(showBoardName ? "w-1/4" : "w-1/3");
-
 	const isPostedToday = $derived.by(() => {
 		const today = new Date();
 		const postDate = new Date(post.createdAt);
@@ -15,13 +13,9 @@
 		);
 	});
 
-	const dayInMs = 24 * 60 * 60 * 1000;
-	const isPostedWithinLastDay = $derived(new Date().getTime() - post.createdAt.getTime() < dayInMs);
-
-	const method = $derived(isPostedToday);
-	const timeWord = $derived(method ? "at" : "on");
+	const timeWord = $derived(isPostedToday ? "at" : "on");
 	const time = $derived(
-		method
+		isPostedToday
 			? post.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
 			: post.createdAt.toLocaleDateString(),
 	);
