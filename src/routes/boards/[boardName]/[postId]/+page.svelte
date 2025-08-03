@@ -10,6 +10,8 @@
 		data.post.body.length > 100 ? `${data.post.body.slice(0, 100)}...` : data.post.body;
 
 	let isReplying = $state(false);
+
+	let formEl: HTMLFormElement | undefined = $state(undefined);
 </script>
 
 <svelte:head>
@@ -37,6 +39,7 @@
 		</button>
 	{:else}
 		<form
+			bind:this={formEl}
 			class="bg-gray-50 p-4 pt-3 dark:bg-gray-950"
 			method="POST"
 			transition:slide
@@ -49,7 +52,17 @@
 				};
 			}}
 		>
-			<TextArea name="body" rows={5} label="Reply" helpText={form?.message} />
+			<TextArea
+				name="body"
+				rows={5}
+				label="Reply"
+				helpText={form?.message}
+				onkeydown={(e) => {
+					if (e.ctrlKey && e.key === "Enter") {
+						formEl?.requestSubmit();
+					}
+				}}
+			/>
 			<Button class="mb-2" color="blue" font="small" type="submit">Submit</Button>
 			<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
 				Cancel

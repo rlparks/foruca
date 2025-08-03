@@ -7,9 +7,10 @@
 		value?: string;
 		helpText?: string;
 		rows?: number;
+		onkeydown?: (event: KeyboardEvent) => void;
 	};
 
-	let { label, name, value = $bindable(), helpText, rows = 3 }: Props = $props();
+	let { label, name, value = $bindable(), helpText, rows = 3, onkeydown }: Props = $props();
 </script>
 
 <div class="mb-4">
@@ -21,6 +22,7 @@
 		{name}
 		{rows}
 		bind:value
+		{onkeydown}
 		class="mt-1 block min-h-15 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 sm:text-sm"
 	></textarea>
 	{#if helpText}
