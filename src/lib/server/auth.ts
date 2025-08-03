@@ -50,7 +50,7 @@ export const auth = betterAuth({
 				},
 			},
 		}),
-		sveltekitCookies(() => new Promise((resolve) => resolve(getRequestEvent()))), // ???
+		sveltekitCookies(getRequestEvent),
 	],
 	database: {
 		dialect: new PostgresJSDialect({
