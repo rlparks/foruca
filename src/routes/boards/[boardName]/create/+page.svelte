@@ -17,7 +17,7 @@
 </svelte:head>
 
 <div class="flex w-full justify-center">
-	<form method="POST" use:enhance>
+	<form class="w-72" method="POST" use:enhance>
 		{#if form?.message}
 			<p class="mb-4 text-red-500">{form.message}</p>
 		{/if}
