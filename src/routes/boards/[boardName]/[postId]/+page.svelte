@@ -63,6 +63,7 @@
 							formEl?.requestSubmit();
 						}
 					}}
+					autofocus
 				/>
 				<Button class="mb-2" color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>

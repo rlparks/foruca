@@ -8,15 +8,26 @@
 		helpText?: string;
 		rows?: number;
 		onkeydown?: (event: KeyboardEvent) => void;
+		autofocus?: boolean;
 	};
 
-	let { label, name, value = $bindable(), helpText, rows = 3, onkeydown }: Props = $props();
+	let {
+		label,
+		name,
+		value = $bindable(),
+		helpText,
+		rows = 3,
+		onkeydown,
+		autofocus,
+	}: Props = $props();
 </script>
 
 <div class="mb-4">
 	<label for={textareaId} class="mb-1.5 block text-sm font-medium">
 		{label}
 	</label>
+	<!-- svelte-ignore a11y_autofocus -->
+	<!-- only used when explicitly triggered -->
 	<textarea
 		id={textareaId}
 		{name}
@@ -24,6 +35,7 @@
 		bind:value
 		{onkeydown}
 		class="mt-1 block min-h-15 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 sm:text-sm"
+		{autofocus}
 	></textarea>
 	{#if helpText}
 		<p class="mt-2 text-xs text-gray-500">{helpText}</p>
