@@ -14,7 +14,7 @@
 
 <div class="mb-4">
 	{#if type !== "checkbox"}
-		<label for={inputId} class="mb-1 block text-sm font-medium">
+		<label for={inputId} class="mb-1.5 block text-sm font-medium">
 			{label}
 		</label>
 		<input

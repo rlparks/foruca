@@ -14,7 +14,7 @@
 </script>
 
 <div class="mb-4">
-	<label for={textareaId} class="mb-1 block text-sm font-medium">
+	<label for={textareaId} class="mb-1.5 block text-sm font-medium">
 		{label}
 	</label>
 	<textarea
