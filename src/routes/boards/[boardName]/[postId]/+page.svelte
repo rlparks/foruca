@@ -11,6 +11,20 @@
 	);
 
 	let isReplying = $state(false);
+
+	// start replying with 'r'
+	function onGlobalKeydown(e: KeyboardEvent) {
+		if (e.defaultPrevented) return;
+		if (isReplying) return;
+		if (!data.user) return;
+		if (e.ctrlKey || e.metaKey || e.altKey) return;
+		const key = e.key?.toLowerCase();
+		if (key !== "r") return;
+		const target = e.target as HTMLElement | null;
+		if (target && target.closest("input, textarea, select, [contenteditable='true']")) return;
+		isReplying = true;
+		e.preventDefault();
+	}
 </script>
 
 <svelte:head>
@@ -19,6 +33,8 @@
 	<meta name="description" content={description} />
 	<meta name="og:description" content={description} />
 </svelte:head>
+
+<svelte:window onkeydown={onGlobalKeydown} />
 
 <header class="mb-6 space-y-4">
 	<h2 class="text-2xl font-bold">{data.post.title}</h2>
