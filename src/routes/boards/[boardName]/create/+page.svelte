@@ -2,6 +2,7 @@
 	import { enhance } from "$app/forms";
 	import Button from "$lib/components/Button.svelte";
 	import Input from "$lib/components/Input.svelte";
+	import TextArea from "$lib/components/TextArea.svelte";
 
 	let { data, form } = $props();
 	const title = `Create Post · ${data.board.name}`;
@@ -23,7 +24,7 @@
 
 		<Input label="Post Title" name="postTitle" type="text" />
 
-		<Input label="Post Content" name="postBody" type="text" />
+		<TextArea label="Post Content" name="postBody" rows={10} />
 
 		<Button type="submit" color="blue" font="small">Create Post</Button>
 	</form>
