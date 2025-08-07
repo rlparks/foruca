@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
 	import Button from "$lib/components/Button.svelte";
+	import Keycap from "$lib/components/Keycap.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 	import { slide } from "svelte/transition";
 
@@ -52,6 +53,9 @@
 				class="w-full cursor-pointer bg-gray-50 p-4 text-center transition hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-900"
 			>
 				Reply
+				<span class="ml-2 text-gray-500">
+					<Keycap>r</Keycap>
+				</span>
 			</button>
 		{:else}
 			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
@@ -77,6 +81,18 @@
 					};
 				}}
 			>
+				<div class="mb-2 flex items-center justify-between text-xs text-gray-500">
+					<div class="space-x-2">
+						<span>Submit</span>
+						<Keycap>Ctrl</Keycap>
+						<span>+</span>
+						<Keycap>Enter</Keycap>
+					</div>
+					<div class="space-x-2">
+						<span>Close</span>
+						<Keycap>Esc</Keycap>
+					</div>
+				</div>
 				<TextArea name="body" rows={5} label="Reply" helpText={form?.message} autofocus />
 				<Button class="mb-2" color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
