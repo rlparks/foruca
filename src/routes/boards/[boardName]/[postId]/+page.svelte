@@ -6,12 +6,11 @@
 
 	let { data, form } = $props();
 
-	const description =
-		data.post.body.length > 100 ? `${data.post.body.slice(0, 100)}...` : data.post.body;
+	const description = $derived(
+		data.post.body.length > 100 ? `${data.post.body.slice(0, 100)}...` : data.post.body,
+	);
 
 	let isReplying = $state(false);
-
-	let formEl: HTMLFormElement | undefined = $state(undefined);
 </script>
 
 <svelte:head>
@@ -42,7 +41,6 @@
 			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 			<!-- also accessible via buttons -->
 			<form
-				bind:this={formEl}
 				class="bg-gray-50 p-4 pt-3 dark:bg-gray-950"
 				method="POST"
 				transition:slide
