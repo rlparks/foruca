@@ -39,11 +39,21 @@
 				Reply
 			</button>
 		{:else}
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+			<!-- also accessible via buttons -->
 			<form
 				bind:this={formEl}
 				class="bg-gray-50 p-4 pt-3 dark:bg-gray-950"
 				method="POST"
 				transition:slide
+				onkeydown={(e) => {
+					if (e.key === "Escape") {
+						e.preventDefault();
+						isReplying = false;
+					} else if (e.ctrlKey && e.key === "Enter") {
+						e.currentTarget.requestSubmit();
+					}
+				}}
 				use:enhance={() => {
 					return async (form) => {
 						if (form.result.type !== "failure") {
@@ -53,18 +63,7 @@
 					};
 				}}
 			>
-				<TextArea
-					name="body"
-					rows={5}
-					label="Reply"
-					helpText={form?.message}
-					onkeydown={(e) => {
-						if (e.ctrlKey && e.key === "Enter") {
-							formEl?.requestSubmit();
-						}
-					}}
-					autofocus
-				/>
+				<TextArea name="body" rows={5} label="Reply" helpText={form?.message} autofocus />
 				<Button class="mb-2" color="blue" font="small" type="submit">Submit</Button>
 				<Button color="outline" font="small" type="button" onclick={() => (isReplying = false)}>
 					Cancel
