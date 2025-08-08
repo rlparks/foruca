@@ -80,7 +80,7 @@
 					if (e.key === "Escape") {
 						e.preventDefault();
 						isReplying = false;
-					} else if (e.ctrlKey && e.key === "Enter") {
+					} else if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
 						e.currentTarget.requestSubmit();
 					}
 				}}
@@ -118,5 +118,5 @@
 {#await data.replies}
 	Loading replies...
 {:then replies}
-	<Replies {replies} />
+	<Replies {replies} canReply={Boolean(data.user)} />
 {/await}

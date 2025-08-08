@@ -4,9 +4,10 @@
 
 	type Props = {
 		replies: PrettyReply[];
+		canReply: boolean;
 	};
 
-	let { replies }: Props = $props();
+	let { replies, canReply }: Props = $props();
 
 	const roots = $derived.by(() => {
 		// Sort replies once by createdAt descending
@@ -43,7 +44,7 @@
 	{:else}
 		<ul class="space-y-3">
 			{#each roots as reply}
-				<ReplyItem {reply} />
+				<ReplyItem {reply} {canReply} />
 			{/each}
 		</ul>
 	{/if}
