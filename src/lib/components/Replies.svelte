@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ReplyItem from "$lib/components/ReplyItem.svelte";
 	import type { PrettyReply, ReplyTree } from "$lib/types/bonus";
+	import { SvelteMap } from "svelte/reactivity";
 
 	type Props = {
 		replies: PrettyReply[];
@@ -13,7 +14,7 @@
 		// Sort replies once by createdAt descending
 		const sortedReplies = replies.toSorted((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
-		const map = new Map<string, ReplyTree>();
+		const map = new SvelteMap<string, ReplyTree>();
 		const top: ReplyTree[] = [];
 		for (const r of sortedReplies) {
 			map.set(r.id, { ...r, children: [] });
@@ -43,7 +44,7 @@
 		<p class="p-4 text-sm text-gray-500">No replies yet.</p>
 	{:else}
 		<ul class="space-y-3">
-			{#each roots as reply}
+			{#each roots as reply (reply.id)}
 				<ReplyItem {reply} {canReply} />
 			{/each}
 		</ul>

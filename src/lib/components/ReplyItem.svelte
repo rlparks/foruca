@@ -88,7 +88,7 @@
 
 	{#if reply.children?.length}
 		<ul class="mt-3 ml-2.5 space-y-3 border-l border-gray-300 pl-4 dark:border-gray-700">
-			{#each reply.children as child}
+			{#each reply.children as child (child.id)}
 				<Self reply={child} {canReply} />
 			{/each}
 		</ul>
