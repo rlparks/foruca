@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+	import { getFormattedDateTime } from "$lib";
 	import Button from "$lib/components/Button.svelte";
 	import Keycap from "$lib/components/Keycap.svelte";
+	import Replies from "$lib/components/Replies.svelte";
 	import TextArea from "$lib/components/TextArea.svelte";
 	import { slide } from "svelte/transition";
 
@@ -37,10 +39,20 @@
 
 <svelte:window onkeydown={onGlobalKeydown} />
 
-<header class="mb-6 space-y-4">
+<header class="mb-6 space-y-2">
 	<h2 class="text-2xl font-bold">{data.post.title}</h2>
-
-	<a href="/users/{data.post.userId}" class="text-blue-600">{data.post.userName}</a>
+	<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-600">
+		<a href="/users/{data.post.userId}" class="text-blue-600">{data.post.userName}</a>
+		<span class="select-none">•</span>
+		<time datetime={data.post.createdAt.toISOString()} title={data.post.createdAt.toLocaleString()}>
+			{getFormattedDateTime(data.post.createdAt)}
+		</time>
+		<span class="select-none">•</span>
+		<span>
+			{data.post.replyCount}
+			{data.post.replyCount === 1 ? "reply" : "replies"}
+		</span>
+	</div>
 </header>
 
 <div class="mb-6 rounded-lg outline">
@@ -106,5 +118,5 @@
 {#await data.replies}
 	Loading replies...
 {:then replies}
-	<pre>{JSON.stringify(replies, null, 2)}</pre>
+	<Replies {replies} />
 {/await}
