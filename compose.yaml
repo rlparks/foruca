@@ -15,6 +15,7 @@ services:
       GITHUB_CLIENT_SECRET: e
       BETTER_AUTH_SECRET: e
       BETTER_AUTH_URL: http://localhost:5173
+      PUBLIC_RYBBIT_ID: e
     depends_on:
       - foruca-db
   foruca-db:
