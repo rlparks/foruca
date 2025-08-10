@@ -45,16 +45,21 @@
 			>
 				Search
 			</button>
-			<a
-				class="block w-full rounded-md px-4 py-2 text-center outline hover:bg-gray-900"
-				href={newPostLink}
-			>
-				<p>Post</p>
-				{#if page.data.board}
-					<p class="truncate">in <span class="text-blue-600">{page.data.board.name}</span></p>
-				{/if}
-			</a>
-			<p>e</p>
+
+			{#if user}
+				<a
+					class="block w-full rounded-md px-4 py-2 text-center outline hover:bg-gray-900"
+					href={newPostLink}
+				>
+					<p>Post</p>
+					{#if page.data.board}
+						<p class="truncate">in <span class="text-blue-600">{page.data.board.name}</span></p>
+					{/if}
+				</a>
+
+				<!-- recent boards -->
+				<p>e</p>
+			{/if}
 		</div>
 
 		<AccountMenu {user} />
